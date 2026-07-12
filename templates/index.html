@@ -57,6 +57,52 @@
         @media (max-width: 600px) {
             .service-card { flex-basis: 100%; }
         }
+
+        /* ============ HERO COCKPIT — terminale del Controller ============ */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+        .hero-cockpit { background: linear-gradient(160deg, #081831 0%, #0A1F3C 55%, #0d2b52 100%); color: white; padding: 55px 5% 65px; }
+        .hero-grid { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 45px; align-items: center; }
+        .hero-claim { flex: 1 1 440px; }
+        .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.8em; letter-spacing: 3px; color: #ff9900; margin-bottom: 14px; }
+        .hero-claim h1 { font-size: 2.5em; line-height: 1.12; margin: 0 0 20px; color: white; }
+        .hero-claim h1 em { font-style: normal; color: #6db3ff; }
+        .hero-claim p { color: #b8c8dd; font-size: 1.08em; line-height: 1.6; max-width: 520px; }
+        .hero-cta-row { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+        .cta-primaria { background: #ff9900; color: #081831; padding: 16px 30px; border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 1.05em; }
+        .cta-primaria:hover { background: #ffb340; }
+        .cta-secondaria { color: #b8c8dd; text-decoration: none; font-weight: 600; border-bottom: 1px solid #35507a; padding-bottom: 2px; }
+        .cta-secondaria:hover { color: white; }
+        /* Il cockpit: card scura tipo terminale finanziario */
+        .cockpit { flex: 1 1 460px; background: #0B1E38; border: 1px solid #22436e; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.45); overflow: hidden; }
+        .cockpit-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: #0e2647; border-bottom: 1px solid #22436e; font-family: 'JetBrains Mono', monospace; font-size: 0.72em; color: #7d97ba; letter-spacing: 1px; }
+        .dot-live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2ECC71; margin-right: 7px; animation: pulsa 1.6s infinite; vertical-align: 1px; }
+        @keyframes pulsa { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+        .cockpit-kpi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #22436e; }
+        .kpi-cella { background: #0B1E38; padding: 16px 14px; }
+        .kpi-label { font-size: 0.68em; letter-spacing: 1.5px; color: #7d97ba; text-transform: uppercase; margin-bottom: 6px; }
+        .kpi-valore { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.55em; color: white; font-variant-numeric: tabular-nums; }
+        .kpi-valore .su { color: #2ECC71; font-size: 0.62em; margin-left: 4px; }
+        .cockpit-chart { padding: 18px 18px 8px; }
+        .chart-legenda { display: flex; gap: 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.68em; color: #7d97ba; padding: 0 18px 14px; }
+        .leg-linea { display: inline-block; width: 18px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: 3px; }
+        #linea-forecast { stroke-dasharray: 700; stroke-dashoffset: 700; animation: disegna 2.4s ease-out 0.4s forwards; }
+        #linea-consuntivo { stroke-dasharray: 700; stroke-dashoffset: 700; animation: disegna 2s ease-out forwards; }
+        @keyframes disegna { to { stroke-dashoffset: 0; } }
+        .anomalia { animation: lampeggia 1.2s infinite 2.6s; opacity: 0; }
+        @keyframes lampeggia { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .badge-anomalia { position: relative; margin: 0 18px 18px; background: rgba(255,153,0,0.12); border: 1px solid rgba(255,153,0,0.45); border-radius: 6px; padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.72em; color: #ffb340; }
+        @media (prefers-reduced-motion: reduce) {
+            #linea-forecast, #linea-consuntivo { animation: none; stroke-dashoffset: 0; }
+            .anomalia { animation: none; opacity: 1; }
+            .dot-live { animation: none; }
+        }
+        @media (max-width: 700px) {
+            .hero-claim h1 { font-size: 1.8em; }
+            .kpi-valore { font-size: 1.15em; }
+        }
+        /* Video spostato sotto la hero, più discreto */
+        .video-strip { max-width: 900px; margin: 45px auto 10px; padding: 0 5%; text-align: center; }
+        .video-strip video { width: 100%; max-width: 780px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); }
     </style>
 <script type="application/ld+json">
     {
@@ -144,29 +190,65 @@
 
 {% block content %}
 
-        <section class="hero-section">
-            <div class="hero-content">
-                
-                <video controls autoplay muted loop 
-                    src="/static/video/controller_5_0_intro.mp4" 
-                    alt="Video: Controller 5.0 e ROI superiore al 150% grazie all'AI" 
-                    class="hero-image">
-                    Il tuo browser non supporta il tag video.
-                </video>
-                <div class="hero-text-container">
-                    <h1>AI per CFO, Controller e Operations: Il Tuo Algoritmo per il Successo Aziendale</h1> 
-                    
-                    <p>
-                        Ti affianco come il tuo **Industrial Controller e CFO** dedicato. La mia esperienza trentennale, unita agli **algoritmi di Intelligenza Artificiale (AI) che creo su misura**, trasforma i dati complessi di budget, controllo di gestione e R&S in decisioni **chiare e profittevoli** per ogni reparto aziendale.
-                    </p>
-                    <p>
-                        Dimentica le incertezze decisionali: il mio obiettivo è uno solo: **essere al tuo fianco per convertire gli obiettivi in risultati concreti** in Finanza, Marketing e Produzione. Concentriamoci solo sui passi necessari per ottimizzare le risorse e **incrementare il tuo margine di profitto**, insieme.
-                    </p>
-                    
-                    <a href="/contatti" class="cta-button">Fissa la Consulenza Strategica AI</a>
+        <section class="hero-cockpit">
+            <div class="hero-grid">
+                <div class="hero-claim">
+                    <div class="hero-eyebrow">INGEGNERIA AI &times; CONTROLLO DI GESTIONE</div>
+                    <h1>Ingegnere AI.<br><em>Numeri da CFO.</em></h1>
+                    <p>Non compro software: <strong>scrivo gli algoritmi</strong>. Trent'anni di controllo di gestione industriale, uniti a modelli predittivi costruiti su misura sui tuoi dati. Forecast, anomaly detection, cash flow: il tuo cruscotto decisionale, prima dei concorrenti.</p>
+                    <div class="hero-cta-row">
+                        <a href="/contatti" class="cta-primaria">Fissa la Consulenza Strategica</a>
+                        <a href="/servizi" class="cta-secondaria">Scopri come lavoro &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="cockpit" aria-label="Esempio di dashboard di controllo di gestione con AI">
+                    <div class="cockpit-bar">
+                        <span><span class="dot-live"></span>CRUSCOTTO CFO &mdash; LIVE</span>
+                        <span id="orologio">FY 2026</span>
+                    </div>
+                    <div class="cockpit-kpi">
+                        <div class="kpi-cella">
+                            <div class="kpi-label">Margine Operativo</div>
+                            <div class="kpi-valore"><span class="conta" data-fine="18.4" data-dec="1">0</span>%<span class="su">&#9650;</span></div>
+                        </div>
+                        <div class="kpi-cella">
+                            <div class="kpi-label">Forecast Accuracy</div>
+                            <div class="kpi-valore"><span class="conta" data-fine="96.2" data-dec="1">0</span>%</div>
+                        </div>
+                        <div class="kpi-cella">
+                            <div class="kpi-label">DSO Incassi</div>
+                            <div class="kpi-valore"><span class="conta" data-fine="47" data-dec="0">0</span>gg<span class="su">&#9660;</span></div>
+                        </div>
+                    </div>
+                    <div class="cockpit-chart">
+                        <svg viewBox="0 0 460 150" width="100%" height="150" role="img" aria-label="Grafico: consuntivo contro forecast AI">
+                            <line x1="0" y1="130" x2="460" y2="130" stroke="#22436e" stroke-width="1"/>
+                            <line x1="0" y1="85" x2="460" y2="85" stroke="#16304f" stroke-width="1"/>
+                            <line x1="0" y1="40" x2="460" y2="40" stroke="#16304f" stroke-width="1"/>
+                            <polyline id="linea-consuntivo" fill="none" stroke="#6db3ff" stroke-width="2.5"
+                                points="0,118 45,112 90,116 135,104 180,96 225,101 270,88 315,80"/>
+                            <polyline id="linea-forecast" fill="none" stroke="#2ECC71" stroke-width="2.5" stroke-dasharray="700"
+                                points="315,80 360,68 405,58 455,42"/>
+                            <circle class="anomalia" cx="225" cy="101" r="6" fill="none" stroke="#ff9900" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <div class="chart-legenda">
+                        <span><span class="leg-linea" style="background:#6db3ff;"></span>CONSUNTIVO</span>
+                        <span><span class="leg-linea" style="background:#2ECC71;"></span>FORECAST AI</span>
+                        <span><span class="leg-linea" style="background:#ff9900;"></span>ANOMALIA</span>
+                    </div>
+                    <div class="badge-anomalia">&#9888; ANOMALY DETECTION &mdash; scostamento costi rilevato a MAG: &minus;2,1% margine &rarr; azione correttiva suggerita</div>
                 </div>
             </div>
         </section>
+
+        <div class="video-strip">
+            <video controls muted loop preload="metadata"
+                src="/static/video/controller_5_0_intro.mp4">
+                Il tuo browser non supporta il tag video.
+            </video>
+        </div>
 
         <hr>
 
@@ -312,4 +394,30 @@
         </section>
         
     
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.conta').forEach(function (el) {
+            el.textContent = el.dataset.fine.replace('.', ',');
+        });
+        return;
+    }
+    document.querySelectorAll('.conta').forEach(function (el) {
+        var fine = parseFloat(el.dataset.fine), dec = parseInt(el.dataset.dec);
+        var durata = 1800, t0 = null;
+        function passo(t) {
+            if (!t0) t0 = t;
+            var p = Math.min((t - t0) / durata, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = (fine * eased).toFixed(dec).replace('.', ',');
+            if (p < 1) requestAnimationFrame(passo);
+        }
+        requestAnimationFrame(passo);
+    });
+})();
+</script>
 {% endblock %}
