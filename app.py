@@ -170,6 +170,25 @@ def contatti():
 
 
 
+
+# =====================================================================
+# AGENTE AI (sostituisce l'app Streamlit esterna: gira qui su Railway,
+# non dorme mai e legge i contenuti del sito direttamente dal DB)
+# =====================================================================
+from agente import chiedi_agente
+
+
+@app.route('/api/agente', methods=['POST'])
+def api_agente():
+    dati = request.get_json(silent=True) or {}
+    messaggio = (dati.get('messaggio') or '').strip()
+    if not messaggio:
+        return {'risposta': 'Scrivi una domanda!'}, 400
+    storia = dati.get('storia') or []
+    risposta = chiedi_agente(messaggio, storia)
+    return {'risposta': risposta}
+
+
 # =====================================================================
 # SEO: redirect 301 dai vecchi URL .html (indicizzati su Google)
 # =====================================================================
