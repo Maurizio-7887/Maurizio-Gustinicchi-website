@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Formazione ITS e GOL - I Nostri Corsi{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .intro-formazione .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %} class="main-content"{% endblock %}
+
+{% block content %}
+
+        <div class="intro-formazione">
+            <h1 class="page-title">Formazione ITS e GOL: Corsi Erogati</h1>
+            <p class="sottotitolo">
+                Un catalogo di corsi altamente specializzati, erogabili in modalità frontale o a distanza, sviluppati per Istituti Tecnici Superiori (ITS) e Programmi Garanzia di Occupabilità dei Lavoratori (GOL). 
+                La competenza teorica è affiancata da **manuali proprietari** per garantire la massima qualità didattica.
+            </p>
+        </div>
+
+        <section class="corsi-grid">
+            
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_controllo_gestione_avanzato.jpg" 
+                    alt="Copertina Manuale Controllo di Gestione">
+                <div class="corso-content">
+                    <h3>Controllo di gestione avanzato</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Corso destinato a fornire strumenti di analisi di bilancio, budgeting, forecasting e KPI per il monitoraggio strategico delle performance aziendali.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_magazzino_magazziniere_5_0.jpg" 
+                    alt="Copertina Manuale Magazzino 5.0">
+                <div class="corso-content">
+                    <h3>Magazzino e Magazziniere 5.0</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Dalla logistica tradizionale alla gestione 4.0: utilizzo di WMS, tracciabilità RFID, principi Lean e ottimizzazione dei flussi di magazzino.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_segretaria_azienda.jpg" 
+                    alt="Copertina Manuale Segretaria di Azienda">
+                <div class="corso-content">
+                    <h3>Segretaria di Azienda</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Formazione completa sulle procedure amministrative, l'organizzazione dell'ufficio, la gestione della corrispondenza e la comunicazione interaziendale.</p>
+                </div>
+            </article>
+            
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_amministrazione_paghe_controllo.jpg" 
+                    alt="Copertina Manuale Amministrazione e Paghe">
+                <div class="corso-content">
+                    <h3>Amministrazione, Paghe e Controllo</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Approfondimento delle normative contabili e fiscali, gestione del ciclo passivo/attivo e conoscenze essenziali per l'elaborazione di buste paga e contributi.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_comunicazione_social_media_manager.jpg" 
+                    alt="Copertina Manuale Social Media Manager">
+                <div class="corso-content">
+                    <h3>Comunicazione e Social Media Manager</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Sviluppo di strategie di Content Marketing, gestione delle piattaforme social, analisi delle performance e creazione di piani editoriali efficaci.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_comunicazione_tecniche_accoglienza.jpg" 
+                    alt="Copertina Manuale Tecniche di Accoglienza">
+                <div class="corso-content">
+                    <h3>Comunicazione e Tecniche di Accoglienza</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Focus sulle soft skill e sulle metodologie per una comunicazione efficace e professionale, essenziali per la gestione del cliente e la prima impressione aziendale.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_comunicazione_tecniche_vendita.jpg" 
+                    alt="Copertina Manuale Tecniche di Vendita">
+                <div class="corso-content">
+                    <h3>Comunicazione e Tecniche di Vendita</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Corso pratico sulle strategie di negoziazione, la gestione delle obiezioni e l'utilizzo delle leve comunicative per chiudere trattative e fidelizzare il cliente.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                    src="/static/img/copertine/manuale_operativo_cybersecurity_modelli_machine_learning.jpg" 
+                    alt="Copertina Manuale Cybersecurity ML">
+                <div class="corso-content">
+                    <h3>Cybersecurity con Modelli Machine Learning</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Analisi delle minacce informatiche, protezione dei dati e implementazione di modelli di Machine Learning per la rilevazione e la prevenzione avanzata degli attacchi.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                     src="/static/img/copertine/manuale_affitti_brevi.jpg" 
+                     alt="Copertina Manuale Affitti Brevi">
+                <div class="corso-content">
+                    <h3>Gestione Affitti Brevi (B&B e Case Vacanza)</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Sviluppo di competenze legali, amministrative e di marketing per il settore extralberghiero. Gestione operativa, adempimenti normativi (CIN/CIR) e strategie di posizionamento sui portali.</p>
+                </div>
+            </article>
+
+            <article class="corso-card">
+                <img class="corso-copertina-img" 
+                     src="/static/img/copertine/manuale_fondamenti_machine_learning.jpg" 
+                     alt="Copertina Manuale Fondamenti Machine Learning">
+                <div class="corso-content">
+                    <h3>Tecnologie di Intelligenza Artificiale per l'Innovazione Aziendale</h3>
+                    <p class="modalita">Modalità: Presenza / Online</p>
+                    <p class="descrizione">Corso teorico-pratico finalizzato all'acquisizione di skill digitali avanzate. Focalizzato sull'utilizzo etico e produttivo dell'IA, prepara i partecipanti alle sfide della digitalizzazione 5.0, rendendoli profili indispensabili per le PMI moderne.</p>
+                </div>
+            </article>
+
+        </section> 
+        
+        <div class="cta-finale cta-formazione">
+            <h2>Interessati a partnership?</h2>
+            <p>Contattaci per definire un programma personalizzato o per richiedere i syllabus completi dei corsi.</p>
+            <a href="/contatti" class="cta-button-large">Contattaci Ora</a>
+        </div>
+    
+{% endblock %}

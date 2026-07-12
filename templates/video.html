@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Video, Tutorial e Corsi Avanzati | Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* Stili Globali per replicare l'aspetto moderno */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f6; 
+            color: #262730; 
+            margin: 0;
+            padding: 0; /* Rimosso il padding 20px qui, è meglio metterlo nelle sezioni */
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+        }
+        /* Stili di Fix per l'Header (Copia da Libri.html) */
+        .main-header { 
+            width: 100%;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            padding: 15px 5%; 
+            border-bottom: 1px solid #eee; 
+            background-color: white; 
+            box-sizing: border-box; /* Per includere il padding nella larghezza */
+        }
+        .logo h1 { 
+            display: block; 
+            font-size: 1.8em; 
+            color: #0056b3; 
+            white-space: nowrap; 
+            margin-bottom: 0; 
+            line-height: 1.2; 
+        }
+        .logo p { 
+            margin-top: 5px; 
+            font-size: 0.9em; 
+            color: #555; 
+        }
+        .main-nav ul { 
+            display: flex; 
+            list-style: none; 
+            flex-wrap: wrap; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .main-nav ul li { 
+            margin: 0 8px; 
+            line-height: 1; 
+        }
+        .main-nav ul li a { 
+            font-size: 0.85em; 
+            font-weight: bold; 
+            white-space: nowrap; 
+            text-decoration: none; 
+            color: #333; 
+        }
+        /* Aggiungo lo stile per la pagina corrente */
+        .main-nav ul li.current-page a {
+            color: #cc0000; /* Evidenzia la pagina Video */
+        }
+
+        /* Stili per il contenuto */
+        main {
+            max-width: 1200px;
+            width: 90%;
+            padding: 20px 0; /* Aggiunto padding qui invece che sul body */
+        }
+        .intro-video {
+            margin-bottom: 30px;
+            padding: 20px 0; /* padding della sezione */
+        }
+        .page-title {
+            color: #0056b3;
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+        .sottotitolo {
+            font-size: 1.1em;
+            color: #555;
+        }
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        .video-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-card p {
+            line-height: 1.4;
+            color: #555;
+            flex-grow: 1;
+        }
+        .video-embed {
+            margin-bottom: 15px;
+            background-color: #f0f0f0; 
+            height: 315px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            border: 1px solid #ccc; 
+            border-radius: 4px;
+        }
+        .video-embed iframe {
+            display: block; 
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+        .cta-button-large, .cta-dettaglio {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: auto;
+        }
+        .video-embed img.thumbnail-img {
+            display: block; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        /* Footer Styles (aggiunti per completezza) */
+        footer {
+            width: 100%;
+            background-color: #262730;
+            color: #f0f2f6;
+            padding: 20px 5%;
+            box-sizing: border-box;
+            font-size: 0.9em;
+        }
+        .footer-info, .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+        .footer-info p, .footer-bottom a {
+            margin: 5px 0;
+            color: #aaa;
+            text-decoration: none;
+        }
+        .footer-info h3 {
+            color: white;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+    <section class="intro-video">
+        <h1 class="page-title" style="color: #0056b3;">Video, Tutorial e Approfondimenti Strategici</h1>
+        <p class="sottotitolo" style="font-size: 1.1em; color: #555;">Una selezione di contenuti video essenziali per Imprenditori e Professionisti. Scopri come l'AI, il Controllo di Gestione e l'Innovazione possono potenziare la tua PMI.</p>
+    </section>
+
+    <section class="video-gallery">
+
+        <article class="video-card">
+            <h3 class="premium-title" style="color: #0056b3; margin-bottom: 15px;">🔥 **Mini-Guida AI: La Tua Prima Mossa Vincente (2 Minuti)**</h3>
+            <p style="margin-bottom: 15px;">Guarda subito l'introduzione strategica e scopri le 3 aree chiave in cui l'IA può farti agire subito (Marketing, Produzione, Controllo).</p>
+            
+            <div class="video-embed" style="height: 315px; border: none; background-color: transparent;">
+                <iframe 
+                    width="100%" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/k_kMuiSGbCA" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    style="border-radius: 4px;">
+                </iframe>
+            </div>
+            
+            <h4 style="margin-top: 25px; color: #cc0000; font-weight: bold; text-align: center;">
+                Sblocca l'Analisi Completa (il Modulo da 6 minuti)! 
+            </h4>
+            
+            <a href="https://maurizio-7887.github.io/landing-page-ai-course/" 
+                class="cta-button-large" 
+                style="background-color: #ffc107; color: #333;">
+                CLICCA QUI E RICEVI IL MODULO ESTRATTO (6 Min)
+            </a>
+        </article>
+
+        <article class="video-card">
+             <h3 style="color: #0056b3; margin-bottom: 15px;">**Corso Avanzato: Strategie AI per Marketing e Produzione (3x10 Minuti)**</h3>
+             <p style="margin-bottom: 15px;">I moduli 1, 2 e 3 del corso completo. Analisi e modelli operativi per l'implementazione pratica dell'Intelligenza Aumentata in azienda.</p>
+             
+             <div class="video-embed" style="height: 315px; border: 1px solid #0056b3; background-color: #0056b3; padding: 0;">
+                 <img src="/static/img/ai-strategy-growth-thumbnail.jpg" 
+                      alt="Copertina Corso Avanzato: Strategia AI" 
+                      class="thumbnail-img">
+             </div>
+             
+             <a href="https://payhip.com/order?link=m91DW&pricing_plan=ZwzKpb22B9" 
+                 class="cta-dettaglio" 
+                 style="background-color: #0056b3; color: white;">
+                 ACQUISTA IL CORSO COMPLETO (€147)
+               </a>
+        </article>
+
+        <article class="video-card">
+             <h3 style="color: #333; margin-bottom: 15px;">**Corso: Controllo di Gestione Avanzato**</h3>
+             <p style="margin-bottom: 15px;">Tecniche di Budgeting, Rolling Forecast e Analisi degli Scostamenti. Modelli operativi pronti all'uso per la pianificazione finanziaria.</p>
+             <div class="video-embed">
+                 <p style="color: #cc0000; font-size: 1.8em;">**COMING SOON**</p>
+             </div>
+             <a href="[LINK ALLA PAGINA DI PRE-ISCRIZIONE O LISTA D'ATTESA]" 
+                 class="cta-dettaglio" 
+                 style="background-color: #5cb85c; color: white;">
+                 AVVISAMI QUANDO È DISPONIBILE
+               </a>
+        </article>
+        
+        <article class="video-card">
+             <h3 style="color: #333; margin-bottom: 15px;">**Corso: Ottimizzazione e Organizzazione Aziendale Lean**</h3>
+             <p style="margin-bottom: 15px;">Mappatura dei processi, riduzione degli sprechi e riorganizzazione funzionale per massimizzare l'efficienza operativa e la velocità decisionale.</p>
+             <div class="video-embed">
+                 <p style="color: #cc0000; font-size: 1.8em;">**COMING SOON**</p>
+             </div>
+             <a href="[LINK ALLA PAGINA DI PRE-ISCRIZIONE O LISTA D'ATTESA]" 
+                 class="cta-dettaglio" 
+                 style="background-color: #5cb85c; color: white;">
+                 AVVISAMI QUANDO È DISPONIBILE
+               </a>
+        </article>
+
+        <article class="video-card">
+             <h3 style="color: #333; margin-bottom: 15px;">**Corso: Digitalizzazione e Comunicazione Inter-Reparto**</h3>
+             <p style="margin-bottom: 15px;">Creazione di moduli software per lo scambio dati rapido (API e script Python) tra reparti, garantendo l'allineamento strategico e operativo.</p>
+             <div class="video-embed">
+                 <p style="color: #cc0000; font-size: 1.8em;">**COMING SOON**</p>
+             </div>
+             <a href="[LINK ALLA PAGINA DI PRE-ISCRIZIONE O LISTA D'ATTESA]" 
+                 class="cta-dettaglio" 
+                 style="background-color: #5cb85c; color: white;">
+                 AVVISAMI QUANDO È DISPONIBILE
+               </a>
+        </article>
+
+        <article class="video-card">
+             <h3 style="color: #333; margin-bottom: 15px;">**Nuovo Argomento Strategico (Coming Soon)**</h3>
+             <p style="margin-bottom: 15px;">Un nuovo corso intensivo dedicato al tema che deciderai. Raggiungi subito la massima performance!</p>
+             <div class="video-embed">
+                 <p style="color: #cc0000; font-size: 1.8em;">**COMING SOON**</p>
+             </div>
+             <a href="[LINK ALLA TUA PAGINA CONTATTI O NEWSLETTER GENERICA]" 
+                 class="cta-dettaglio" 
+                 style="background-color: #2980b9; color: white;">
+                 ISCRIVITI ALLA NEWSLETTER
+               </a>
+        </article>
+        
+    </section>
+    
+
+{% endblock %}

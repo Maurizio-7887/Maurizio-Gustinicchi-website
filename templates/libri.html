@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Le Nostre Pubblicazioni - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER e NAV (Lasciati invariati) */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        .intro-libri .page-title { color: #0056b3; } 
+        .main-nav ul li.current-page a { color: #cc0000; } /* Stile pagina corrente */
+    
+        /* ========================================================= */
+        /* REGOLE ESSENZIALI PER L'ALLINEAMENTO ORIZZONTALE */
+        /* ========================================================= */
+    
+        .libri-gallery {
+            display: flex;
+            flex-wrap: nowrap; 
+            justify-content: center;
+            min-width: 980px; 
+            max-width: 1200px; 
+            margin: 20px auto; 
+            gap: 20px; 
+            padding: 0 10px;
+            overflow-x: auto;
+        }
+        
+        .libro-card {
+            flex: 0 0 300px; 
+            width: 300px; 
+            min-height: 750px; 
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .libro-copertina {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+        }
+    
+        .libro-info {
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%;
+        }
+    
+        .descrizione-breve {
+            flex-grow: 1; 
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+        }
+    
+        .cta-amazon {
+            background-color: #ff9900; 
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: block; 
+            width: 80%; 
+            margin-top: auto;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+    <section class="intro-libri">
+        <h1 class="page-title">Le Nostre Pubblicazioni per la Tua Crescita</h1>
+        <p class="sottotitolo">Manuali operativi essenziali per Imprenditori, Manager e Professionisti che desiderano padroneggiare il Controllo di Gestione e l'Innovazione.</p>
+    </section>
+
+    <section class="libri-gallery">
+
+        <article class="libro-card">
+            <img src="/static/img/libro-marketing-successo.jpg" alt="Copertina del Libro: Marketing di Successo" class="libro-copertina">
+            
+            <div class="libro-info">
+                <h2>MARKETING DI SUCCESSO: Costi e Controllo nella Tua Strategia</h2>
+                <p class="autore">Di: Maurizio Gustinicchi</p>
+                <p class="descrizione-breve">Un manuale operativo essenziale per ogni Imprenditore e Controller che vuole misurare l'efficacia delle campagne marketing, trasformando la spesa in investimento strategico.</p>
+                <a href="https://www.amazon.it/MARKETING-SUCCESSO-CONTROLLO-STRATEGIA-OPERATIVO/dp/B0DMJC6KPY" target="_blank" class="cta-amazon">Acquista su Amazon</a>
+            </div>
+        </article>
+
+        <article class="libro-card">
+            <img src="/static/img/libro-executive-assistant.jpg" alt="Copertina del Libro: Executive Assistant" class="libro-copertina">
+            
+            <div class="libro-info">
+                <h2>IL PROFESSIONISTA QUALIFICATO DI SEGRETERIA E L'ASSISTENTE DEL CEO: Competenze, Strategie e Successo</h2>
+                <p class="autore">Di: Maurizio Gustinicchi</p>
+                <p class="descrizione-breve">Una guida pratica sulle competenze avanzate, dal Time Management all'Accounting, necessarie per il successo professionale di un Executive Assistant moderno.</p>
+                <a href="https://www.amazon.it/PROFESSIONISTA-QUALIFICATO-SEGRETERIA-LASSISTENTE-DEL/dp/B0DK5G8NPK" target="_blank" class="cta-amazon">Acquista su Amazon</a>
+            </div>
+        </article>
+
+        <article class="libro-card">
+            <img src="/static/img/libro-la-distruzione-creatrice.jpg" 
+                alt="Copertina del Libro: La Distruzione Creatrice 4.0" 
+                class="libro-copertina">
+            
+            <div class="libro-info">
+                <h2>LA DISTRUZIONE CREATRICE 4.0: COMANDARE L'AI PER MARGINALIZZARE</h2>
+                
+                <p class="autore">Di: Maurizio Gustinicchi</p>
+                
+                <p class="descrizione-breve">L'unica guida operativa che integra la teoria economica della Distruzione Creatrice con il mondo 5.0. Impara Python per acquisire il controllo degli algoritmi e trasformare le sfide dell'Intelligenza Artificiale in un vantaggio competitivo per CFO, Controller e Operations Manager.</p>
+                
+                <a href="https://www.amazon.com/dp/B0G4L5M1Y3" target="_blank" class="cta-amazon">Acquista su Amazon</a>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="cta-finale">
+        <h3>Sei interessato a una collaborazione o a un'intervista?</h3>
+        <p>Contattami direttamente per eventi, workshop o partnership editoriali.</p>
+        <a href="/contatti" class="cta-button-large">Contatta l'Autore</a>
+    </section>
+    
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Recensioni e Testimonianze - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI (ripresi da shop.html) */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; }
+        .logo h1 { margin-bottom: 0; line-height: 1.2; color: #0056b3; white-space: nowrap; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+        
+        .intro-recensioni { text-align: center; padding: 30px 20px 30px; background-color: white; }
+        .intro-recensioni h1 { font-size: 2.2em; color: #0056b3; margin-bottom: 10px; } /* Colore blu per l'header principale */
+        .sottotitolo { font-size: 1.1em; color: #555; max-width: 900px; margin: 0 auto; }
+
+        /* GRIGLIA DELLE TESTIMONIANZE */
+        .recensioni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* STILE DELLA CARD RECENSIONE */
+        .recensione-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px; /* Altezza minima per contenere il testo */
+        }
+
+        .recensione-card blockquote {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 20px;
+            border-left: 3px solid #ff9900;
+            padding-left: 15px;
+            text-align: left;
+        }
+
+        .recensione-card .autore {
+            font-weight: bold;
+            color: #0056b3;
+            font-size: 1em;
+            margin-top: auto;
+        }
+        
+        .recensione-card .servizio {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* FIX Navigazione per due righe */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        
+        <section class="intro-recensioni">
+            <h1 class="page-title">La Nostra Migliore Garanzia: Le Voci dei Clienti</h1>
+            <p class="sottotitolo">Leggi le esperienze dirette di aziende e professionisti che hanno trasformato i loro processi grazie alla nostra consulenza e ai nostri software proprietari.</p>
+        </section>
+
+        <section class="recensioni-grid">
+            
+            <article class="recensione-card">
+                <blockquote>"Il Maint Planner Pro ha rivoluzionato il nostro reparto manutenzioni. Il sistema di preventivi è ora automatico e la riduzione degli errori è stata impressionante."</blockquote>
+                <div class="autore">Angelo Mierla, CEO Iron Segnaletica</div>
+                <div class="servizio">Cliente Software (Maint Planner Pro)</div>
+            </article>
+            
+            <article class="recensione-card">
+                <blockquote>"Questo professore innovativo integra ' AI  nel corso di amministrazione, offrendo una visione all'avanguardia su come la tecnologia stia trasformando la gestione aziendale. Il suo approccio moderno e pratico è stimolante e fondamentale per la preparazione al futuro del lavoro."</blockquote>
+                <div class="autore">Isabella Valenti (PG)</div>
+                <div class="servizio">Allieva (Corso Amministrazione, Paghe e Controllo)</div>
+            </article>
+            
+        </section>
+
+    
+{% endblock %}

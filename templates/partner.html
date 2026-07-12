@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Partner e Collaborazioni - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .intro-partner .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="intro-partner">
+            <h1 class="page-title">Le Nostre Alleanze Strategiche</h1>
+            <p class="sottotitolo">La forza della consulenza risiede anche nella rete di esperti. Lavoro in sinergia con partner qualificati per garantirti un supporto a 360°.</p>
+        </section>
+
+        <section class="partner-list-grid">
+            
+            <article class="partner-card">
+                <img src="/static/img/consorzio-ids.jpg" alt="Logo Consorzio IDS" class="partner-logo">
+                <h2>Consorzio IDS (Digital Innovation and Sustainability)</h2>
+                <h3>Ruolo: Advisor Tecnico e Membro del Comitato Scientifico</h3>
+                <p>
+                    Il Consorzio si occupa di digitalizzare le aziende italiane, con un focus specifico sull'automazione dei processi contabili e finanziari. 
+                    In qualità di Advisor, sono parte attiva nel progetto di **sostituzione dei report manuali in Power BI Dashboard**, garantendo ai Commercialisti **basso carico cognitivo, enorme risparmio di tempo e riduzione dei costi**.
+                </p>
+                <a href="#" class="cta-link-partner" target="_blank">Visita il Consorzio</a>
+            </article>
+
+            <article class="partner-card">
+                <img src="/static/img/impresa-efficace-logo.png" alt="Logo Impresa Efficace" class="partner-logo">
+                <h2>Impresa Efficace S.R.L. (Master Avanzato)</h2>
+                <h3>Ruolo: Partner e Istruttore/Formatore Senior (Focus su IA, Python e Reporting)</h3>
+                <p>
+                    Collaboro come Istruttore Senior al Master Avanzato di Controllo di Gestione. Il corso è rivolto a professionisti e Imprenditori che vogliono padroneggiare non solo l'analisi di bilancio e il Budget, ma anche gli **strumenti digitali del futuro**. Insegno i moduli di **Automazione con IA e Python**, **Budgeting Avanzato** e **Reporting Interattivo**, portando in aula l'esperienza operativa di anni di consulenza.
+                </p>
+                <a href="https://gamma.app/docs/Corso-Avanzato-di-Controllo-di-Gestione-qe7o0z1aem3bpel?mode=doc" class="cta-link-partner" target="_blank">Scopri il Master Completo</a>
+            </article>
+            
+        </section>
+
+        <section class="cta-finale">
+            <h3>Cerchi un partner solido per il tuo prossimo progetto?</h3>
+            <p>Sfrutta la forza della nostra rete di competenze.</p>
+            <a href="/contatti" class="cta-button-large">Contattaci</a>
+        </section>
+    
+{% endblock %}

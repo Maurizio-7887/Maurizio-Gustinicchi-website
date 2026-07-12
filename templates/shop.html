@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Acquista i nostri Prodotti - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* CSS INTEGRATO PER FIX LOGO E NAVIGAZIONE */
+        /* FIX GLOBALI HEADER */
+        .main-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            padding: 15px 5%; 
+            border-bottom: 1px solid #eee; 
+            background-color: white; 
+        }
+        
+        /* FIX LOGO */
+        .logo h1 { 
+            display: block; 
+            font-size: 1.8em; 
+            color: #0056b3; 
+            white-space: nowrap; 
+            margin-bottom: 0; 
+            line-height: 1.2; 
+        }
+        .logo p { 
+            margin-top: 5px; 
+            font-size: 0.9em; 
+            color: #555; 
+        }
+
+        /* FIX Navigazione */
+        .main-nav ul { 
+            display: flex; 
+            list-style: none; 
+            flex-wrap: wrap; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .main-nav ul li { 
+            margin: 0 8px; 
+            line-height: 1; 
+        }
+        .main-nav ul li a { 
+            font-size: 0.85em; 
+            font-weight: bold; 
+            white-space: nowrap; 
+            text-decoration: none; 
+            color: #333; 
+        }
+
+        /* FIX Titolo Pagina per coerenza */
+        .intro-servizi h1 {
+            color: #0056b3; 
+        }
+
+        /* FIX: Griglia a 3 colonne affiancate sempre, per schermi grandi */
+        .elenco-servizi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px; 
+            padding: 20px 5%;
+            margin: 0 auto;
+            max-width: 1200px; 
+        }
+
+        /* Adattamento per schermi più piccoli, per evitare che le card si rompano male */
+        @media (max-width: 992px) {
+            .elenco-servizi-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .logo h1 {
+                white-space: normal; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .elenco-servizi-grid {
+                grid-template-columns: 1fr; 
+            }
+            .main-header {
+                flex-direction: column; 
+                align-items: center;
+            }
+            .main-nav ul {
+                flex-wrap: wrap; 
+                justify-content: center;
+            }
+            .main-nav li {
+                margin: 5px 10px;
+            }
+        }
+        
+        /* Stili della Card per allineamento e aspetto visivo */
+        .servizio-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex; 
+            flex-direction: column;
+            justify-content: flex-start; 
+            min-height: 450px; 
+        }
+        
+        .servizio-icona {
+            max-width: 80px;
+            margin: 0 auto 15px;
+        }
+
+        .servizio-card h2 {
+            color: #0056b3;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .servizio-card p {
+            flex-grow: 1; 
+            margin-bottom: 15px;
+        }
+
+        .prezzo {
+            font-weight: bold;
+            color: #333;
+            margin-top: auto; 
+            margin-bottom: 10px;
+        }
+        
+        .cta-dettaglio {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-dettaglio:hover {
+            background-color: #004494;
+        }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+ 
+        <section class="intro-servizi intro-prodotti"> 
+            <h1>I Nostri Software e Soluzioni Proprietarie</h1>
+            <p class="sottotitolo">Scegli tra i nostri potenti software proprietari, progettati per l'analisi avanzata, la gestione operativa e la produzione di contenuti.</p>
+        </section>
+
+        <section class="elenco-servizi-grid">
+            
+            <article class="servizio-card">
+                <img src="/static/img/icona_dashboard.png" alt="Icona Dashboard Interattiva" class="servizio-icona">
+                <h2>Smart-Board Analytics</h2>
+                <p>Dashboard **user-friendly** e interattiva per l'analisi dei dati, creata per sostituire i report complessi (come Power BI) con visualizzazioni chiare.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/servizi/dashboard-bi" class="cta-dettaglio">Scopri di più</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/icona_manutenzione.png" alt="Icona Software Manutenzione" class="servizio-icona">
+                <h2>Maint Planner Pro</h2>
+                <p>Software completo per **pianificare, programmare e gestire** in modo efficiente tutte le attività di manutenzione (preventiva e correttiva).</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/servizi/manutenzione" class="cta-dettaglio">Scopri di più</a> 
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/icona_content_factory.png" alt="Icona Content Factory Suite" class="servizio-icona">
+                <h2>Content Factory Suite</h2>
+                <p>La soluzione completa per **Social Media Manager**: dalla creazione rapida di contenuti alla programmazione e all'analisi cross-piattaforma.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/servizi/content-factory" class="cta-dettaglio">Scopri di più</a>
+            </article>
+
+        </section>
+    
+{% endblock %}

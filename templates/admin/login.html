@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin Login - MGC{% endblock %}
+{% block content %}
+<section style="max-width:400px; margin:60px auto; padding:30px; background:white; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <h1 style="color:#004d99;">Area Riservata</h1>
+    <form method="POST" style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+        <label>Username</label>
+        <input type="text" name="username" required style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+        <label>Password</label>
+        <input type="password" name="password" required style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+        <button type="submit" style="padding:12px; background:#004d99; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Accedi</button>
+    </form>
+</section>
+{% endblock %}

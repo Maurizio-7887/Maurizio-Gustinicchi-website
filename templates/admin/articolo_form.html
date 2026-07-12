@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Modifica' if a else 'Nuovo' }} Articolo - Admin MGC{% endblock %}
+{% block content %}
+<section style="max-width:1000px; margin:30px auto; padding:0 5%;">
+    <h1 style="color:#004d99;">{{ 'Modifica Articolo' if a else 'Nuovo Articolo' }}</h1>
+    <p><a href="/admin">&larr; Torna al pannello</a></p>
+    <form method="POST" style="display:flex; flex-direction:column; gap:14px; background:white; padding:25px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+        <label><strong>Titolo</strong></label>
+        <input type="text" name="titolo" value="{{ a.titolo if a else '' }}" required style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+
+        <label><strong>Slug</strong> (URL: /blog/<em>slug</em>, senza spazi)</label>
+        <input type="text" name="slug" value="{{ a.slug if a else '' }}" required pattern="[A-Za-z0-9\-\.]+" style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+
+        <label><strong>Data pubblicazione</strong></label>
+        <input type="date" name="data_pubblicazione" value="{{ a.data_pubblicazione if a else '' }}" style="padding:10px; border:1px solid #ccc; border-radius:4px; max-width:250px;">
+
+        <label><strong>Meta description</strong> (SEO, max ~160 caratteri)</label>
+        <textarea name="meta_description" rows="2" style="padding:10px; border:1px solid #ccc; border-radius:4px;">{{ a.meta_description if a else '' }}</textarea>
+
+        <label><strong>Excerpt</strong> (riassunto mostrato nella card del blog)</label>
+        <textarea name="excerpt" rows="3" style="padding:10px; border:1px solid #ccc; border-radius:4px;">{{ a.excerpt if a else '' }}</textarea>
+
+        <label><strong>Immagine copertina</strong> (path, es. /static/img/copertina.jpg)</label>
+        <input type="text" name="cover" value="{{ a.cover if a else '' }}" style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+
+        <label><strong>Contenuto HTML</strong> (il corpo dell'articolo, dentro il &lt;main&gt;)</label>
+        <textarea name="body" rows="22" required style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:monospace; font-size:0.85em;">{{ a.body if a else '' }}</textarea>
+
+        <label><strong>Style CSS specifici</strong> (opzionale, blocco &lt;style&gt;...&lt;/style&gt;)</label>
+        <textarea name="styles" rows="6" style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:monospace; font-size:0.85em;">{{ a.styles if a else '' }}</textarea>
+
+        <label style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" name="pubblicato" {{ 'checked' if not a or a.pubblicato else '' }}> <strong>Pubblicato</strong>
+        </label>
+
+        <button type="submit" style="padding:14px; background:#004d99; color:white; border:none; border-radius:4px; font-weight:bold; font-size:1.05em; cursor:pointer;">💾 Salva Articolo</button>
+    </form>
+</section>
+{% endblock %}

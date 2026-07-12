@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ a.titolo }} - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{{ a.meta_description }}{% endblock %}
+
+{% block head_extra %}
+{{ a.styles | safe }}
+{% endblock %}
+
+{% block content %}
+{{ a.body | safe }}
+{% endblock %}

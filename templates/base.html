@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Maurizio Gustinicchi Consulting{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Consulenza AI per CFO, Controller e Operations. Algoritmi su misura per il Controllo di Gestione avanzato.{% endblock %}">
+    <link rel="canonical" href="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <a href="/" style="text-decoration:none; color:inherit;">
+                <h1>MAURIZIO GUSTINICCHI CONSULTING</h1>
+                <p>Leader AI per l'Impresa in Italia</p>
+            </a>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/chi-siamo">CHI SIAMO</a></li>
+                <li><a href="/certificati">CERTIFICAZIONI</a></li>
+                <li><a href="/servizi">SERVIZI</a></li>
+                <li><a href="/shop">ACQUISTA</a></li>
+                <li><a href="/formazione">FORMAZIONE</a></li>
+            </ul>
+            <ul>
+                <li><a href="/video">VIDEO</a></li>
+                <li><a href="/libri">LIBRI</a></li>
+                <li><a href="/partner">PARTNER</a></li>
+                <li><a href="/blog">BLOG</a></li>
+                <li><a href="/testimonianze">RECENSIONI</a></li>
+                <li><a href="/contatti">CONTATTACI</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="max-width:900px; margin:15px auto; padding:0 5%;">
+        {% for category, message in messages %}
+          <div style="padding:12px 18px; border-radius:6px; margin-bottom:8px; font-weight:bold;
+                      background-color:{{ '#d4edda' if category == 'success' else '#f8d7da' }};
+                      color:{{ '#155724' if category == 'success' else '#721c24' }};">
+            {{ message }}
+          </div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main{% block main_attrs %}{% endblock %}>
+    {% block content %}{% endblock %}
+    </main>
+
+    <hr>
+
+    <footer>
+        <div class="footer-info">
+            <h3>CONTATTAMI</h3>
+            <p>SEDE: Via Spluga 8 - 06012 Città di Castello (PG)</p>
+            <p>E-MAIL: gustinicchimaurizio@gmail.com</p>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; {{ current_year }} MAURIZIO GUSTINICCHI CONSULTING. Tutti i diritti riservati.</p>
+            <a href="/privacy-policy">Privacy Policy</a> | <a href="/privacy-policy#cookie">Cookie Policy</a>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

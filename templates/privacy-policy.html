@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Informativa sulla Privacy - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .privacy-section .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="privacy-section">
+            <h1 class="page-title">Informativa sulla Privacy</h1>
+            <p class="data-aggiornamento">Ultimo aggiornamento: Ottobre 2025</p>
+
+            <article class="privacy-content">
+                <h2>1. Titolare del Trattamento</h2>
+                <p><strong>MAURIZIO GUSTINICCHI CONSULTING</strong> è il Titolare del trattamento dei dati personali raccolti tramite questo sito.</p>
+                <p><strong>Contatto Titolare:</strong> info@tuo-dominio.it</p>
+
+                <h2>2. Tipi di Dati Raccolti</h2>
+                <p>Raccogliamo dati di navigazione (tramite cookies, se attivi), e dati forniti volontariamente dall'utente (nome, email, messaggio) tramite i moduli di contatto.</p>
+                
+                <h2>3. Finalità del Trattamento</h2>
+                <p>I dati raccolti sono trattati per: rispondere alle richieste di contatto, fornire i servizi richiesti, adempiere a obblighi legali e, con il tuo consenso, per finalità di marketing.</p>
+                
+                <h2>4. Diritti dell'Utente</h2>
+                <p>Hai il diritto di accedere, rettificare, cancellare i tuoi dati e di opporti al trattamento. Per esercitare i tuoi diritti, puoi contattarci all'indirizzo sopra indicato.</p>
+
+                <p class="disclaimer">
+                    **NOTA BENE:** Questo è un **template segnaposto**. Il testo completo e legalmente valido della tua Informativa sulla Privacy deve essere generato da un consulente legale specializzato, in conformità al GDPR (Regolamento Generale sulla Protezione dei Dati).
+                </p>
+            </article>
+
+        </section>
+    
+{% endblock %}

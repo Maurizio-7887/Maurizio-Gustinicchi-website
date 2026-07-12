@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - MGC{% endblock %}
+{% block content %}
+<section style="max-width:1200px; margin:30px auto; padding:0 5%;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h1 style="color:#004d99;">Pannello di Gestione</h1>
+        <a href="/admin/logout" style="color:#721c24;">Esci</a>
+    </div>
+
+    <h2 style="margin-top:30px; border-bottom:3px solid #ff9900; padding-bottom:8px;">📝 Articoli Blog
+        <a href="/admin/articolo/nuovo" style="float:right; font-size:0.6em; background:#004d99; color:white; padding:8px 16px; border-radius:4px; text-decoration:none;">+ Nuovo Articolo</a>
+    </h2>
+    <table style="width:100%; border-collapse:collapse; margin-top:15px; background:white;">
+        <tr style="background:#004d99; color:white;">
+            <th style="padding:10px; text-align:left;">Data</th>
+            <th style="padding:10px; text-align:left;">Titolo</th>
+            <th style="padding:10px;">Stato</th>
+            <th style="padding:10px;">Azioni</th>
+        </tr>
+        {% for a in articoli %}
+        <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:10px;">{{ a.data_pubblicazione }}</td>
+            <td style="padding:10px;"><strong>{{ a.titolo }}</strong><br><small style="color:#888;">/blog/{{ a.slug }}</small></td>
+            <td style="padding:10px; text-align:center;">{{ '✅ Pubblicato' if a.pubblicato else '⏸️ Bozza' }}</td>
+            <td style="padding:10px; text-align:center; white-space:nowrap;">
+                <a href="/admin/articolo/{{ a.id }}" style="margin-right:10px;">Modifica</a>
+                <form method="POST" action="/admin/articolo/{{ a.id }}/elimina" style="display:inline;" onsubmit="return confirm('Eliminare definitivamente questo articolo?');">
+                    <button type="submit" style="background:none; border:none; color:#c0392b; cursor:pointer; text-decoration:underline;">Elimina</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 style="margin-top:50px; border-bottom:3px solid #ff9900; padding-bottom:8px;">📩 Lead Ricevuti (ultimi 50)</h2>
+    <table style="width:100%; border-collapse:collapse; margin-top:15px; background:white; font-size:0.9em;">
+        <tr style="background:#004d99; color:white;">
+            <th style="padding:8px; text-align:left;">Data</th>
+            <th style="padding:8px; text-align:left;">Nome</th>
+            <th style="padding:8px; text-align:left;">Email</th>
+            <th style="padding:8px; text-align:left;">Azienda</th>
+            <th style="padding:8px; text-align:left;">Messaggio</th>
+            <th style="padding:8px;">CRM</th>
+        </tr>
+        {% for l in leads %}
+        <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:8px; white-space:nowrap;">{{ l.creato_il.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td style="padding:8px;">{{ l.nome }}</td>
+            <td style="padding:8px;"><a href="mailto:{{ l.email }}">{{ l.email }}</a></td>
+            <td style="padding:8px;">{{ l.azienda }}</td>
+            <td style="padding:8px; max-width:300px;">{{ l.messaggio[:120] }}{% if l.messaggio|length > 120 %}…{% endif %}</td>
+            <td style="padding:8px; text-align:center; white-space:nowrap;">
+                {% if l.sincronizzato_crm %}✅
+                {% else %}
+                <form method="POST" action="/admin/lead/{{ l.id }}/reinvia" style="display:inline;">
+                    <button type="submit" title="{{ l.risposta_crm }}" style="background:#ff9900; border:none; color:white; padding:4px 10px; border-radius:4px; cursor:pointer;">↻ Reinvia</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" style="padding:20px; text-align:center;">Nessun lead ricevuto.</td></tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}

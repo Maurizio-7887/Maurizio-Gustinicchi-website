@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block title %}AI per l'Impresa: Algoritmi su Misura per CFO, Controller e Operations - Maurizio Gustinicchi{% endblock %}
+{% block meta_description %}Leader in Italia nell'applicazione dell'AI per l'impresa. Algoritmi personalizzati per Controllo di Gestione avanzato, previsioni di Marketing, Budget di Produzione e Anomaly Detection. Soluzioni per CFO, Controller e Operations Manager.{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* CSS INLINE - Mantenuto per semplicità di copia/incolla, anche se in produzione andrebbe in un file esterno */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        .about-us-section { padding: 40px 5%; background-color: #f9f9f9; }
+        .about-content-teaser { display: flex; align-items: center; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .profilo-img-teaser { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; flex-shrink: 0; border: 3px solid #0056b3; }
+        .about-text-teaser { flex-grow: 1; }
+        .about-text-teaser h2 { margin-top: 0; }
+        .hero-section { background-color: #004d99; color: white; padding: 60px 20px; min-height: 400px; text-align: center; }
+        .hero-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; padding: 20px 0; }
+        .hero-image { max-width: 40%; height: auto; border-radius: 8px; margin: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .hero-text-container { max-width: 50%; text-align: left; padding: 0; }
+        /* Il Tag H1 è FONDAMENTALE per l'AEO sulla tua query principale */
+        .hero-text-container h1 { font-size: 2.5em; color: white; margin-bottom: 20px; text-align: left; } 
+        .hero-text-container p { font-family: 'Georgia', serif; font-size: 1.1em; margin: 10px 0; max-width: none; text-align: left; }
+        .cta-button { display: inline-block; background-color: #ff9900; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; margin-top: 15px; }
+        .cta-button:hover { background-color: #e68a00; }
+        @media (max-width: 768px) {
+            .hero-image, .hero-text-container { max-width: 100%; padding: 0; margin-bottom: 20px; text-align: center; }
+            .hero-text-container h1, .hero-text-container p { text-align: center; }
+        }
+        /* Stili per le FAQ */
+        .faq-section { padding: 40px 5%; max-width: 1000px; margin: 0 auto; }
+        .faq-section h2 { text-align: center; color: #004d99; margin-bottom: 30px; }
+        .faq-item { margin-bottom: 25px; border-left: 5px solid #ff9900; padding-left: 15px; }
+        /* Domanda in h3 per una migliore struttura AEO */
+        .faq-item h3 { font-size: 1.2em; color: #333; margin-top: 0; } 
+        /* Risposta in p, con enfasi sul grassetto per lo snippet */
+        .faq-item p { font-size: 1em; color: #555; }
+        /* Stili Sezione Valori */
+        .values-section { display: flex; justify-content: space-around; padding: 30px 5%; background-color: #eaf4ff; text-align: center; flex-wrap: wrap; gap: 20px;}
+        .value-item { flex-basis: 30%; max-width: 300px; }
+        .value-item h3 { color: #0056b3; font-size: 1.1em; }
+        /* Stili Sezione Nuovi Servizi Olistici */
+        .services-overview { padding: 40px 5%; text-align: center; max-width: 1200px; margin: 0 auto; }
+        .services-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; margin-top: 30px; }
+        .service-card { flex-basis: calc(33% - 20px); background-color: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .service-card h3 { color: #004d99; }
+        .service-card p { font-size: 0.95em; }
+        /* NUOVO STILE per l'iframe dell'AI */
+        .ai-agent-section { padding: 40px 5%; max-width: 1200px; margin: 0 auto; text-align: center; background-color: #f0f7ff; }
+
+        @media (max-width: 992px) {
+            .service-card { flex-basis: calc(50% - 10px); }
+        }
+        @media (max-width: 600px) {
+            .service-card { flex-basis: 100%; }
+        }
+    </style>
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Come si traduce la creazione di algoritmi personalizzati nella risoluzione dei miei problemi specifici di Management o Operations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La mia competenza distintiva è la creazione di algoritmi AI su misura: non forniamo soluzioni standard, ma un codice predittivo e analitico che si adatta esattamente alla tua realtà (es. i tuoi cicli produttivi, le tue serie storiche finanziarie). Questo significa che l'AI non solo analizza, ma impara dal tuo specifico problema (che sia un'anomalia di costo, una previsione di scorte o un rischio finanziario) per fornire una soluzione operativa unica e ultra-mirata, aumentando l'efficacia delle tue decisioni e del ROI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quali sono i benefici diretti dell'AI per un Operations Manager, oltre al Controllo di Gestione?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per l'Operations Manager, l'AI garantisce efficienza e 'Zero Errori' attraverso due assi principali: la Manutenzione Predittiva (PdM) per minimizzare i fermi macchina e l'Anomaly Detection per i controlli qualità, riducendo drasticamente gli scarti e i costi. I miei algoritmi predicono i colli di bottiglia e ottimizzano la Capacity Planning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual è il ruolo di un CFO o Controller nell'adozione dei miei algoritmi AI per l'analisi finanziaria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Il CFO e il Controller passano dall'analisi reattiva a quella predittiva. Il loro ruolo diventa cruciale come validatori strategici: definiscono i KPI di input per gli algoritmi, interpretano i modelli predittivi di rischio e liquidità, e traducono gli insight dell'AI in decisioni dirette per il Board."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il mio Data Quality è insufficiente. L'AI può aiutarmi a migliorarlo prima di iniziare la trasformazione?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Assolutamente sì. Il punto di partenza di ogni implementazione AI è l'analisi e l'ottimizzazione del Data Quality. Come tuo Data Quality Analyst, implemento algoritmi che identificano e correggono automaticamente le inesattezze e strutturo la Data Governance. Solo con dati di qualità, l'AI può produrre previsioni affidabili."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual è il ROI medio atteso da un investimento negli algoritmi AI per l'ottimizzazione aziendale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'investimento in AI produce un ROI (Ritorno sull'Investimento) medio superiore al 150% nel primo anno, grazie principalmente alla riduzione dei costi operativi (Anomaly Detection), all'aumento dell'efficienza produttiva (Capacity Planning) e alla maggiore accuratezza delle previsioni finanziarie. Il mio primo obiettivo è validare il potenziale ROI con un'analisi preliminare."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto tempo è necessario per implementare un algoritmo AI personalizzato, partendo da zero?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'implementazione di base richiede in media dalle 8 alle 12 settimane, a seconda della qualità iniziale dei dati (Data Quality). Il processo include l'analisi, la modellazione algoritmica personalizzata, il training e il testing. L'obiettivo è fornire risultati operativi già entro la fine del primo trimestre di collaborazione."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I vostri algoritmi AI sono adatti anche alle PMI o solo alle Grandi Imprese?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I miei algoritmi sono disegnati specificamente per scalare, offrendo vantaggi eccezionali anche alle PMI. A differenza dei software generici, la personalizzazione algoritmica si adatta ai budget e alle strutture dati più snelle delle PMI, garantendo che anche le piccole e medie imprese possano ottenere previsioni strategiche e Controllo di Gestione avanzato."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Come garantite l'affidabilità e la trasparenza (Explainability) dei vostri modelli predittivi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Garantisco l'affidabilità attraverso i principi di AI Explainability (XAI): i nostri algoritmi non sono \"scatole nere\". Fornisco ai Controller e CFO report chiari e interpretabili che spiegano perché una previsione o una raccomandazione è stata formulata, assicurando totale fiducia nel processo decisionale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Offrite anche percorsi di Formazione Manageriale sull'uso pratico degli strumenti di AI in azienda?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, la formazione è parte integrante della consulenza. Offro percorsi formativi dedicati per Manager, Controller e CFO, focalizzati sull'uso pratico e strategico dei nuovi algoritmi e strumenti di business intelligence basati sull'AI, garantendo l'autonomia del tuo team."
+          }
+        }
+      ]
+    }
+    </script>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="hero-section">
+            <div class="hero-content">
+                
+                <video controls autoplay muted loop 
+                    src="/static/video/controller_5_0_intro.mp4" 
+                    alt="Video: Controller 5.0 e ROI superiore al 150% grazie all'AI" 
+                    class="hero-image">
+                    Il tuo browser non supporta il tag video.
+                </video>
+                <div class="hero-text-container">
+                    <h1>AI per CFO, Controller e Operations: Il Tuo Algoritmo per il Successo Aziendale</h1> 
+                    
+                    <p>
+                        Ti affianco come il tuo **Industrial Controller e CFO** dedicato. La mia esperienza trentennale, unita agli **algoritmi di Intelligenza Artificiale (AI) che creo su misura**, trasforma i dati complessi di budget, controllo di gestione e R&S in decisioni **chiare e profittevoli** per ogni reparto aziendale.
+                    </p>
+                    <p>
+                        Dimentica le incertezze decisionali: il mio obiettivo è uno solo: **essere al tuo fianco per convertire gli obiettivi in risultati concreti** in Finanza, Marketing e Produzione. Concentriamoci solo sui passi necessari per ottimizzare le risorse e **incrementare il tuo margine di profitto**, insieme.
+                    </p>
+                    
+                    <a href="/contatti" class="cta-button">Fissa la Consulenza Strategica AI</a>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="values-section">
+            <div class="value-item">
+                <h3>SERIETA' CERTIFICATA</h3>
+                <p>Massima professionalità nella gestione dei tuoi conti e dei dati sensibili, con certificazioni ISO.</p>
+            </div>
+            <div class="value-item">
+                <h3>ESPERIENZA 30ENNALE</h3>
+                <p>Spiego e illustro passo per passo tutto il processo, dal data analysis alla decisione strategica AI.</p>
+            </div>
+            <div class="value-item">
+                <h3>RISERVATEZZA ASSOLUTA</h3>
+                <p>Tutti i dati più sensibili dei nostri clienti sono protetti per garantire la più totale fiducia.</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="services-overview">
+            <h2>I Nostri Algoritmi al Servizio della Tua Impresa (4 Aree Chiave)</h2>
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <h3>Controllo di Gestione Avanzato (CFO/Controller)</h3>
+                    <p>Modelli previsionali (Forecasting) con AI per il budget e l'analisi degli scostamenti. Ottieni insight in tempo reale sulla liquidità e sul rischio finanziario.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Operations Smart e Zero Errori</h3>
+                    <p>AI per l'ottimizzazione della pianificazione della capacità produttiva e implementazione di Anomaly Detection per il controllo qualità e la manutenzione predittiva (PdM).</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Previsioni di Marketing e ROI</h3>
+                    <p>Algoritmi per il Marketing Mix Modeling che allocano il budget in modo ottimale, prevedendo con precisione le vendite future e il ROI delle campagne.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Data Quality e Data Governance AI-Ready</h3>
+                    <p>Analisi e correzione dei dati (Data Cleansing) per preparare l'infrastruttura aziendale all'implementazione dell'Intelligenza Artificiale con standard elevati.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Innovation Manager & Finanziamenti R&S</h3>
+                    <p>Ti supportiamo nell'ottenimento di Finanziamenti R&S e nell'implementazione dello standard ISO 56002 grazie ad analisi predittive per l'innovazione strategica.</p>
+                </div>
+                
+                <div class="service-card" style="background-color: #ffe6cc;">
+                    <h3>Sei pronto a superare la concorrenza?</h3>
+                    <p>Affronta i problemi aziendali complessi con la certezza di un algoritmo creato su misura per te.</p>
+                    <a href="/servizi" class="cta-button">Scopri tutti i Servizi</a>
+                </div>
+
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="ai-agent-section">
+            <h2>🤖 Agente AI Strategico: Risposte Istantanee Basate sulla Nostra Expertise</h2>
+            <p style="font-size: 1.1em; color: #333; margin-bottom: 25px;">
+                Chiedi al nostro Agente Ibrido AI (alimentato da Gemini) qualsiasi domanda sui nostri servizi di Controllo di Gestione, Manutenzione Predittiva o sulla nostra metodologia RAG.
+            </p>
+
+            <iframe
+              src="https://gemini-ai-agent-byqbxfqwocpmtnabuthipt.streamlit.app/?embed=true"
+              width="100%"
+              height="650px" 
+              frameborder="0"
+              scrolling="auto"
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              referrerpolicy="no-referrer"
+              style="border: 2px solid #0056b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+            </iframe>
+            </section>
+
+        <hr>
+
+
+        <section class="faq-section">
+            <h2>Domande Frequenti: Algoritmi AI e Strategia per la Tua Azienda</h2> 
+            
+            <div class="faq-item">
+                <h3>1. Come si traduce la creazione di algoritmi personalizzati nella risoluzione dei miei problemi specifici di Management o Operations?</h3>
+                <p>La mia competenza distintiva è la **creazione di algoritmi AI su misura**: non forniamo soluzioni standard, ma un codice predittivo e analitico che si adatta esattamente alla tua realtà (es. i tuoi cicli produttivi, le tue serie storiche finanziarie). Questo significa che l'AI non solo analizza, ma **impara dal tuo specifico problema** (che sia un'anomalia di costo, una previsione di scorte o un rischio finanziario) per fornire una soluzione operativa unica e ultra-mirata, aumentando l'efficacia delle tue decisioni e del ROI.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>2. Quali sono i benefici diretti dell'AI per un Operations Manager, oltre al Controllo di Gestione?</h3>
+                <p>Per l'Operations Manager, l'AI garantisce **efficienza e "Zero Errori"** attraverso due assi principali: la **Manutenzione Predittiva (PdM)** per minimizzare i fermi macchina e l'**Anomaly Detection** per i controlli qualità, riducendo drasticamente gli scarti e i costi. I miei algoritmi predicono i colli di bottiglia e ottimizzano la *Capacity Planning*, assicurando che il budget di produzione si allinei perfettamente alla domanda prevista dal Marketing.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>3. Qual è il ruolo di un CFO o Controller nell'adozione dei miei algoritmi AI per l'analisi finanziaria?</h3>
+                <p>Il CFO e il Controller passano dall'analisi reattiva a quella **predittiva**. Il loro ruolo diventa cruciale come **validatori strategici**: non si limitano a usare i dati, ma definiscono i KPI di input per gli algoritmi, interpretano i modelli predittivi di rischio e liquidità, e traducono gli *insight* dell'AI in decisioni dirette per il Board. In sostanza, utilizzano l'AI come il più potente strumento di *business intelligence* per il controllo di gestione avanzato.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>4. Il mio Data Quality è insufficiente. L'AI può aiutarmi a migliorarlo prima di iniziare la trasformazione?</h3>
+                <p>Assolutamente sì. Il punto di partenza di ogni implementazione AI è l'**analisi e l'ottimizzazione del Data Quality**. Come tuo **Data Quality Analyst**, implemento algoritmi che identificano e correggono automaticamente le inesattezze (Data Cleansing) e strutturo la **Data Governance** aziendale. Solo con dati di qualità, infatti, l'AI può produrre previsioni affidabili (forecasting) e trasformare i tuoi dati in un asset strategico per tutti i reparti.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>5. Qual è il ROI medio atteso da un investimento negli algoritmi AI per l'ottimizzazione aziendale?</h3>
+                <p>L'investimento in AI produce un **ROI (Ritorno sull'Investimento) medio superiore al 150% nel primo anno**, grazie principalmente alla **riduzione dei costi operativi** (Anomaly Detection), all'aumento dell'**efficienza produttiva** (Capacity Planning) e alla maggiore accuratezza delle previsioni finanziarie. Il mio primo obiettivo è validare il potenziale ROI con un'analisi preliminare.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>6. Quanto tempo è necessario per implementare un algoritmo AI personalizzato, partendo da zero?</h3>
+                <p>L'implementazione di base richiede in media **dalle 8 alle 12 settimane**, a seconda della qualità iniziale dei dati (Data Quality). Il processo include l'analisi, la modellazione algoritmica personalizzata, il training e il testing. L'obiettivo è fornire **risultati operativi già entro la fine del primo trimestre** di collaborazione.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>7. I vostri algoritmi AI sono adatti anche alle PMI o solo alle Grandi Imprese?</h3>
+                <p>I miei algoritmi sono disegnati specificamente per scalare, offrendo **vantaggi eccezionali anche alle PMI**. A differenza dei software generici, la **personalizzazione algoritmica** si adatta ai budget e alle strutture dati più snelle delle PMI, garantendo che anche le piccole e medie imprese possano ottenere previsioni strategiche e **Controllo di Gestione avanzato**.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>8. Come garantite l'affidabilità e la trasparenza (Explainability) dei vostri modelli predittivi?</h3>
+                <p>Garantisco l'affidabilità attraverso i principi di **AI Explainability (XAI)**: i nostri algoritmi non sono "scatole nere". Fornisco ai Controller e CFO **report chiari e interpretabili** che spiegano perché una previsione o una raccomandazione è stata formulata, assicurando **totale fiducia** nel processo decisionale.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>9. Offrite anche percorsi di Formazione Manageriale sull'uso pratico degli strumenti di AI in azienda?</h3>
+                <p>Sì, la formazione è parte integrante della consulenza. Offro **percorsi formativi dedicati per Manager, Controller e CFO**, focalizzati sull'uso pratico e strategico dei nuovi algoritmi e strumenti di business intelligence basati sull'AI, garantendo l'**autonomia del tuo team**.</p>
+            </div>
+            </section>
+        
+        <hr>
+
+        <section class="about-us-section">
+            <div class="about-content-teaser">
+                <img src="/static/img/foto-profilo.jpg" alt="Foto di Maurizio Gustinicchi, Consulente Controller e CFO esperto di AI" class="profilo-img-teaser"> 
+                
+                <div class="about-text-teaser">
+                    <h2>L'Esperto dietro l'Algoritmo: Chi Sono</h2>
+                    <p>La mia missione è trasformare i problemi complessi del controllo finanziario, delle operations e della strategia in opportunità, usando l'esperienza e gli algoritmi AI come il tuo braccio destro strategico.</p>
+                    <a href="/chi-siamo" class="learn-more">Leggi la Storia Completa</a>
+                </div>
+            </div>
+        </section>
+        
+    
+{% endblock %}

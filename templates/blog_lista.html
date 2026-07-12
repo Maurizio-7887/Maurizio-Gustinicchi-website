@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Articoli e Approfondimenti - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}Blog del Controller Strategico AI: approfondimenti su Controllo di Gestione, AI, Operations e Marketing per PMI italiane.{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI (ripresi da shop.html) */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; }
+        .logo h1 { margin-bottom: 0; line-height: 1.2; color: #0056b3; white-space: nowrap; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+        
+        .intro-blog { text-align: center; padding: 40px 5%; background-color: #f9f9f9; border-bottom: 1px solid #eee; }
+        .intro-blog h1 { color: #0056b3; font-size: 2.2em; margin-bottom: 10px; }
+
+        /* LAYOUT GRIGLIA ARTICOLI */
+        .articoli-griglia {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .articolo-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .articolo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CORREZIONE FINALE CSS PER EVITARE TAGLIO E MOSTRARE L'IMMAGINE PER INTERO */
+        .articolo-img {
+            width: 100%;
+            height: 200px; /* Mantieni l'area riservata all'immagine */
+            object-fit: contain; /* MOSTRA TUTTA L'IMMAGINE PROPORZIONALMENTE */
+            padding: 10px; /* Aggiunge un po' di spazio per una migliore visualizzazione */
+        }
+
+        .articolo-content {
+            padding: 20px;
+        }
+
+        .articolo-content h2 {
+            font-size: 1.4em;
+            color: #ff9900;
+            margin-top: 0;
+            min-height: 50px; /* Per mantenere l'altezza uniforme */
+        }
+
+        .articolo-content p {
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .articolo-meta {
+            font-size: 0.8em;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .cta-leggi {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .cta-leggi:hover {
+            background-color: #004494;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+        <section class="intro-blog">
+            <h1>Il Blog del Controller Strategico AI</h1>
+            <p>Approfondimenti e analisi sull'applicazione di algoritmi AI su misura per trasformare il Controllo di Gestione, le Operations e il Marketing della tua impresa.</p>
+        </section>
+
+        <section class="articoli-griglia">
+        {% for a in articoli %}
+            <article class="articolo-card">
+                {% if a.cover %}
+                <img src="{{ a.cover }}" alt="{{ a.titolo }}" class="articolo-img">
+                {% endif %}
+                <div class="articolo-content">
+                    <h2>{{ a.titolo }}</h2>
+                    <p>{{ a.excerpt }}</p>
+                    <div class="articolo-meta">Pubblicato: {{ a.data_it }}</div>
+                    <a href="/blog/{{ a.slug }}" class="cta-leggi">Leggi Articolo</a>
+                </div>
+            </article>
+        {% else %}
+            <p style="text-align:center; padding:40px;">Nessun articolo pubblicato al momento.</p>
+        {% endfor %}
+        </section>
+{% endblock %}

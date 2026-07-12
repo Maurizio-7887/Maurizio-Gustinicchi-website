@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}I Nostri Servizi - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .intro-servizi .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="intro-servizi">
+            <h1 class="page-title">I Nostri Servizi Essenziali per la Crescita</h1>
+            <p class="sottotitolo">Offriamo consulenza specialistica e strumenti pratici per la digitalizzazione aziendale e l'ottimizzazione dei processi, coprendo ogni aspetto critico del tuo business.</p>
+        </section>
+
+        <section class="elenco-servizi-grid">
+            
+            <article class="servizio-card">
+                <img src="/static/img/Icona_Controller.png" alt="Icona Controller e KPI" class="servizio-icona">
+                <h2>Controllo di Gestione 5.0: Navigazione Proattiva AI</h2>
+                <p>Il controllo tradizionale guarda lo specchietto retrovisore; il nostro guarda la strada. Grazie al Machine Learning, eliminiamo l'incertezza decisionale e preveniamo passi falsi finanziari e operativi, mettendoti in condizione di agire prima degli altri.</p>
+                <a href="/servizi/controllo" class="cta-dettaglio">Scopri di più</a> 
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/img_digitalizzazione_lean.jpg" alt="Icona Digitalizzazione e Lean" class="servizio-icona">
+                <h2>Digitalizzazione &amp; Lean: Il Ritorno all'Efficienza</h2>
+                <p>La vera digitalizzazione non è comprare software costosi, ma snellire e automatizzare i processi esistenti. Mappiamo con l'AI i tuoi flussi di lavoro per identificare le strozzature e riorganizzare in modo chirurgico e mirato.</p>
+                <a href="/servizi/digitalizzazione" class="cta-dettaglio">Scopri di più</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/icona_innovation_manager.png" alt="Icona Certificazione DNV Innovation Manager" class="servizio-icona">
+                <h2>Innovation Manager Certificato DNV</h2>
+                <p>Guida certificata UNI 11814 per l'implementazione della norma ISO 56002 e per la ricerca di fondi per la Ricerca & Sviluppo.</p>
+                <a href="/servizi/innovation-manager" class="cta-dettaglio">Scopri di più</a>
+            </article>
+            
+            <article class="servizio-card">
+                <img src="/static/img/dashboard.png" alt="Icona Business Reporting" class="servizio-icona">
+                <h2>Business Reporting</h2>
+                <p>Reportistica direzionale efficace, anche per mezzo dell'automazione informatica (python). Dati chiari e veloci, con report strutturati e sempre aggiornati.</p>
+                <a href="/servizi/business-reporting" class="cta-dettaglio">Scopri di più</a>
+            </article>
+            
+            <article class="servizio-card">
+                <img src="/static/img/icona_organizational_support.png" alt="Icona Organizzazione Aziendale" class="servizio-icona">
+                <h2>Organizzazione Aziendale</h2>
+                <p>Strutturiamo l'organigramma e definiamo ruoli e responsabilità per massimizzare l'efficienza interna e supportare una crescita sostenibile.</p>
+                <a href="/servizi/organizzazione" class="cta-dettaglio">Scopri di più</a>
+            </article>
+            
+        </section>
+        
+        <section class="cta-finale">
+            <h3>Pronto a far crescere la tua impresa?</h3>
+            <p>Non sai da dove iniziare? Parliamone: la prima analisi è gratuita e senza impegno.</p>
+            <a href="/contatti" class="cta-button-large">Richiedi la Tua Consulenza</a>
+        </section>
+
+    
+{% endblock %}

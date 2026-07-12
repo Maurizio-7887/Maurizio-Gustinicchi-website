@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Contattaci - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .intro-contatti .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="intro-contatti">
+            <h1 class="page-title">Parla con me</h1>
+            <p class="sottotitolo">Compila il modulo qui sotto o usa i contatti diretti per richiedere una prima analisi gratuita della tua situazione aziendale.</p>
+        </section>
+
+        <section class="contatti-content">
+            
+            <div class="contact-form-container">
+                <h2>Inviaci un Messaggio</h2>
+                <form action="/contatti" method="POST" class="contact-form">
+                    
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="email">Email Aziendale:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="azienda">Azienda:</label>
+                    <input type="text" id="azienda" name="azienda">
+
+                    <label for="telefono">Telefono:</label>
+                    <input type="tel" id="telefono" name="telefono">
+
+                    <label for="oggetto">Oggetto del Messaggio:</label>
+                    <select id="oggetto" name="oggetto">
+                        <option value="analisi">Richiesta Analisi Gratuita</option>
+                        <option value="preventivo">Richiesta Preventivo Servizi</option>
+                        <option value="altro">Altro...</option>
+                    </select>
+
+                    <label for="messaggio">Messaggio:</label>
+                    <textarea id="messaggio" name="messaggio" rows="6" required></textarea>
+
+                    <button type="submit" class="cta-button">Invia Richiesta</button>
+                    
+                    <p class="privacy-note">Cliccando su Invia, accetti la nostra <a href="/privacy-policy">Informativa sulla Privacy</a>.</p>
+                </form>
+            </div>
+
+            <div class="contact-info-container">
+                <h2>Contatti Diretti</h2>
+                
+                <div class="info-block">
+                    <h3>Ufficio e Sede Legale</h3>
+                    <p>Via Spluga 8, 06012 Città di Castello (PG)</p>
+                </div>
+                
+                <div class="info-block">
+                    <h3>Telefono e Email</h3>
+                    <p><strong>Telefono:</strong> 3441808677</p>
+                    <p><strong>Email:</strong> gustinicchimaurizio@gmail.com</p>
+                </div>
+
+                <div class="info-block">
+                    <h3>Orari di Apertura</h3>
+                    <p>Lunedì - Venerdì: 9:00 - 19:00</p>
+                </div>
+
+                <div class="map-placeholder">
+                    <p>Caricamento Mappa... (Qui andrà il box con Google Maps)</p>
+                </div>
+
+            </div>
+
+        </section>
+        
+    
+{% endblock %}

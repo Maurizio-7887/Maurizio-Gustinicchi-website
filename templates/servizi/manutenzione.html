@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Maint Planner Pro - Dashboard Analitiche di Manutenzione{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX: Assicura che l'intestazione sia blu e su una riga */
+        .logo h1 {
+            color: #0056b3; /* Blu coerente */
+            white-space: nowrap;
+        }
+        .page-title {
+            color: #0056b3; /* Blu coerente */
+        }
+        
+        /* NUOVO: Stile per le due immagini del prodotto affiancate */
+        .product-images-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Spazio tra le due immagini */
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        .product-images-grid img {
+            max-width: 45%; /* Ogni immagine occupa circa la metà dello spazio */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* FIX: rimuove i vecchi stili di icone inutili e assicura che il contenuto principale sia centrato */
+        .bio-content {
+            display: block;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Responsive per immagini su mobile */
+        @media (max-width: 768px) {
+            .product-images-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .product-images-grid img {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        
+        <section class="intro-chisono">
+            <h1 class="page-title">Maint Planner Pro: Il Controllo Olistico delle Manutenzioni</h1>
+            <p class="sottotitolo">Smetti di investire migliaia di euro e mesi di formazione per imparare strumenti complessi. Ti forniamo **Dashboard di Business Intelligence (BI) su misura** e **subito operative**, sviluppate in Python.</p>
+        </section>
+
+        <section class="product-images-grid">
+            <img src="/static/img/img_dashboard_mnt.png" alt="Anteprima Dashboard di Business Intelligence" title="Anteprima Dashboard Principale">
+            
+            <img src="/static/img/icona_manutenzione_one.png" alt="Dettaglio Analisi Manutenzioni" title="Dettaglio Dashboard Manutenzioni">
+        </section>
+
+        <section class="bio-content">
+            
+            <div class="bio-testo">
+                
+                <p class="sottotitolo-foto" style="margin-top: 10px; text-align: center;">La tua dashboard pronta in settimane, non in mesi. Concentrati sulle decisioni, non sulla programmazione DAX.</p>
+                
+                <h2>La Rivoluzione della BI per le PMI: Velocità e Chiarezza</h2>
+                <p>Oggi, per ottenere il controllo di gestione, si ricorre spesso a strumenti di BI leader di mercato che, pur essendo potenti, richiedono licenze costose e una curva di apprendimento ripida (spesso legata al linguaggio **DAX**). La nostra soluzione elimina questo ostacolo.</p>
+
+                <h3>Perché la Soluzione in Python è la Tua Alternativa Vincente:</h3>
+                
+                <p>Ti offriamo **Dashboard Interattive** basate su Streamlit e Python, che si integrano direttamente ai tuoi gestionali attuali (ERP, database, file CSV) per darti risultati immediati e ridurre il **carico cognitivo** dei tuoi manager:</p>
+
+                <div class="feature-list">
+                    <ul>
+                        <li>**Stop al DAX:** La logica di calcolo complessa (simile a DAX) viene gestita da algoritmi Python robusti e di facile manutenzione, rendendo la dashboard più veloce e leggibile.</li>
+                        <li>**Zero Curva di Apprendimento:** Interfaccia **User-Friendly** ottimizzata per la direzione aziendale. Concentrati su cosa fare, non su come filtrare.</li>
+                        <li>**Focus su KPI Strategici:** Dashboard progettate specificamente per mostrare le metriche vitali per il tuo business, con segmentazione in base al ruolo o all'agente (come nel file Python fornito).</li>
+                        <li>**Costo/Tempo Ridotti:** Sviluppo personalizzato in una frazione del tempo e del costo necessari per implementare e formare il personale su piattaforme BI complesse.</li>
+                        <li>**Integrazione con l'IA:** Le dashboard sono già predisposte per ospitare analisi predittive e raccomandazioni generate dai nostri algoritmi di Intelligenza Artificiale.</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </section>
+        
+        <section class="cta-finale">
+            <h3>Sei pronto ad avere una dashboard operativa la prossima settimana?</h3>
+            <p>Non perdere altro tempo a cercare di padroneggiare strumenti non necessari. Contattami per vedere un esempio della dashboard in azione sui tuoi dati.</p>
+            <a href="/contatti" class="cta-button-large">Richiedi la Tua Demo Gratuita</a>
+        </section>
+        
+    
+{% endblock %}

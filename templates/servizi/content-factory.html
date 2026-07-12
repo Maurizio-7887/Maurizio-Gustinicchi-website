@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Content Factory Suite - CRM & Generazione Contenuti AI{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* CSS INTEGRATO PER FIX LOGO E NAVIGAZIONE */
+        /* Questo CSS assicura che l'header sia sempre allineato e coerente */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione per due righe (spaziatura) */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* Titoli e Contenuto */
+        .page-title { color: #0056b3; }
+        .bio-content { display: block; max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* Stile per le due immagini del prodotto affiancate */
+        .product-images-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px; 
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        .product-images-grid img {
+            max-width: 45%; 
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Stile specifico per le sezioni interne del flusso di lavoro */
+        .workflow-step {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid #ff9900; 
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .workflow-step h3 {
+            color: #004d99;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-images-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .product-images-grid img {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        
+        <section class="intro-chisono">
+            <h1 class="page-title">Content Factory Suite: Il Tuo Kit Completo per il Social Media Manager</h1>
+            <p class="sottotitolo">Automatizza la creazione di contenuti, gestisci i contatti e trasforma le idee in video virali, tutto in un'unica suite Python-based.</p>
+        </section>
+
+        <section class="product-images-grid">
+            <img src="/static/img/img_pipeline.png" alt="Anteprima CRM e Pipeline di Vendita" title="CRM e Pipeline di Vendita">
+            
+            <img src="/static/img/img_post.png" alt="Anteprima Generazione Contenuti Social" title="Generazione Contenuti Social">
+        </section>
+
+        <section class="bio-content">
+            
+            <div class="bio-testo">
+                
+                <p class="sottotitolo-foto" style="margin-top: 10px; text-align: center;">Dalla gestione del cliente alla produzione di slide e video: la suite che accelera il tuo processo creativo e strategico.</p>
+                
+                <h2>Il Flusso di Lavoro Perfetto per i Professionisti del Contenuto</h2>
+                <p>La Content Factory Suite non è solo un software, ma un processo integrato che accompagna ogni fase del tuo lavoro, dalla strategia di vendita alla pubblicazione multi-formato.</p>
+
+                <div class="workflow-step">
+                    <h3>FASE 1: CRM & Gestione Cliente</h3>
+                    <p>La prima sezione è il tuo **Customer Relationship Management (CRM)** interno. Ti permette di tenere traccia dell'anagrafica delle aziende clienti e di gestire l'intera **pipeline di vendita**, dal primo contatto alla chiusura del contratto di content marketing.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h3>FASE 2: Generazione Materiale</h3>
+                    <p>Questa parte automatizza la creazione di materiali di comunicazione essenziali per la campagna e il branding:</p>
+                    <ul>
+                        <li>**Biglietto da Visita Digitale:** Creazione rapida di vCard e link personalizzati.</li>
+                        <li>**Newsletter:** Strumenti per la redazione e l'invio di newsletter ottimizzate.</li>
+                        <li>**Infografica dei Servizi:** Generazione visuale delle tue offerte per presentazioni immediate e di impatto.</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-step">
+                    <h3>FASE 3 & 4: Produzione di Slide, Video & Analisi AI</h3>
+                    <p>La suite ti offre potenti strumenti di produzione e monitoraggio:</p>
+                    <ul>
+                        <li>**Generatore di PPT Verticali/Orizzontali:** Crea slide **orizzontali** ottimizzate per conferenze e **verticali** (ideali per i social).</li>
+                        <li>**Creazione Reel & Video Social:** Le slide verticali passano direttamente alla sezione di creazione video, permettendoti di realizzare rapidamente **Reel** pronti per la pubblicazione social.</li>
+                        <li>**Monitoraggio e Analisi AI:** Tieni sotto controllo l'efficacia delle tue campagne e dei tuoi reel con potenti strumenti di analisi basati su Intelligenza Artificiale.</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 40px;">Semplifica, Automatizza, Domina i Social.</h3>
+                
+                <div class="feature-list">
+                    <ul>
+                        <li>**Integrazione Perfetta:** Collega la strategia di vendita alla produzione di contenuti senza uscire dalla suite.</li>
+                        <li>**Multiformato:** Dalla semplice infografica al Reel di successo, copri ogni esigenza del cliente.</li>
+                        <li>**Efficienza AI:** Riduci i tempi di creazione e aumenta la qualità dei tuoi output.</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </section>
+        
+        <section class="cta-finale">
+            <h3>Sei pronto a rivoluzionare la tua agenzia di Social Media Marketing?</h3>
+            <p>Non lasciare che gli strumenti complessi rallentino il tuo successo. Ottieni una demo gratuita della Content Factory Suite.</p>
+            <a href="/contatti" class="cta-button-large">Richiedi la Tua Demo Gratuita</a>
+        </section>
+        
+    
+{% endblock %}

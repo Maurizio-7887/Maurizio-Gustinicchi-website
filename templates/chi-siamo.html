@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Chi Sono - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* FIX Titolo Pagina per coerenza */
+        .intro-chisono .page-title { color: #0056b3; } 
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="intro-chisono">
+            <h1 class="page-title">Maurizio Gustinicchi: La Mia Storia</h1>
+            <p class="sottotitolo">Consulente esperto in Digitalizzazione, Controllo di Gestione e Innovazione, con un approccio potenziato dall'Intelligenza Artificiale.</p>
+        </section>
+
+        <section class="bio-content">
+            
+            <div class="bio-foto">
+                <img src="/static/img/foto-profilo.jpg" alt="Foto Profilo Maurizio Gustinicchi" class="profile-pic">
+                
+                <p class="sottotitolo-foto">La mia missione: Trasformare i dati in profitto e organizzare il successo.</p>
+            </div>
+
+            <div class="bio-testo">
+                <h2>Oltre la Consulenza: Il Partner Strategico</h2>
+                <p>La mia missione è trasformare la tua PMI attraverso un approccio **olistico e data-driven**. Dopo anni trascorsi ad affrontare le sfide di organizzazione e controllo, ho compreso che la vera rivoluzione aziendale è l'integrazione tra l'esperienza umana e la **potenza degli algoritmi**. La mia visione non si limita a darti report, ma a costruire la macchina aziendale perfetta e scalabile.</p>
+                
+                <h3>Il Controller 5.0: AI e Controllo di Gestione</h3>
+                <p>Mi posiziono come un **Controller 5.0**, dove il Controllo di Gestione viene potenziato dall'analisi predittiva. Impiego **algoritmi di Intelligenza Artificiale** per affinare il forecasting, ottimizzare la marginalità e identificare le inefficienze nascoste, andando ben oltre il tradizionale monitoraggio dei KPI.</p>
+
+                <h3>L'Innovation Manager e l'Organizzazione Aziendale</h3>
+                <p>In qualità di **Advisor dell'Innovazione** (Innovation Manager certificato), affianco le aziende nell'adozione della cultura dell'innovazione, specialmente nell'implementazione dello standard **UNI 56001**. Parallelamente, mi occupo di **Organizzazione Aziendale** attraverso la riprogettazione di flussi e ruoli, facilitando la scalabilità e l'efficienza interna.</p>
+                
+                <h3>Strumenti per la Crescita: Dashboard e Software Snelli</h3>
+                <p>Per assicurare che la macchina aziendale funzioni, sviluppo soluzioni tecnologiche mirate:</p>
+                
+                <ul class="feature-list">
+                    <li>**Dashboard di Comunicazione Interna:** Creo sistemi visuali che facilitano il flusso di informazioni tra le diverse funzioni aziendali e la Direzione, garantendo che le decisioni siano tempestive e basate su dati allineati.</li>
+                    <li>**Sviluppo Software Snelli (Custom SW):** Dove i gestionali standard sono rigidi, intervengo con la **creazione di software snelli e rapidi**, plasmati sulle esigenze operative specifiche, per colmare i gap tecnologici in modo immediato ed efficace.</li>
+                </ul>
+
+                <h3>Le Mie Aree di Competenza Chiave</h3>
+                <ul class="feature-list">
+                    <li>**Controllo di Gestione Avanzato** con impiego di Algoritmi AI.</li>
+                    <li>Implementazione di sistemi **UNI 56001** (Innovation Management).</li>
+                    <li>**Progettazione di Dashboard Operative** per la comunicazione interfunzionale.</li>
+                    <li>Riprogettazione dell'**Organizzazione Aziendale** per la scalabilità.</li>
+                    <li>Sviluppo di **Software snelli (Custom SW)** per esigenze specifiche.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cta-finale">
+            <h3>Vuoi che la mia esperienza diventi il tuo vantaggio competitivo?</h3>
+            <a href="/contatti" class="cta-button-large">Contattami Ora</a>
+        </section>
+    
+{% endblock %}

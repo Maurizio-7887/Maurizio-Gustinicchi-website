@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Certificazioni - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* CSS per il LOGO e HEADER (Ripreso da style.css e da fix precedenti) */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        .logo h1 { margin-bottom: 0; line-height: 1.2; color: #0056b3; white-space: nowrap; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+        
+        /* Navigazione per due righe (spaziatura) */
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
+        .main-nav ul li { margin: 0 8px; line-height: 1; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* Stili della pagina Certificazioni (per coerenza) */
+        .intro-certificati { text-align: center; padding: 60px 20px 40px; }
+        .page-title { font-size: 2.2em; color: #0056b3; margin-bottom: 10px; } /* Usiamo il blu per il titolo */
+        .certificati-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px 20px; }
+        .certificato-card { background-color: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); overflow: hidden; text-align: center; transition: transform 0.3s; }
+        .certificato-img { width: 100%; height: auto; object-fit: cover; display: block; border-bottom: 5px solid #004d99; }
+        .certificato-info { padding: 20px; }
+        .certificato-info h2 { color: #004d99; font-size: 1.4em; margin-bottom: 5px; }
+        .ente-data { color: #666; font-size: 0.9em; margin-bottom: 15px; }
+        .cta-pdf { display: inline-block; background-color: #ff9900; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.9em; transition: background-color 0.3s; }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="intro-certificati">
+            <h1 class="page-title">Le Nostre Qualifiche Ufficiali e la Competenza Certificata</h1>
+            <p class="sottotitolo">L'impegno nella formazione continua e le qualifiche ottenute garantiscono la massima competenza e professionalità in ogni area di consulenza, dal Controllo di Gestione all'Intelligenza Artificiale.</p>
+        </section>
+
+        <section class="certificati-gallery">
+
+            <article class="certificato-card">
+                <img src="/static/img/certificato-pisa.jpg" alt="Certificato Tecnico Digitalizzazione AI - Università di Pisa" class="certificato-img">
+                <div class="certificato-info">
+                    <h2>Tecnico della Digitalizzazione e AI</h2>
+                    <p class="ente-data">Ente Rilasciante: <strong>Università di Pisa</strong> (Dipartimento di Ingegneria Civile e Industriale) | <strong>Focus: Implementazione AI</strong></p>
+                    <p>Questa qualifica attesta la profonda conoscenza nelle metodologie di digitalizzazione aziendale, automazione dei processi e l'applicazione pratica degli algoritmi di Intelligenza Artificiale nei contesti industriali e di servizio.</p>
+                    <a href="/static/docs/certificato-pisa.pdf" target="_blank" class="cta-pdf">Visualizza Dettagli (PDF)</a>
+                </div>
+            </article>
+
+            <article class="certificato-card">
+                <img src="/static/img/certificato-controller.jpg" alt="Certificazione Controller Assocontroller" class="certificato-img">
+                <div class="certificato-info">
+                    <h2>Controller Professionista Certificato</h2>
+                    <p class="ente-data">Ente Rilasciante: <strong>Assocontroller</strong> | <strong>Focus: Controllo di Gestione e Reporting</strong></p>
+                    <p>La certificazione rilasciata da Assocontroller è la prova di una padronanza completa delle tecniche avanzate di Controllo di Gestione, Reporting, Budgeting e Analisi degli scostamenti, essenziali per la salute finanziaria dell'impresa.</p>
+                    <a href="/static/docs/certificato-assocontroller.pdf" target="_blank" class="cta-pdf">Visualizza Dettagli (PDF)</a>
+                </div>
+            </article>
+
+            <article class="certificato-card">
+                <img src="/static/img/certificato-innovation-manager.jpg" alt="Certificazione Innovation Manager DNV" class="certificato-img">
+                <div class="certificato-info">
+                    <h2>Innovation Manager Certificato</h2>
+                    <p class="ente-data">Ente Rilasciante: <strong>DNV</strong> | Riferimento: **Norma UNI 11814:2021**</p>
+                    <p>La certificazione UNI 11814 attesta la capacità di guidare l'innovazione in azienda, gestendo strategie, progetti e risorse necessarie per la Transizione 4.0. Questa qualifica è la garanzia di un approccio strutturato e conforme agli standard nazionali.</p>
+                    <a href="/static/docs/certificato-dnv.pdf" target="_blank" class="cta-pdf">Visualizza Dettagli (PDF)</a>
+                </div>
+            </article>
+            
+        </section>
+        
+        <section class="cta-finale">
+            <h3>Domande sulle nostre qualifiche?</h3>
+            <p>Contattaci per approfondire le nostre competenze e capire come si applicano al tuo progetto specifico.</p>
+            <a href="/contatti" class="cta-button-large">Parla con un Esperto</a>
+        </section>
+
+    
+{% endblock %}

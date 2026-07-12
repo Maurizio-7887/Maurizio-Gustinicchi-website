@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Dettaglio Controllo di Gestione - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block head_extra %}
+<style>
+        /* FIX GLOBALI HEADER */
+        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
+        
+        /* FIX LOGO */
+        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
+        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
+
+        /* FIX Navigazione: Spinge la NAV a destra e gestisce la rottura su due righe */
+        .main-nav { margin-left: auto; text-align: right; } 
+        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; justify-content: flex-end; }
+        .main-nav ul li { margin: 0 8px; line-height: 1.5; }
+        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
+        
+        /* Titolo Pagina */
+        .dettaglio-intro h1 { color: #0056b3; }
+        
+        /* Contenitore principale (per centrare il contenuto) */
+        .content-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Stile specifico della pagina di dettaglio (ripristinato) */
+        .feature-box { display: flex; align-items: center; gap: 40px; margin-bottom: 50px; }
+        .feature-icon-container { flex-shrink: 0; max-width: 250px; text-align: center; }
+        .feature-icon-img { max-width: 100%; height: auto; border-radius: 50%; border: 3px solid #0056b3; }
+        .feature-box h2 { color: #0056b3; margin-top: 0; font-size: 1.8em; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-box { flex-direction: column; text-align: center; }
+        }
+    </style>
+{% endblock %}
+
+{% block main_attrs %}{% endblock %}
+
+{% block content %}
+
+        <section class="dettaglio-intro" style="text-align: center; padding: 30px 20px;">
+            <h1 style="font-size: 2.5em; margin-bottom: 10px; color: #0056b3;">Controllo di Gestione Avanzato & Predictive Analytics con AI</h1>
+            <p style="font-size: 1.1em; color: #555;">Trasforma l'incertezza in precisione strategica. Passa dal reporting storico alla simulazione predittiva ad altissima accuratezza.</p>
+        </section>
+
+        <div class="content-container">
+            
+            <article class="feature-box">
+                <div class="feature-icon-container">
+                    <img src="/static/img/img_analisi_montecarlo.jpg" alt="Analisi Montecarlo" class="feature-icon-img">
+                    <p style="font-weight: bold; margin-top: 10px;">La nostra forza: Simulazioni Monte Carlo fino a 10 Milioni di opzioni.</p>
+                </div>
+                
+                <div>
+                    <h2 style="color: #0056b3; margin-top: 0;">L'Era del Controller 5.0: Precisione Ineguagliabile</h2>
+                    <p>Il Controllo di Gestione tradizionale si limita a registrare la storia. Noi ti portiamo nel futuro. Sfruttando la potenza del **Machine Learning** e di **Agenti di Intelligenza Artificiale**, sottoponiamo ogni dato a un livello di analisi impossibile per i metodi convenzionali.</p>
+                </div>
+            </article>
+            
+            <h2 style="color: #004d99; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 40px;">Benefici Chiave</h2>
+            <ul>
+                <li>**Forecasting Potenziato:** Previsioni di bilancio e di cassa molto più accurate grazie all'IA.</li>
+                <li>**Analisi Predittiva del Pricing:** Ottimizza i prezzi di vendita in base a scenari futuri e costi variabili.</li>
+                <li>**Ottimizzazione della Marginalità:** Identifica i colli di bottiglia e le inefficienze nascoste nei processi aziendali con precisione algoritmica.</li>
+                <li>**Dashboard Interattive:** Monitoraggio in tempo reale dei KPI strategici con visualizzazioni chiare e immediate (simili a Smart-Board Analytics).</li>
+            </ul>
+            
+            <section style="text-align: center; margin-top: 60px; padding: 30px; background-color: #e6f0ff; border-radius: 8px;">
+                <h3 style="color: #004d99;">Trasforma i Tuoi Dati in Decisioni Vincenti.</h3>
+                <p>Richiedi una demo per vedere come i nostri algoritmi possono simulare scenari futuri basati sui dati della tua azienda.</p>
+                <a href="/contatti" class="cta-button-large" style="display: inline-block; background-color: #ff9900; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; margin-top: 15px;">Richiedi una Demo</a>
+            </section>
+
+        </div>
+    
+{% endblock %}

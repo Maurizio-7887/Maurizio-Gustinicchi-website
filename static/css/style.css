@@ -1,0 +1,1104 @@
+/* ======================================================= */
+/* 0. STILI BASE & RESET */
+/* ======================================================= */
+
+/* Stile base: reset del browser */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+/* Stile del corpo: imposta il Georgia come font principale */
+body {
+    font-family: 'Georgia', serif; 
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+/* Applica un font diverso e audace (Montserrat) per i titoli e il menu */
+h1, h2, h3, h4, .main-nav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; 
+}
+
+/* Applica Georgia anche ai paragrafi lunghi nella Hero */
+.hero-content p {
+    font-family: 'Georgia', serif; 
+    font-size: 1.1em;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+
+/* ======================================================= */
+/* 1. STILI HEADER & NAVIGAZIONE (Comune a tutte le pagine) */
+/* ======================================================= */
+
+/* FIX GLOBALE HEADER: Allinea gli elementi in fondo e riduci il padding per compattare */
+.main-header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end; /* Allinea il logo e la nav in basso */
+    padding: 15px 5%; /* Spazio ridotto in alto/basso */
+    border-bottom: 1px solid #ddd;
+    background-color: white; 
+}
+
+/* Stile per il Logo (Testo o Immagine) */
+.main-logo {
+    max-width: 200px; 
+    height: auto;
+    display: block;
+}
+
+/* 🎯 FIX LOGO CRUCIALE: Colore BLU, su una riga e dimensione maggiore per il desktop */
+.logo h1 {
+    display: block; 
+    font-size: 1.8em; 
+    color: #0056b3; /* BLU */
+    white-space: nowrap; /* FORZA su una riga */
+    margin-bottom: 0; /* Rimuovi margine in basso */
+    line-height: 1.2;
+}
+
+/* Stile Navigazione */
+.main-nav {
+    /* AGGIUNTO: Spinge l'intera nav a destra, risolvendo l'allineamento */
+    margin-left: auto;
+    text-align: right;
+}
+
+.main-nav ul {
+    list-style: none; 
+    display: flex;
+    flex-wrap: wrap; 
+    margin: 0;
+    padding: 0;
+    /* AGGIUNTO: Allinea il contenuto a destra */
+    justify-content: flex-end; 
+}
+
+/* 🎯 FIX NAVIGAZIONE CRUCIALE: Aggiungi margine ai singoli <li> per spaziarli */
+.main-nav ul li {
+    margin: 0 8px; /* Margine tra i link per distanziarli */
+    padding: 0;
+    line-height: 1.2; /* Spazio verticale ridotto */
+}
+
+/* Stile per i singoli link: Compressione e pulizia delle ridondanze */
+.main-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    
+    font-size: 0.85em; 
+    margin-left: 0; 
+    
+    font-weight: bold;
+    transition: color 0.2s;
+    white-space: nowrap; /* Evita che il nome della pagina si rompa */
+}
+
+.main-nav ul li a:hover {
+    color: #ff9900; 
+}
+
+
+/* ======================================================= */
+/* 2. STILI HOME PAGE (index.html) */
+/* ======================================================= */
+
+.hero-section {
+    background-color: #004d99; 
+    color: white; 
+    padding: 60px 20px;
+    min-height: 400px; 
+    text-align: center; 
+}
+
+.hero-content {
+    max-width: 1200px; 
+    margin: 0 auto;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+    padding: 20px 0; 
+}
+
+.hero-image {
+    max-width: 40%; 
+    height: auto;
+    border-radius: 8px; 
+    margin: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+}
+
+.hero-text-container {
+    max-width: 50%; 
+    text-align: left; 
+}
+
+.hero-text-container h2 {
+    font-size: 2.5em;
+    color: white; 
+    margin-bottom: 20px;
+    text-align: left; 
+}
+
+.hero-text-container p {
+    font-family: 'Georgia', serif; 
+    font-size: 1.1em;
+    margin: 10px 0; 
+    max-width: none;
+    text-align: left; 
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #ff9900; 
+    color: white;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.cta-button:hover {
+    background-color: #e68a00;
+}
+.cta-button:hover {
+    background-color: #e68a00;
+}
+
+
+/* Stile Sezione Valori (3 Colonne) */
+.values-section {
+    display: flex; 
+    justify-content: space-around;
+    padding: 50px 20px;
+    gap: 30px; 
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.value-item {
+    flex: 1; 
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+/* Stile Sezione Servizi in Home (overview) */
+.services-overview {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.service-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.service-card {
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* ======================================================= */
+/* 3. STILI PAGINA SERVIZI (servizi.html) */
+/* ======================================================= */
+
+.intro-servizi {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: white;
+}
+
+.page-title {
+    font-size: 2.2em;
+    color: #004d99; 
+    margin-bottom: 10px;
+}
+
+/* CORREZIONE: Stili del sottotitolo, riutilizzo anche per formazione */
+.sottotitolo {
+    font-size: 1.1em;
+    color: #555;
+    /* Limitiamo la larghezza per renderlo leggibile e lo centriamo */
+    max-width: 900px;
+    margin: 0 auto; 
+}
+
+.elenco-servizi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 40px 20px;
+}
+
+.servizio-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.servizio-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.servizio-icona {
+    width: 80px; 
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.servizio-card h2 {
+    color: #004d99;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.cta-dettaglio {
+    display: inline-block;
+    margin-top: 15px;
+    color: #007bff; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Stile per la Call To Action finale (riutilizzato da altre pagine) */
+.cta-finale {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #e6f0ff; 
+    margin: 40px 0;
+}
+
+.cta-button-large {
+    display: inline-block;
+    background-color: #ff9900; 
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.cta-button-large:hover {
+    background-color: #e68a00;
+}
+
+/* ======================================================= */
+/* 3.5. STILI PAGINA FORMAZIONE (formazione.html) */
+/* ======================================================= */
+
+/* Intro: riutilizza gli stili di intro-servizi */
+.intro-formazione {
+    /* Si basa sullo stile di .intro-servizi */
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: white;
+}
+
+/* Griglia dei Corsi */
+.corsi-grid {
+    display: grid;
+    /* Usa la stessa logica responsiva dei servizi (300px min-width) */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+/* Card del Singolo Corso */
+.corso-card {
+    background-color: white;
+    padding: 0; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden; 
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; 
+    flex-direction: column; 
+    text-align: left;
+}
+
+.corso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+}
+
+/* Immagine di copertina del Manuale/Corso */
+.corso-copertina-img {
+    width: 100%;
+    height: auto; 
+    display: block;
+    border-bottom: 3px solid #ff9900; 
+}
+
+/* Contenuto Testuale della Card */
+.corso-content {
+    padding: 20px;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.corso-content h3 {
+    color: #004d99;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.corso-content .modalita {
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.corso-content p {
+    font-size: 0.95em;
+    color: #333;
+    margin-bottom: 20px;
+    flex-grow: 1; 
+}
+
+/* Link di Dettaglio (Call to Action) */
+.cta-link-formazione {
+    display: block; 
+    text-align: center;
+    background-color: #004d99;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-top: auto; 
+    transition: background-color 0.3s;
+}
+
+.cta-link-formazione:hover {
+    background-color: #003366;
+}
+
+/* ======================================================= */
+/* 3.6. STILI PAGINA SHOP (shop.html) */
+/* ======================================================= */
+
+/* Contenitore principale: Assicura un layout a griglia/flexbox */
+.lista-prodotti {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+/* Card del singolo prodotto: Assicura una struttura chiara */
+.prodotto-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+
+/* RIDIMENSIONAMENTO CRUCIALE DELL'IMMAGINE */
+.prodotto-card .prodotto-img {
+    max-width: 250px; 
+    height: auto;
+    object-fit: contain; 
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    border-radius: 5px;
+}
+
+.prodotto-card h2 {
+    color: #004d99;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+.prodotto-card p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+}
+
+.prodotto-card .prezzo {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ff9900;
+    margin-bottom: 20px;
+}
+
+/* Stile del pulsante "Scopri di più" */
+.pulsante-acquista {
+    display: inline-block;
+    background-color: #ff9900;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: auto; 
+}
+
+.pulsante-acquista:hover {
+    background-color: #e68a00;
+}
+
+/* === Media Query per Mobile: Rende le immagini più compatte === */
+@media (max-width: 600px) {
+    .prodotto-card .prodotto-img {
+        max-width: 200px; 
+    }
+}
+
+/* ======================================================= */
+/* 4. STILI PAGINE DETTAGLIO SERVIZIO (servizi/...) */
+/* ======================================================= */
+
+.dettaglio-hero {
+    background-color: #f0f0f0; 
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 3px solid #004d99;
+}
+
+.service-title {
+    font-size: 2.5em;
+    color: #004d99;
+    margin-bottom: 10px;
+}
+
+.breadcrumbs {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.breadcrumbs a {
+    color: #666;
+    text-decoration: none;
+}
+
+.service-content {
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.content-intro, .content-body {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.content-intro h2, .content-body h2 {
+    color: #ff9900; 
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+.feature-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list ul li {
+    padding-left: 25px; 
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+/* Stile specifico per la CTA a fondo pagina */
+.cta-service-specific {
+    background-color: #e6f0ff;
+    padding: 40px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* ======================================================= */
+/* 4.5. STILI PAGINA CHI SIAMO (chi-siamo.html) - CODICE CRUCIALE MANCANTE */
+/* ======================================================= */
+
+/* Contenitore principale (Foto + Testo) */
+.bio-content {
+    display: flex; 
+    gap: 40px; 
+    padding: 40px 20px 80px;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    align-items: flex-start; 
+}
+
+/* Blocco Foto e Didascalia: GLI DICIAMO DI AVERE UNA LARGHEZZA FISSA */
+.bio-foto {
+    flex: 0 0 250px; 
+    text-align: center;
+}
+
+/* RIDIMENSIONAMENTO CRUCIALE DELL'IMMAGINE PROFILO */
+.profile-pic {
+    width: 250px; 
+    height: 250px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    display: block;
+    margin: 0 auto 10px; 
+    border: 5px solid #004d99;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Query per Reattività (su mobile la foto va sopra il testo) */
+@media (max-width: 900px) {
+    .bio-content {
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center;
+    }
+}
+
+/* ======================================================= */
+/* 4.6. STILI IMMAGINE DETTAGLIO CONTROLLO (Monte Carlo) */
+/* ======================================================= */
+
+.analisi-montecarlo-visual {
+    text-align: center !important; 
+    padding: 20px 0; 
+    margin: 10px auto;
+}
+
+/* REGOLA CRUCIALE MODIFICATA: SOLO 250px! */
+.montecarlo-img {
+    max-width: 250px !important; 
+    width: 100% !important; 
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.content-body h2 {
+    clear: both; 
+}
+
+/* ======================================================= */
+/* 5. STILI PAGINA VIDEO (video.html) */
+/* ======================================================= */
+
+.intro-video {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.video-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+.video-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden; 
+}
+
+.video-embed {
+    position: relative;
+    padding-bottom: 56.25%; 
+    height: 0;
+}
+
+.video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px 8px 0 0; 
+}
+
+.video-card h3 {
+    padding: 15px 20px 5px;
+    color: #004d99;
+}
+
+.video-card p {
+    padding: 0 20px 20px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* ======================================================= */
+/* 6. STILI PAGINA LIBRI (libri.html) */
+/* ======================================================= */
+
+.intro-libri {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.libri-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 40px;
+    padding: 40px 20px;
+    justify-items: center; 
+}
+
+.libro-card {
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px; 
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.libro-copertina {
+    width: 80%;
+    height: auto;
+    object-fit: contain; 
+    margin: 20px auto 15px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+}
+
+.libro-info {
+    padding: 0 15px;
+}
+
+.libro-info h2 {
+    font-size: 1.3em;
+    color: #004d99;
+    margin-bottom: 5px;
+}
+
+.autore {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.descrizione-breve {
+    font-size: 0.95em;
+    margin-bottom: 20px;
+}
+
+.cta-amazon {
+    display: inline-block;
+    background-color: #ff9900; 
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-amazon:hover {
+    background-color: #e68a00;
+}
+
+/* ======================================================= */
+/* 7. STILI PAGINA CERTIFICATI (certificati.html) */
+/* ======================================================= */
+
+.intro-certificati {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.certificati-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+.certificato-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.certificato-card:hover {
+    transform: translateY(-5px);
+}
+
+.certificato-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-bottom: 5px solid #004d99; 
+}
+
+.certificato-info {
+    padding: 20px;
+}
+
+.certificato-info h2 {
+    color: #004d99;
+    font-size: 1.4em;
+    margin-bottom: 5px;
+}
+
+.ente-data {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.cta-pdf {
+    display: inline-block;
+    background-color: #ff9900; 
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.cta-pdf:hover {
+    background-color: #e68a00;
+}
+
+/* ======================================================= */
+/* 8. STILI PAGINA CONTATTI (contatti.html) */
+/* ======================================================= */
+
+.intro-contatti {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.contatti-content {
+    display: flex; 
+    gap: 40px;
+    padding: 40px 20px;
+    flex-wrap: wrap; 
+}
+
+.contact-form-container, .contact-info-container {
+    flex: 1; 
+    min-width: 300px; 
+    padding: 20px;
+}
+
+.contact-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form h2 {
+    color: #004d99;
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.contact-form input[type="text"], 
+.contact-form input[type="email"], 
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+    font-size: 1em;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form .cta-button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    font-size: 1.1em;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.privacy-note {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.contact-info-container h2 {
+    color: #004d99;
+    margin-bottom: 20px;
+}
+
+.info-block {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-left: 3px solid #ff9900; 
+    background-color: #f9f9f9;
+}
+
+.info-block h3 {
+    color: #333;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 250px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: #555;
+}
+
+/* ======================================================= */
+/* 9. STILI PAGINA PRIVACY (privacy-policy.html) */
+/* ======================================================= */
+
+.privacy-section {
+    padding: 40px 20px 80px;
+}
+
+.data-aggiornamento {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 40px;
+    display: block;
+    text-align: center;
+}
+
+.privacy-content h2 {
+    color: #004d99;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.disclaimer {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px dashed #ff9900;
+    background-color: #fff8e6;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+
+/* Stili di base per schermi grandi (Desktop) */
+.nav-menu {
+    display: flex; 
+}
+
+/* --- Media Query per Dispositivi Mobili (Schermi piccoli) --- */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        display: none; 
+    }
+
+    .col-sm-4 { 
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* ======================================================= */
+/* 10. MEDIA QUERIES (REATTIVITÀ) */
+/* ======================================================= */
+
+/* Regole applicate solo su schermi piccoli (es. smartphone) */
+@media (max-width: 768px) {
+    
+    /* FIX CRUCIALE PER IL TITOLO: Riduce la dimensione e permette l'a capo */
+    .logo h1 {
+        /* Riduci il font (puoi provare 1.2em o 1.4em a seconda del risultato) */
+        font-size: 1.4em !important; 
+        /* Permetti al testo di andare a capo per adattarsi allo schermo */
+        white-space: normal !important; 
+        /* Centra il titolo */
+        text-align: center !important; 
+    }
+
+    /* Header & Navigazione: Mette il logo e i link in colonna */
+    .main-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 15px 10px; /* Aumenta leggermente il padding per respirare */
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+    
+    .main-nav ul li {
+        margin: 5px 0; /* Aggiunge spazio verticale tra i link */
+    }
+
+    .main-nav ul li a {
+        margin-left: 0;
+    }
+
+    /* Sezione Hero: Layout a singola colonna e centrato */
+    .hero-section {
+        padding: 40px 15px; /* Riduci il padding verticale per mobile */
+    }
+    
+    .hero-content {
+        flex-direction: column; 
+    }
+    
+    .hero-image, .hero-text-container {
+        max-width: 100%; 
+        margin: 10px 0; 
+        text-align: center; 
+    }
+    
+    .hero-text-container h2, .hero-text-container p {
+        text-align: center;
+    }
+
+    /* Valori: Passano su una colonna singola */
+    .values-section {
+        flex-direction: column;
+    }
+    
+    /* Contatti: Assicura che le due colonne vadano a capo */
+    .contatti-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .contact-form-container, .contact-info-container {
+        min-width: 100%;
+    }
+    
+    /* Adatta tutte le griglie a una singola colonna più piccola */
+    .elenco-servizi-grid, 
+    .corsi-grid,
+    .video-gallery,
+    .libri-gallery,
+    .certificati-gallery,
+    .lista-prodotti,
+    .partner-list-grid {
+        /* Forza la visualizzazione su una singola colonna per la maggior parte dei casi */
+        grid-template-columns: 1fr; 
+        gap: 20px;
+        padding: 20px 15px;
+    }
+}
+
+/* ======================= STILI PAGINA PARTNER ======================= */
+
+.intro-partner {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.partner-list-grid {
+    display: grid;
+    /* 2 Colonne su schermi grandi */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+    gap: 40px;
+    padding: 40px 20px;
+    align-items: stretch; 
+}
+
+.partner-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.partner-logo {
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto 15px;
+    display: block;
+}
+
+.partner-card h2 {
+    color: #004d99;
+    font-size: 1.4em;
+    margin-bottom: 5px;
+}
+
+.partner-card h3 {
+    color: #ff9900;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    font-weight: normal;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 10px;
+}
+
+.cta-link-partner {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
