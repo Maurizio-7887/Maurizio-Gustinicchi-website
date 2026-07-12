@@ -40,3 +40,53 @@ class Lead(db.Model):
     sincronizzato_crm = db.Column(db.Boolean, default=False)
     risposta_crm = db.Column(db.Text, default='')
     creato_il = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Prodotto(db.Model):
+    __tablename__ = 'prodotti'
+    id = db.Column(db.Integer, primary_key=True)
+    slug = db.Column(db.String(200), unique=True, nullable=False, index=True)
+    nome = db.Column(db.String(300), nullable=False)
+    descrizione = db.Column(db.Text, default='')
+    tipo = db.Column(db.String(30), default='libro')     # libro | software
+    prezzo_cent = db.Column(db.Integer, nullable=False)  # prezzo in centesimi (es. 2490 = 24,90€)
+    spedizione_cent = db.Column(db.Integer, default=500) # costo spedizione in centesimi
+    immagine = db.Column(db.String(400), default='')
+    attivo = db.Column(db.Boolean, default=True)
+    creato_il = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def prezzo_eur(self):
+        return f'{self.prezzo_cent / 100:.2f}'.replace('.', ',')
+
+    @property
+    def spedizione_eur(self):
+        return f'{self.spedizione_cent / 100:.2f}'.replace('.', ',')
+
+
+class Ordine(db.Model):
+    __tablename__ = 'ordini'
+    id = db.Column(db.Integer, primary_key=True)
+    prodotto_id = db.Column(db.Integer, db.ForeignKey('prodotti.id'), nullable=False)
+    prodotto = db.relationship('Prodotto', backref='ordini')
+    quantita = db.Column(db.Integer, default=1)
+    totale_cent = db.Column(db.Integer, nullable=False)
+    # Dati cliente e spedizione
+    nome = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    telefono = db.Column(db.String(50), default='')
+    indirizzo = db.Column(db.String(300), default='')
+    cap = db.Column(db.String(10), default='')
+    citta = db.Column(db.String(120), default='')
+    provincia = db.Column(db.String(4), default='')
+    note = db.Column(db.Text, default='')
+    # Stati: in_attesa_pagamento -> pagato -> spedito  (bonifico: da_confermare -> pagato -> spedito)
+    stato = db.Column(db.String(30), default='in_attesa_pagamento')
+    metodo_pagamento = db.Column(db.String(30), default='stripe')  # stripe | bonifico
+    stripe_session_id = db.Column(db.String(300), default='')
+    sincronizzato_crm = db.Column(db.Boolean, default=False)
+    creato_il = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def totale_eur(self):
+        return f'{self.totale_cent / 100:.2f}'.replace('.', ',')
