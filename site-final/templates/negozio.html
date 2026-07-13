@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Negozio - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}Acquista i manuali operativi di Maurizio Gustinicchi direttamente dal sito, con pagamento sicuro con carta o bonifico.{% endblock %}
+
+{% block content %}
+
+    <section class="intro-libri">
+        <h1 class="page-title">Il Nostro Negozio</h1>
+        <p class="sottotitolo">Acquista i manuali direttamente qui, con pagamento sicuro con carta o bonifico bancario. Spedizione in tutta Italia.</p>
+    </section>
+
+    <section class="libri-gallery">
+        {% for p in prodotti %}
+        <article class="libro-card">
+            {% if p.immagine %}
+            <img src="{{ p.immagine }}" alt="Copertina: {{ p.nome }}" class="libro-copertina">
+            {% endif %}
+            <div class="libro-info">
+                <h2>{{ p.nome }}</h2>
+                <p class="descrizione-breve">{{ p.descrizione }}</p>
+                <p class="prezzo-negozio">€ {{ p.prezzo_eur }} <span style="font-weight:normal; font-size:0.7em; color:#666;">+ € {{ p.spedizione_eur }} spedizione</span></p>
+                <a href="{{ url_for('acquista', slug=p.slug) }}" class="cta-negozio">Acquista ora</a>
+            </div>
+        </article>
+        {% else %}
+        <p style="text-align:center; grid-column:1/-1; color:#666;">Nessun prodotto disponibile al momento.</p>
+        {% endfor %}
+    </section>
+
+{% endblock %}

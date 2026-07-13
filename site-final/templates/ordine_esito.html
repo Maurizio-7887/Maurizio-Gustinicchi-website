@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Il tuo ordine - Maurizio Gustinicchi Consulting{% endblock %}
+{% block meta_description %}{% endblock %}
+
+{% block content %}
+
+<section style="max-width:700px; margin:50px auto; padding:0 5%; text-align:center;">
+
+    {% if esito == 'successo' %}
+        <h1 style="color:#1e7e34;">✅ Pagamento ricevuto, grazie!</h1>
+        <p style="font-size:1.1em; color:#444;">Il tuo ordine <strong>#{{ o.id }}</strong> per <strong>{{ o.prodotto.nome }}</strong> è confermato.</p>
+        <p style="color:#666;">Riceverai una conferma via email a <strong>{{ o.email }}</strong>. Ti contatteremo per la spedizione.</p>
+
+    {% elif esito == 'prenotazione' %}
+        <h1 style="color:#004d99;">✅ Prenotazione ricevuta, grazie {{ o.nome.split(' ')[0] }}!</h1>
+        <p style="font-size:1.1em; color:#444;">Hai richiesto una demo per <strong>{{ o.prodotto.nome }}</strong>.</p>
+        <p style="color:#666;">Ti ricontatteremo entro 24-48h all'indirizzo <strong>{{ o.email }}</strong>{% if o.telefono %} o al numero {{ o.telefono }}{% endif %} per fissare la demo gratuita di 30 minuti e definire i dettagli.</p>
+
+    {% elif esito == 'bonifico' %}
+        <h1 style="color:#004d99;">📦 Ordine ricevuto — completa il pagamento</h1>
+        <p style="font-size:1.1em; color:#444;">Il tuo ordine <strong>#{{ o.id }}</strong> per <strong>{{ o.prodotto.nome }}</strong> (x{{ o.quantita }}) è stato registrato.</p>
+
+        <div style="background:white; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); padding:25px; margin:25px 0; text-align:left;">
+            <h3 style="color:#004d99; margin-top:0;">Istruzioni per il bonifico</h3>
+            <p><strong>Importo da versare:</strong> € {{ o.totale_eur }}</p>
+            <p><strong>Intestatario:</strong> {{ intestatario }}</p>
+            <p><strong>IBAN:</strong> {{ iban }}</p>
+            <p><strong>Causale:</strong> Ordine #{{ o.id }} - {{ o.prodotto.nome }}</p>
+        </div>
+
+        <p style="color:#666;">Appena il bonifico è ricevuto, ti confermeremo l'ordine via email a <strong>{{ o.email }}</strong> e organizzeremo la spedizione.</p>
+
+    {% elif esito == 'annullato' %}
+        <h1 style="color:#c0392b;">Pagamento annullato</h1>
+        <p style="font-size:1.1em; color:#444;">Il pagamento per l'ordine <strong>#{{ o.id }}</strong> non è andato a buon fine o è stato annullato.</p>
+        <p style="color:#666;">Nessun addebito è stato effettuato. Puoi riprovare in qualsiasi momento dal nostro <a href="{{ url_for('negozio') }}">negozio</a>.</p>
+    {% endif %}
+
+    <a href="{{ url_for('negozio') }}" class="cta-negozio" style="margin-top:20px; display:inline-block;">Torna al negozio</a>
+
+</section>
+
+{% endblock %}

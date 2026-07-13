@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Admin Prodotti - MGC{% endblock %}
+{% block content %}
+<section style="max-width:1200px; margin:30px auto; padding:0 5%;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h1 style="color:#004d99;">Gestione Prodotti Negozio</h1>
+        <div>
+            <a href="{{ url_for('admin_dashboard') }}" style="margin-right:15px;">← Dashboard</a>
+            <a href="/admin/logout" style="color:#721c24;">Esci</a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+        <div style="background:{{ '#f8d7da' if category=='error' else '#d4edda' }}; color:{{ '#721c24' if category=='error' else '#155724' }}; padding:10px 16px; border-radius:5px; margin-top:15px;">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h2 style="margin-top:30px; border-bottom:3px solid #ff9900; padding-bottom:8px;">📦 Prodotti Esistenti</h2>
+    <table style="width:100%; border-collapse:collapse; margin-top:15px; background:white; font-size:0.9em;">
+        <tr style="background:#004d99; color:white;">
+            <th style="padding:8px; text-align:left;">Nome</th>
+            <th style="padding:8px;">Tipo</th>
+            <th style="padding:8px;">Prezzo</th>
+            <th style="padding:8px;">Attivo</th>
+            <th style="padding:8px;">Azioni</th>
+        </tr>
+        {% for p in prodotti %}
+        <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:8px;"><strong>{{ p.nome }}</strong><br><small style="color:#888;">/{{ p.slug }}</small></td>
+            <td style="padding:8px; text-align:center;">{{ p.tipo }}</td>
+            <td style="padding:8px; text-align:center;">€ {{ p.prezzo_eur }}</td>
+            <td style="padding:8px; text-align:center;">{{ '✅' if p.attivo else '⏸️' }}</td>
+            <td style="padding:8px; text-align:center;">
+                <a href="#form-prodotto" onclick="compilaForm({{ p.id|tojson }}, {{ p.slug|tojson }}, {{ p.nome|tojson }}, {{ p.descrizione|tojson }}, {{ p.tipo|tojson }}, {{ p.prezzo_eur|tojson }}, {{ p.spedizione_eur|tojson }}, {{ p.immagine|tojson }}, {{ p.attivo|tojson }})">Modifica</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" style="padding:15px; text-align:center; color:#888;">Nessun prodotto ancora.</td></tr>
+        {% endfor %}
+    </table>
+
+    <h2 id="form-prodotto" style="margin-top:50px; border-bottom:3px solid #ff9900; padding-bottom:8px;">✏️ Aggiungi / Modifica Prodotto</h2>
+    <form method="POST" action="{{ url_for('admin_prodotti') }}" style="background:white; padding:25px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-top:15px;">
+        <input type="hidden" name="id" id="f_id">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div>
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Slug (parte dell'URL, es. mio-libro)</label>
+                <input type="text" name="slug" id="f_slug" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div>
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Tipo</label>
+                <select name="tipo" id="f_tipo" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                    <option value="libro">Libro</option>
+                    <option value="software">Software</option>
+                </select>
+            </div>
+            <div style="grid-column:1/-1;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Nome</label>
+                <input type="text" name="nome" id="f_nome" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="grid-column:1/-1;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Descrizione</label>
+                <textarea name="descrizione" id="f_descrizione" rows="3" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;"></textarea>
+            </div>
+            <div>
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Prezzo (€)</label>
+                <input type="text" name="prezzo" id="f_prezzo" required placeholder="24,90" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div>
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Spedizione (€)</label>
+                <input type="text" name="spedizione" id="f_spedizione" placeholder="5,00" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="grid-column:1/-1;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Percorso immagine (es. /static/img/mia-copertina.jpg)</label>
+                <input type="text" name="immagine" id="f_immagine" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div>
+                <label style="font-weight:bold;"><input type="checkbox" name="attivo" id="f_attivo" checked> Prodotto attivo (visibile nel negozio)</label>
+            </div>
+        </div>
+
+        <button type="submit" style="margin-top:20px; background:#004d99; color:white; border:none; padding:12px 25px; border-radius:5px; font-weight:bold; cursor:pointer;">Salva Prodotto</button>
+        <button type="button" onclick="nuovoProdotto()" style="margin-top:20px; margin-left:10px; background:#eee; color:#333; border:none; padding:12px 25px; border-radius:5px; font-weight:bold; cursor:pointer;">+ Nuovo (svuota form)</button>
+    </form>
+</section>
+
+<script>
+function compilaForm(id, slug, nome, descrizione, tipo, prezzo, spedizione, immagine, attivo) {
+    document.getElementById('f_id').value = id;
+    document.getElementById('f_slug').value = slug;
+    document.getElementById('f_nome').value = nome;
+    document.getElementById('f_descrizione').value = descrizione;
+    document.getElementById('f_tipo').value = tipo;
+    document.getElementById('f_prezzo').value = prezzo;
+    document.getElementById('f_spedizione').value = spedizione;
+    document.getElementById('f_immagine').value = immagine;
+    document.getElementById('f_attivo').checked = attivo;
+}
+function nuovoProdotto() {
+    document.getElementById('f_id').value = '';
+    document.querySelectorAll('#form-prodotto ~ form input[type=text], #form-prodotto ~ form textarea').forEach(el => el.value = '');
+}
+</script>
+{% endblock %}

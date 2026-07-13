@@ -747,6 +747,28 @@ h1, h2, h3, h4, .main-nav a {
     background-color: #e68a00;
 }
 
+.cta-negozio {
+    display: inline-block;
+    background-color: #004d99;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-negozio:hover {
+    background-color: #003d80;
+}
+
+.prezzo-negozio {
+    font-weight: bold;
+    font-size: 1.15em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
 /* ======================================================= */
 /* 7. STILI PAGINA CERTIFICATI (certificati.html) */
 /* ======================================================= */
