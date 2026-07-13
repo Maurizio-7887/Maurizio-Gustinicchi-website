@@ -104,6 +104,20 @@ h1, h2, h3, h4, .main-nav a {
     color: #ff9900; 
 }
 
+/* Pulsante CRM in evidenza nella navbar, distinto dai link normali */
+.main-nav ul li a.nav-crm-button {
+    background-color: #0056b3;
+    color: white !important;
+    padding: 6px 14px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.main-nav ul li a.nav-crm-button:hover {
+    background-color: #003d80;
+    color: white !important;
+}
+
 
 /* ======================================================= */
 /* 2. STILI HOME PAGE (index.html) */
