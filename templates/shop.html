@@ -111,6 +111,15 @@
             margin: 0 auto 15px;
         }
 
+        .servizio-foto {
+            width: calc(100% + 40px);
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            display: block;
+            height: 160px;
+            object-fit: cover;
+        }
+
         .servizio-card h2 {
             color: #0056b3;
             margin-top: 10px;
@@ -151,36 +160,134 @@
 {% block content %}
  
         <section class="intro-servizi intro-prodotti"> 
-            <h1>I Nostri Software e Soluzioni Proprietarie</h1>
-            <p class="sottotitolo">Scegli tra i nostri potenti software proprietari, progettati per l'analisi avanzata, la gestione operativa e la produzione di contenuti.</p>
+            <h1>MASTER SUITE — I Nostri Software Proprietari</h1>
+            <p class="sottotitolo">Il controllo di gestione digitale, senza costi di licenza. Applicativi web proprietari 100% cloud, senza installazione, pronti all'uso.</p>
+        </section>
+
+        <section class="intro-servizi" style="padding-top:0;">
+            <h2 style="text-align:center; color:#0056b3;">Per lo Studio: strumenti da CFO, semplici da usare</h2>
         </section>
 
         <section class="elenco-servizi-grid">
-            
+
             <article class="servizio-card">
-                <img src="/static/img/icona_dashboard.png" alt="Icona Dashboard Interattiva" class="servizio-icona">
-                <h2>Smart-Board Analytics</h2>
-                <p>Dashboard **user-friendly** e interattiva per l'analisi dei dati, creata per sostituire i report complessi (come Power BI) con visualizzazioni chiare.</p>
+                <img src="/static/img/master-suite/mastercash.jpg" alt="MasterCash - Tesoreria e Cash Flow" class="servizio-foto">
+                <h2>MasterCash</h2>
+                <p><strong>Tesoreria &amp; Cash Flow</strong>: pianificazione finanziaria a livello CFO, scadenzario attivo/passivo, previsione di cassa a 12 mesi, scenari what-if e report pronti per la banca. Ideale per l'adeguato assetto ex art. 2086 c.c.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/mastercpm.jpg" alt="MasterCPM - Corporate Performance Management" class="servizio-foto">
+                <h2>MasterCPM</h2>
+                <p><strong>Corporate Performance Management</strong>: bilancio previsionale, conto economico riclassificato, matrice di elasticità costi-ricavi e cash flow indiretto. Cinque moduli integrati, quadrature verificate algebricamente.</p>
                 <p class="prezzo">A partire da € trattativa personale</p>
                 <a href="/servizi/dashboard-bi" class="cta-dettaglio">Scopri di più</a>
             </article>
 
             <article class="servizio-card">
-                <img src="/static/img/icona_manutenzione.png" alt="Icona Software Manutenzione" class="servizio-icona">
-                <h2>Maint Planner Pro</h2>
-                <p>Software completo per **pianificare, programmare e gestire** in modo efficiente tutte le attività di manutenzione (preventiva e correttiva).</p>
+                <img src="/static/img/master-suite/masterdebt.jpg" alt="MasterDebt - Rateizzazioni e Debito Fiscale" class="servizio-foto">
+                <h2>MasterDebt</h2>
+                <p><strong>Rateizzazioni &amp; Debito Fiscale</strong>: gestione completa di cartelle esattoriali e piani di rateizzazione AdER/INPS, scadenze, residui, alert automatici in un'unica dashboard.</p>
                 <p class="prezzo">A partire da € trattativa personale</p>
-                <a href="/servizi/manutenzione" class="cta-dettaglio">Scopri di più</a> 
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
             </article>
 
             <article class="servizio-card">
-                <img src="/static/img/icona_content_factory.png" alt="Icona Content Factory Suite" class="servizio-icona">
-                <h2>Content Factory Suite</h2>
-                <p>La soluzione completa per **Social Media Manager**: dalla creazione rapida di contenuti alla programmazione e all'analisi cross-piattaforma.</p>
+                <img src="/static/img/master-suite/masterfico.jpg" alt="MasterFICO - Contabilita e Fatturazione Elettronica" class="servizio-foto">
+                <h2>MasterFICO</h2>
+                <p><strong>Contabilità &amp; Fatturazione Elettronica</strong>: ciclo attivo e passivo in stile SAP FICO, fatture multi-riga, note di credito, import XML/p7m dallo SdI, centri di costo e contabilità analitica.</p>
                 <p class="prezzo">A partire da € trattativa personale</p>
-                <a href="/servizi/content-factory" class="cta-dettaglio">Scopri di più</a>
+                <a href="/servizi/controllo" class="cta-dettaglio">Scopri di più</a>
             </article>
 
+        </section>
+
+        <section class="intro-servizi" style="padding-top:0;">
+            <h2 style="text-align:center; color:#0056b3;">Per i vostri clienti: la fabbrica digitale chiavi in mano</h2>
+            <p class="sottotitolo">Il commercialista che porta in azienda anche gli strumenti operativi diventa il partner strategico della digitalizzazione. La MASTER Suite copre l'intero ciclo produttivo e logistico delle PMI manifatturiere.</p>
+        </section>
+
+        <section class="elenco-servizi-grid">
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masterwork.jpg" alt="MasterWork - Produzione e Fabbrica" class="servizio-foto">
+                <h2>MasterWork</h2>
+                <p><strong>Produzione &amp; Fabbrica</strong>: tracciatura avanzamenti e anomalie di reparto, gestione operatori e turni, integrazione presenze.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/servizi/manutenzione" class="cta-dettaglio">Scopri di più</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masterlogistic-wms.jpg" alt="MasterLogistic WMS - Magazzino e Logistica" class="servizio-foto">
+                <h2>MasterLogistic / MasterWMS</h2>
+                <p><strong>Magazzino &amp; Logistica</strong>: ordini fornitori/clienti, DDT, giacenze, flussi corrieri e KPI logistici in tempo reale.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masteranalytics.jpg" alt="MasterAnalytics - Analisi e Marginalita" class="servizio-foto">
+                <h2>MasterAnalytics</h2>
+                <p><strong>Analisi &amp; Marginalità</strong>: analytics di produzione integrata via API, costi, ricavi, marginalità per articolo e commessa.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/servizi/dashboard-bi" class="cta-dettaglio">Scopri di più</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masterquality.jpg" alt="MasterQuality - Qualita ISO 9001" class="servizio-foto">
+                <h2>MasterQuality</h2>
+                <p><strong>Qualità ISO 9001 / IATF</strong>: non conformità, audit, APQP/PPAP e documentazione di sistema per aziende certificate.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masterprocurement.jpg" alt="MasterProcurement - Acquisti" class="servizio-foto">
+                <h2>MasterProcurement</h2>
+                <p><strong>Acquisti</strong>: richieste d'acquisto, ordini e vendor rating con flussi approvativi digitali.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
+            </article>
+
+            <article class="servizio-card">
+                <img src="/static/img/master-suite/masterproduction.jpg" alt="MasterProduction - Pianificazione della Produzione" class="servizio-foto">
+                <h2>MasterProduction</h2>
+                <p><strong>Pianificazione</strong>: programmazione della produzione con visibilità su capacità, priorità e colli di bottiglia.</p>
+                <p class="prezzo">A partire da € trattativa personale</p>
+                <a href="/contatti" class="cta-dettaglio">Richiedi una demo</a>
+            </article>
+
+        </section>
+
+        <section class="intro-servizi" style="padding-top:0;">
+            <h2 style="text-align:center; color:#0056b3;">Perché scegliere la MASTER Suite</h2>
+        </section>
+
+        <section class="elenco-servizi-grid">
+            <article class="servizio-card">
+                <h2 style="font-size:1.1em;">Nessun costo di licenza</h2>
+                <p>Software proprietario: niente canoni per utente, niente moduli a pagamento nascosti.</p>
+            </article>
+            <article class="servizio-card">
+                <h2 style="font-size:1.1em;">Su misura, in tempi rapidi</h2>
+                <p>Ogni applicativo si adatta ai processi reali dell'azienda, non il contrario.</p>
+            </article>
+            <article class="servizio-card">
+                <h2 style="font-size:1.1em;">Cloud professionale</h2>
+                <p>Deploy su infrastruttura cloud con database PostgreSQL: accesso da PC, tablet e smartphone.</p>
+            </article>
+            <article class="servizio-card">
+                <h2 style="font-size:1.1em;">Un unico interlocutore</h2>
+                <p>Analisi, sviluppo, formazione e assistenza: un solo referente certificato Innovation Manager.</p>
+            </article>
+        </section>
+
+        <section class="cta-finale" style="text-align:center; padding:30px 5%;">
+            <h2>Richiedi una demo gratuita per il tuo studio</h2>
+            <p>Presentazione operativa di 30 minuti, online o in sede, sugli applicativi di tuo interesse. Possibilità di convenzioni per studi professionali e rivendita ai clienti.</p>
+            <a href="/contatti" class="cta-button-large">Prenota la Demo</a>
         </section>
     
 {% endblock %}
