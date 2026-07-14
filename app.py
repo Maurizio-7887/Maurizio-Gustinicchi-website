@@ -4,7 +4,6 @@ MAURIZIO GUSTINICCHI CONSULTING - Sito dinamico
 Flask + PostgreSQL (Railway) | Blog gestito da DB | Form contatti -> CRM
 """
 import os
-import re
 import json
 import threading
 from datetime import datetime, date
@@ -51,20 +50,6 @@ SITE_URL = os.environ.get('SITE_URL', 'https://www.mauriziogustinicchiconsulting
 @app.context_processor
 def inject_globals():
     return {'current_year': datetime.now().year}
-
-
-@app.after_request
-def converti_grassetto_markdown(response):
-    """Il sito contiene testi scritti in stile Markdown (**parola**) che però
-    non vengono interpretati da Jinja, quindi comparivano gli asterischi
-    letterali. Qui li convertiamo in <strong> su tutto l'HTML in uscita,
-    così non serve correggere ogni singolo template a mano (né i futuri
-    articoli di blog/prodotti scritti allo stesso modo)."""
-    if response.content_type and 'text/html' in response.content_type:
-        html = response.get_data(as_text=True)
-        html = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', html, flags=re.S)
-        response.set_data(html)
-    return response
 
 
 # =====================================================================
@@ -384,28 +369,6 @@ def acquista(slug):
     p = Prodotto.query.filter_by(slug=slug, attivo=True).first_or_404()
 
     if request.method == 'POST':
-
-        # --- SOFTWARE: prenotazione/richiesta demo, niente spedizione né pagamento online ---
-        if p.tipo == 'software':
-            ordine = Ordine(
-                prodotto_id=p.id, quantita=1, totale_cent=0,
-                nome=request.form.get('nome', '').strip(),
-                email=request.form.get('email', '').strip(),
-                telefono=request.form.get('telefono', '').strip(),
-                citta=request.form.get('azienda', '').strip(),  # riuso il campo 'citta' per l'azienda del richiedente
-                note=request.form.get('note', '').strip(),
-                metodo_pagamento='prenotazione',
-                stato='da_confermare',
-            )
-            if not ordine.nome or not ordine.email:
-                flash('Compila almeno nome ed email per la prenotazione.', 'error')
-                return redirect(url_for('acquista', slug=slug))
-            db.session.add(ordine)
-            db.session.commit()
-            threading.Thread(target=invia_ordine_al_crm, args=(ordine.id,), daemon=True).start()
-            return redirect(url_for('ordine_esito', ordine_id=ordine.id, esito='prenotazione'))
-
-        # --- LIBRO: acquisto vero con spedizione e pagamento ---
         try:
             qty = max(1, min(20, int(request.form.get('quantita', 1))))
         except ValueError:
@@ -469,7 +432,7 @@ def acquista(slug):
 @app.route('/ordine/<int:ordine_id>/<esito>')
 def ordine_esito(ordine_id, esito):
     o = Ordine.query.get_or_404(ordine_id)
-    if esito not in ('successo', 'annullato', 'bonifico', 'prenotazione'):
+    if esito not in ('successo', 'annullato', 'bonifico'):
         abort(404)
     return render_template('ordine_esito.html', o=o, esito=esito,
                            iban=IBAN_BONIFICO, intestatario=INTESTATARIO_BONIFICO)
@@ -554,61 +517,25 @@ def seed_prodotti():
         return
     libri = [
         dict(slug='marketing-di-successo', tipo='libro',
-             nome='LA RAGIONERIA DEL MARGINE PER ADDETTI AL MARKETING (Nuova Edizione)',
-             descrizione="Il nuovo Marketer-Controller AI-Driven: Modello AI-Driven per la costificazione, Ragioneria Strategica e Analisi Predittiva del budget marketing. Copia cartacea autografata.",
-             prezzo_cent=5000, spedizione_cent=500,
-             immagine='/static/img/libro-ragioneria-margine-marketing.jpg'),
+             nome='MARKETING DI SUCCESSO: Costi e Controllo nella Tua Strategia',
+             descrizione='Manuale operativo per Imprenditori e Controller: misura le campagne marketing e trasforma la spesa in investimento strategico. Copia cartacea autografata.',
+             prezzo_cent=2490, spedizione_cent=500,
+             immagine='/static/img/libro-marketing-successo.jpg'),
         dict(slug='professionista-segreteria-ceo', tipo='libro',
              nome="IL PROFESSIONISTA QUALIFICATO DI SEGRETERIA E L'ASSISTENTE DEL CEO",
              descrizione='Competenze, strategie e successo per la figura chiave accanto alla direzione. Copia cartacea autografata.',
-             prezzo_cent=3000, spedizione_cent=500,
+             prezzo_cent=2490, spedizione_cent=500,
              immagine='/static/img/libro-executive-assistant.jpg'),
         dict(slug='distruzione-creatrice-4-0', tipo='libro',
              nome="LA DISTRUZIONE CREATRICE 4.0: COMANDARE L'AI PER MARGINALIZZARE",
              descrizione="Come guidare l'Intelligenza Artificiale per creare margine e vantaggio competitivo. Copia cartacea autografata.",
-             prezzo_cent=6000, spedizione_cent=500,
+             prezzo_cent=2490, spedizione_cent=500,
              immagine='/static/img/libro-la-distruzione-creatrice.jpg'),
     ]
     for l in libri:
         db.session.add(Prodotto(**l))
-
-    software = [
-        dict(slug='mastercash', tipo='software', nome='MasterCash',
-             descrizione='Tesoreria & Cash Flow: pianificazione finanziaria a livello CFO, scadenzario attivo/passivo, previsione di cassa a 12 mesi.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/mastercash.jpg'),
-        dict(slug='mastercpm', tipo='software', nome='MasterCPM',
-             descrizione='Corporate Performance Management: bilancio previsionale, conto economico riclassificato, cash flow indiretto.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/mastercpm.jpg'),
-        dict(slug='masterdebt', tipo='software', nome='MasterDebt',
-             descrizione='Rateizzazioni & Debito Fiscale: cartelle esattoriali e piani di rateizzazione AdER/INPS in un\'unica dashboard.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterdebt.jpg'),
-        dict(slug='masterledger', tipo='software', nome='MasterLedger',
-             descrizione='Contabilità & Fatturazione Elettronica: ciclo attivo e passivo, fatture multi-riga, import XML/p7m dallo SdI.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterledger.jpg'),
-        dict(slug='masterwork', tipo='software', nome='MasterWork',
-             descrizione='Produzione & Fabbrica: tracciatura avanzamenti e anomalie di reparto, gestione operatori e turni.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterwork.jpg'),
-        dict(slug='masterlogistic-wms', tipo='software', nome='MasterLogistic / MasterWMS',
-             descrizione='Magazzino & Logistica: ordini fornitori/clienti, DDT, giacenze, flussi corrieri e KPI logistici in tempo reale.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterlogistic-wms.jpg'),
-        dict(slug='masteranalytics', tipo='software', nome='MasterAnalytics',
-             descrizione='Analisi & Marginalità: analytics di produzione integrata via API, costi, ricavi, marginalità per articolo.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masteranalytics.jpg'),
-        dict(slug='masterquality', tipo='software', nome='MasterQuality',
-             descrizione='Qualità ISO 9001 / IATF: non conformità, audit, APQP/PPAP e documentazione di sistema.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterquality.jpg'),
-        dict(slug='masterprocurement', tipo='software', nome='MasterProcurement',
-             descrizione='Acquisti: richieste d\'acquisto, ordini e vendor rating con flussi approvativi digitali.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterprocurement.jpg'),
-        dict(slug='masterproduction', tipo='software', nome='MasterProduction',
-             descrizione='Pianificazione: programmazione della produzione con visibilità su capacità, priorità e colli di bottiglia.',
-             prezzo_cent=0, spedizione_cent=0, immagine='/static/img/master-suite/masterproduction.jpg'),
-    ]
-    for s in software:
-        db.session.add(Prodotto(**s))
-
     db.session.commit()
-    print(f'>>> Seed prodotti: {len(libri)} libri + {len(software)} software.')
+    print(f'>>> Seed prodotti: {len(libri)} libri.')
 
 
 
