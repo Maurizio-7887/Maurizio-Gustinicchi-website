@@ -39,6 +39,7 @@ class Lead(db.Model):
     pagina_origine = db.Column(db.String(400), default='')
     sincronizzato_crm = db.Column(db.Boolean, default=False)
     risposta_crm = db.Column(db.Text, default='')
+    notificato_desktop = db.Column(db.Boolean, default=False)
     creato_il = db.Column(db.DateTime, default=datetime.utcnow)
 
 
