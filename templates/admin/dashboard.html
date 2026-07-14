@@ -63,4 +63,48 @@
         {% endfor %}
     </table>
 </section>
+
+<script>
+// --- Notifiche desktop per nuovi lead: polling ogni 10 secondi ---
+(function () {
+    var INTERVALLO_MS = 10000;
+
+    function chiediPermessoNotifiche() {
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    }
+
+    function mostraNotificaLead(lead) {
+        var titolo = '📩 Nuovo lead: ' + lead.nome;
+        var corpo = (lead.azienda ? lead.azienda + ' — ' : '') + lead.messaggio;
+        if ('Notification' in window && Notification.permission === 'granted') {
+            var notifica = new Notification(titolo, {
+                body: corpo,
+                requireInteraction: true,   // resta visibile finché l'utente non la chiude
+                tag: 'lead-' + lead.id
+            });
+            notifica.onclick = function () {
+                window.focus();
+                window.location.href = '/admin';
+            };
+        }
+    }
+
+    function controllaNuoviLead() {
+        fetch('/api/leads/check-new', { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : { nuovi_lead: [] }; })
+            .then(function (data) {
+                (data.nuovi_lead || []).forEach(mostraNotificaLead);
+            })
+            .catch(function () { /* silenzioso: riprova al prossimo giro */ });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        chiediPermessoNotifiche();
+        controllaNuoviLead();
+        setInterval(controllaNuoviLead, INTERVALLO_MS);
+    });
+})();
+</script>
 {% endblock %}

@@ -5,13 +5,16 @@ Flask + PostgreSQL (Railway) | Blog gestito da DB | Form contatti -> CRM
 """
 import os
 import json
+import smtplib
 import threading
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from functools import wraps
 
 import requests
 from flask import (Flask, render_template, request, redirect, url_for,
-                   flash, session, abort, Response)
+                   flash, session, abort, Response, jsonify)
 from models import db, Articolo, Lead, Prodotto, Ordine
 
 app = Flask(__name__)
@@ -28,6 +31,15 @@ db.init_app(app)
 # --- Configurazione integrazione CRM ---
 CRM_WEBHOOK_URL = os.environ.get('CRM_WEBHOOK_URL', '')       # endpoint del CRM che riceve i lead
 CRM_API_KEY = os.environ.get('CRM_API_KEY', '')               # opzionale: header X-API-Key
+
+# --- Configurazione notifiche email per nuovi lead ---
+SMTP_SERVER = os.environ.get('SMTP_SERVER', '')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', '587'))
+SMTP_USER = os.environ.get('SMTP_USER', '')
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', SMTP_USER)
+NOTIFICA_EMAIL_DESTINATARIO = os.environ.get('NOTIFICA_EMAIL_DESTINATARIO',
+                                              'info@mauriziogustinicchiconsulting.it')
 
 # --- Stripe (vendita diretta) ---
 # Se STRIPE_SECRET_KEY non è impostata, lo shop funziona in modalità BONIFICO:
@@ -107,6 +119,62 @@ def blog_articolo(slug):
 # =====================================================================
 # CONTATTI: salva lead su DB + invio al CRM via webhook
 # =====================================================================
+def invia_email_notifica_lead(lead_dict):
+    """Invia una email di notifica a info@mauriziogustinicchiconsulting.it
+    ogni volta che arriva un nuovo lead dal form contatti. Configurabile
+    tramite le variabili d'ambiente SMTP_SERVER, SMTP_PORT, SMTP_USER,
+    SMTP_PASSWORD, SENDER_EMAIL. Se SMTP non è configurato, non fa nulla
+    (il lead resta comunque salvato nel DB)."""
+    if not SMTP_SERVER or not SMTP_USER or not SMTP_PASSWORD:
+        print('Notifica email non inviata: SMTP non configurato (SMTP_SERVER/SMTP_USER/SMTP_PASSWORD).')
+        return
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f"Nuovo lead dal sito: {lead_dict.get('nome', '')}"
+        msg['From'] = SENDER_EMAIL
+        msg['To'] = NOTIFICA_EMAIL_DESTINATARIO
+
+        testo = (
+            f"Nuovo lead ricevuto dal form contatti del sito:\n\n"
+            f"Nome: {lead_dict.get('nome', '')}\n"
+            f"Email: {lead_dict.get('email', '')}\n"
+            f"Azienda: {lead_dict.get('azienda', '')}\n"
+            f"Telefono: {lead_dict.get('telefono', '')}\n"
+            f"Messaggio: {lead_dict.get('messaggio', '')}\n"
+            f"Data: {lead_dict.get('data', '')}\n\n"
+            f"Vai al pannello admin: {SITE_URL}/admin\n"
+        )
+
+        html = f"""
+        <html>
+          <body style="font-family:Arial, sans-serif; color:#222;">
+            <h2 style="color:#004d99;">📩 Nuovo lead dal sito web</h2>
+            <table style="border-collapse:collapse;">
+              <tr><td style="padding:6px; font-weight:bold;">Nome</td><td style="padding:6px;">{lead_dict.get('nome', '')}</td></tr>
+              <tr><td style="padding:6px; font-weight:bold;">Email</td><td style="padding:6px;">{lead_dict.get('email', '')}</td></tr>
+              <tr><td style="padding:6px; font-weight:bold;">Azienda</td><td style="padding:6px;">{lead_dict.get('azienda', '')}</td></tr>
+              <tr><td style="padding:6px; font-weight:bold;">Telefono</td><td style="padding:6px;">{lead_dict.get('telefono', '')}</td></tr>
+              <tr><td style="padding:6px; font-weight:bold;">Messaggio</td><td style="padding:6px;">{lead_dict.get('messaggio', '')}</td></tr>
+              <tr><td style="padding:6px; font-weight:bold;">Data</td><td style="padding:6px;">{lead_dict.get('data', '')}</td></tr>
+            </table>
+            <p style="margin-top:20px;">
+              <a href="{SITE_URL}/admin" style="background:#004d99; color:white; padding:10px 18px; border-radius:4px; text-decoration:none;">Apri pannello admin</a>
+            </p>
+          </body>
+        </html>
+        """
+
+        msg.attach(MIMEText(testo, 'plain'))
+        msg.attach(MIMEText(html, 'html'))
+
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.sendmail(SENDER_EMAIL, [NOTIFICA_EMAIL_DESTINATARIO], msg.as_string())
+    except Exception as e:
+        print(f'Errore invio email notifica lead: {e}')
+
+
 def invia_lead_al_crm(lead_dict):
     """Invio asincrono del lead al CRM. Il lead resta comunque nel DB del sito
     come backup: se il CRM non risponde, non si perde nulla."""
@@ -162,6 +230,7 @@ def contatti():
             'data': datetime.now().isoformat(),
         }
         threading.Thread(target=invia_lead_al_crm, args=(payload,), daemon=True).start()
+        threading.Thread(target=invia_email_notifica_lead, args=(payload,), daemon=True).start()
 
         flash('Messaggio inviato con successo! Ti risponderò al più presto.', 'success')
         return redirect(url_for('contatti'))
@@ -321,6 +390,37 @@ def admin_lead_reinvia(lead_id):
     threading.Thread(target=invia_lead_al_crm, args=(payload,), daemon=True).start()
     flash(f'Lead #{lead.id} reinviato al CRM.', 'success')
     return redirect(url_for('admin_dashboard'))
+
+
+@app.route('/api/leads/check-new')
+@login_required
+def api_leads_check_new():
+    """Usato dalla dashboard admin per il polling: restituisce i lead arrivati
+    di recente e non ancora 'notificati' via desktop, poi li marca come tali.
+    Il frontend chiama questo endpoint ogni 10 secondi e mostra una
+    Notification() del browser per ogni nuovo lead trovato."""
+    soglia = datetime.utcnow() - timedelta(minutes=30)
+    nuovi = (Lead.query
+             .filter(Lead.notificato_desktop.is_(False))
+             .filter(Lead.creato_il >= soglia)
+             .order_by(Lead.creato_il.asc())
+             .all())
+
+    risultato = [{
+        'id': l.id,
+        'nome': l.nome,
+        'email': l.email,
+        'azienda': l.azienda,
+        'messaggio': l.messaggio[:150],
+        'creato_il': l.creato_il.strftime('%d/%m/%Y %H:%M'),
+    } for l in nuovi]
+
+    for l in nuovi:
+        l.notificato_desktop = True
+    if nuovi:
+        db.session.commit()
+
+    return jsonify({'nuovi_lead': risultato})
 
 
 # =====================================================================
