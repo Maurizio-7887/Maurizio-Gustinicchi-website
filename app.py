@@ -643,14 +643,16 @@ def seed_prodotti():
 # INIT DB + SEED AUTOMATICO AL PRIMO AVVIO
 # =====================================================================
 def seed_articoli():
-    if Articolo.query.count() > 0:
-        return
+    """Importa soltanto gli articoli del seed che non sono già presenti."""
     seed_file = os.path.join(os.path.dirname(__file__), 'seed_articoli.json')
     if not os.path.exists(seed_file):
         return
     with open(seed_file, encoding='utf-8') as f:
         articoli = json.load(f)
+    inseriti = 0
     for a in articoli:
+        if Articolo.query.filter_by(slug=a['slug']).first():
+            continue
         db.session.add(Articolo(
             slug=a['slug'], titolo=a['titolo'],
             meta_description=a.get('meta_description', ''),
@@ -659,8 +661,10 @@ def seed_articoli():
             body=a['body'], styles=a.get('styles', ''),
             data_pubblicazione=date.fromisoformat(a['data_pubblicazione']),
             pubblicato=True))
-    db.session.commit()
-    print(f'>>> Seed completato: {len(articoli)} articoli importati.')
+        inseriti += 1
+    if inseriti:
+        db.session.commit()
+        print(f'>>> Seed completato: {inseriti} nuovi articoli importati.')
 
 
 with app.app_context():
