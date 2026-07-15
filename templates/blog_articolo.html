@@ -2,6 +2,8 @@
 
 {% block title %}{{ a.titolo }} - Maurizio Gustinicchi Consulting{% endblock %}
 {% block meta_description %}{{ a.meta_description }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{% if a.cover %}https://www.mauriziogustinicchiconsulting.it{{ a.cover }}{% else %}https://www.mauriziogustinicchiconsulting.it/static/img/foto-profilo.jpg{% endif %}{% endblock %}
 
 {% block head_extra %}
 {{ a.styles | safe }}

@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Maurizio Gustinicchi Consulting{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Consulenza AI per CFO, Controller e Operations. Algoritmi su misura per il Controllo di Gestione avanzato.{% endblock %}">
-    <link rel="canonical" href="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+    <link rel="canonical" href="https://www.mauriziogustinicchiconsulting.it{{ request.path }}">
+
+    <!-- Open Graph: anteprime professionali su LinkedIn, Facebook, WhatsApp -->
+    <meta property="og:site_name" content="Maurizio Gustinicchi Consulting">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{{ self.title() }}">
+    <meta property="og:description" content="{{ self.meta_description() }}">
+    <meta property="og:url" content="https://www.mauriziogustinicchiconsulting.it{{ request.path }}">
+    <meta property="og:image" content="{% block og_image %}https://www.mauriziogustinicchiconsulting.it/static/img/foto-profilo.jpg{% endblock %}">
+    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,7 +80,9 @@
         <div class="footer-info">
             <h3>CONTATTAMI</h3>
             <p>SEDE: Via Spluga 8 - 06012 Città di Castello (PG)</p>
-            <p>E-MAIL: gustinicchimaurizio@gmail.com</p>
+            <p>TEL: <a href="tel:+393880457943" style="color:inherit;">388 0457943</a></p>
+            <p>E-MAIL: <a href="mailto:info@mauriziogustinicchiconsulting.it" style="color:inherit;">info@mauriziogustinicchiconsulting.it</a></p>
+            <p>E-MAIL: <a href="mailto:gustinicchimaurizio@gmail.com" style="color:inherit;">gustinicchimaurizio@gmail.com</a></p>
         </div>
 
         <div class="footer-bottom">
