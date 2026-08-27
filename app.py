@@ -7,6 +7,7 @@ import os
 import json
 import smtplib
 import threading
+import re
 from datetime import datetime, date, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -15,7 +16,7 @@ from functools import wraps
 import requests
 from flask import (Flask, render_template, request, redirect, url_for,
                    flash, session, abort, Response, jsonify)
-from models import db, Articolo, Lead, Prodotto, Ordine
+from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mgc-dev-key-cambiami')
@@ -31,6 +32,7 @@ db.init_app(app)
 # --- Configurazione integrazione CRM ---
 CRM_WEBHOOK_URL = os.environ.get('CRM_WEBHOOK_URL', '')       # endpoint del CRM che riceve i lead
 CRM_API_KEY = os.environ.get('CRM_API_KEY', '')               # opzionale: header X-API-Key
+LANDING_PUBLISH_API_KEY = os.environ.get('LANDING_PUBLISH_API_KEY', '')
 
 # --- Configurazione notifiche email per nuovi lead ---
 SMTP_SERVER = os.environ.get('SMTP_SERVER', '')
@@ -239,6 +241,118 @@ def contatti():
 
 
 
+# =====================================================================
+# LANDING PAGE: pubblicazione dalla Content Factory + raccolta lead
+# =====================================================================
+def _validate_landing_payload(data):
+    required = ('id', 'version', 'slug', 'status', 'title', 'blocks')
+    if any(key not in data for key in required):
+        return 'Payload incompleto.'
+    if not re.fullmatch(r'[0-9a-fA-F-]{36}', str(data.get('id', ''))):
+        return 'ID landing non valido.'
+    if not re.fullmatch(r'[a-z0-9-]{1,160}', str(data.get('slug', ''))):
+        return 'Slug non valido.'
+    if data.get('status') not in ('published', 'draft', 'archived'):
+        return 'Stato non valido.'
+    if not isinstance(data.get('blocks'), list) or len(data['blocks']) > 12:
+        return 'Blocchi non validi.'
+    allowed = {'hero', 'benefits', 'lead_form'}
+    if any(not isinstance(b, dict) or b.get('type') not in allowed or not isinstance(b.get('props', {}), dict) for b in data['blocks']):
+        return 'Tipo di blocco non consentito.'
+    theme = data.get('theme') or {}
+    for color in (theme.get('primary', '#0d2b4e'), theme.get('accent', '#e05252')):
+        if not re.fullmatch(r'#[0-9a-fA-F]{6}', str(color)):
+            return 'Colore non valido.'
+    try:
+        version = int(data.get('version'))
+        if version < 1:
+            return 'Versione non valida.'
+    except (TypeError, ValueError):
+        return 'Versione non valida.'
+    return None
+
+
+@app.route('/api/internal/landing-pages/<external_id>', methods=['PUT'])
+def api_publish_landing(external_id):
+    if not LANDING_PUBLISH_API_KEY or request.headers.get('X-API-Key', '') != LANDING_PUBLISH_API_KEY:
+        return jsonify({'status': 'error', 'message': 'Chiave API non valida'}), 401
+    data = request.get_json(silent=True) or {}
+    if data.get('id') != external_id:
+        return jsonify({'status': 'error', 'message': 'ID non coerente'}), 400
+    error = _validate_landing_payload(data)
+    if error:
+        return jsonify({'status': 'error', 'message': error}), 400
+    page = LandingPage.query.filter_by(external_id=external_id).first()
+    incoming_version = int(data['version'])
+    if page and incoming_version < page.version:
+        return jsonify({'status': 'error', 'message': 'Versione precedente a quella pubblicata'}), 409
+    slug_owner = LandingPage.query.filter_by(slug=data['slug']).first()
+    if slug_owner and slug_owner.external_id != external_id:
+        return jsonify({'status': 'error', 'message': 'Slug già utilizzato'}), 409
+    if page is None:
+        page = LandingPage(external_id=external_id)
+        db.session.add(page)
+    page.version = incoming_version
+    page.slug = data['slug']
+    page.status = data['status']
+    page.title = str(data['title'])[:200]
+    page.meta_description = str((data.get('seo') or {}).get('description', ''))[:300]
+    page.payload_json = json.dumps(data, ensure_ascii=False)
+    db.session.commit()
+    public_url = f"{SITE_URL}/landing/{page.slug}"
+    return jsonify({'status': 'success', 'id': external_id, 'version': page.version,
+                    'public_url': public_url}), 201 if incoming_version == 1 else 200
+
+
+def _landing_block(payload, block_type):
+    return next((b.get('props', {}) for b in payload.get('blocks', []) if b.get('type') == block_type), {})
+
+
+@app.route('/landing/<slug>', methods=['GET', 'POST'])
+def landing_pubblica(slug):
+    page = LandingPage.query.filter_by(slug=slug, status='published').first_or_404()
+    payload = page.payload
+    if request.method == 'POST':
+        # Honeypot: i browser umani non compilano questo campo nascosto.
+        if request.form.get('website', '').strip():
+            return redirect(url_for('landing_pubblica', slug=slug))
+        nome = request.form.get('nome', '').strip()[:200]
+        email = request.form.get('email', '').strip()[:200]
+        azienda = request.form.get('azienda', '').strip()[:200]
+        telefono = request.form.get('telefono', '').strip()[:50]
+        messaggio = request.form.get('messaggio', '').strip()[:5000]
+        privacy = request.form.get('privacy') == 'on'
+        if not nome or not email or '@' not in email or not privacy:
+            flash('Inserisci nome, email valida e accetta la privacy policy.', 'error')
+            return render_template('landing_page.html', page=page, data=payload,
+                                   hero=_landing_block(payload, 'hero'),
+                                   benefits=_landing_block(payload, 'benefits'),
+                                   form_block=_landing_block(payload, 'lead_form'))
+        utm = {key: request.form.get(key, '').strip()[:200]
+               for key in ('utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term')}
+        source = (payload.get('lead_config') or {}).get('source') or f'landing:{slug}'
+        lead = Lead(nome=nome, email=email, azienda=azienda, telefono=telefono,
+                    messaggio=messaggio or f'Richiesta dalla landing {page.title}',
+                    fonte=source[:100], pagina_origine=f'/landing/{slug}')
+        db.session.add(lead)
+        db.session.commit()
+        lead_payload = {
+            '_lead_id': lead.id, 'event_id': f'landing-{page.external_id}-{lead.id}',
+            'nome': nome, 'email': email, 'azienda': azienda, 'telefono': telefono,
+            'messaggio': lead.messaggio, 'fonte': source,
+            'landing_id': page.external_id, 'landing_slug': slug,
+            'landing_version': page.version, 'pagina_origine': f'/landing/{slug}',
+            'utm': utm, 'consenso_privacy': True, 'data': datetime.now().isoformat(),
+        }
+        threading.Thread(target=invia_lead_al_crm, args=(lead_payload,), daemon=True).start()
+        threading.Thread(target=invia_email_notifica_lead, args=(lead_payload,), daemon=True).start()
+        return redirect(url_for('landing_pubblica', slug=slug, inviato='1'))
+    return render_template('landing_page.html', page=page, data=payload,
+                           hero=_landing_block(payload, 'hero'),
+                           benefits=_landing_block(payload, 'benefits'),
+                           form_block=_landing_block(payload, 'lead_form'))
+
+
 
 # =====================================================================
 # AGENTE AI (sostituisce l'app Streamlit esterna: gira qui su Railway,
@@ -291,6 +405,8 @@ def sitemap():
     urls += [f'{SITE_URL}/blog', f'{SITE_URL}/contatti', f'{SITE_URL}/negozio']
     for a in Articolo.query.filter_by(pubblicato=True).all():
         urls.append(f'{SITE_URL}/blog/{a.slug}')
+    for landing in LandingPage.query.filter_by(status='published').all():
+        urls.append(f'{SITE_URL}/landing/{landing.slug}')
     xml = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:

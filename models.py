@@ -27,6 +27,28 @@ class Articolo(db.Model):
         return f'{d.day} {mesi[d.month - 1]} {d.year}'
 
 
+class LandingPage(db.Model):
+    __tablename__ = 'landing_pages'
+    id = db.Column(db.Integer, primary_key=True)
+    external_id = db.Column(db.String(36), unique=True, nullable=False, index=True)
+    version = db.Column(db.Integer, nullable=False, default=1)
+    slug = db.Column(db.String(160), unique=True, nullable=False, index=True)
+    status = db.Column(db.String(20), default='published')
+    title = db.Column(db.String(200), nullable=False)
+    meta_description = db.Column(db.String(300), default='')
+    payload_json = db.Column(db.Text, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    @property
+    def payload(self):
+        import json
+        try:
+            data = json.loads(self.payload_json or '{}')
+            return data if isinstance(data, dict) else {}
+        except (TypeError, ValueError):
+            return {}
+
+
 class Lead(db.Model):
     __tablename__ = 'leads'
     id = db.Column(db.Integer, primary_key=True)
