@@ -95,7 +95,7 @@
         {% for a in articoli %}
             <article class="articolo-card">
                 {% if a.cover %}
-                <img src="{{ a.cover }}" alt="{{ a.titolo }}" class="articolo-img">
+                <img src="{{ article_cover_url(a.cover) }}" alt="{{ a.titolo }}" class="articolo-img">
                 {% endif %}
                 <div class="articolo-content">
                     <h2>{{ a.titolo }}</h2>

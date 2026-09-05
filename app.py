@@ -8,7 +8,15 @@ import json
 import smtplib
 import threading
 import re
+import hmac
+import hashlib
+import uuid
 from datetime import datetime, date, timedelta
+from urllib.parse import urljoin, urlparse
+
+import bleach
+from bleach.css_sanitizer import CSSSanitizer
+from sqlalchemy import inspect, text
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from functools import wraps
@@ -20,6 +28,7 @@ from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mgc-dev-key-cambiami')
+app.config['MAX_CONTENT_LENGTH'] = 600 * 1024
 
 # --- Database: PostgreSQL su Railway, SQLite in locale ---
 db_url = os.environ.get('DATABASE_URL', 'sqlite:///mgc_sito.db')
@@ -33,6 +42,9 @@ db.init_app(app)
 CRM_WEBHOOK_URL = os.environ.get('CRM_WEBHOOK_URL', '')       # endpoint del CRM che riceve i lead
 CRM_API_KEY = os.environ.get('CRM_API_KEY', '')               # opzionale: header X-API-Key
 LANDING_PUBLISH_API_KEY = os.environ.get('LANDING_PUBLISH_API_KEY', '')
+# Chiave separata dall'integrazione landing: senza chiave l'endpoint articoli
+# resta deliberatamente inaccessibile.
+app.config['WEBSITE_ARTICLE_PUBLISH_API_KEY'] = os.environ.get('WEBSITE_ARTICLE_PUBLISH_API_KEY', '')
 
 # --- Configurazione notifiche email per nuovi lead ---
 SMTP_SERVER = os.environ.get('SMTP_SERVER', '')
@@ -61,9 +73,21 @@ ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Mgc@Admin2026!')
 SITE_URL = os.environ.get('SITE_URL', 'https://www.mauriziogustinicchiconsulting.it')
 
 
+def absolute_cover_url(cover):
+    """Return a canonical HTTPS URL for a local or remote article cover."""
+    if not cover:
+        return ''
+    if cover.startswith('https://'):
+        return cover
+    return urljoin(SITE_URL.rstrip('/') + '/', cover.lstrip('/'))
+
+
 @app.context_processor
 def inject_globals():
-    return {'current_year': datetime.now().year}
+    return {
+        'current_year': datetime.now().year,
+        'article_cover_url': absolute_cover_url,
+    }
 
 
 # =====================================================================
@@ -107,6 +131,7 @@ def servizio_dettaglio(slug):
 def blog():
     articoli = (Articolo.query
                 .filter_by(pubblicato=True)
+                .filter(Articolo.data_pubblicazione <= date.today())
                 .order_by(Articolo.data_pubblicazione.desc())
                 .all())
     return render_template('blog_lista.html', articoli=articoli)
@@ -114,8 +139,162 @@ def blog():
 
 @app.route('/blog/<slug>')
 def blog_articolo(slug):
-    articolo = Articolo.query.filter_by(slug=slug, pubblicato=True).first_or_404()
+    articolo = (Articolo.query.filter_by(slug=slug, pubblicato=True)
+                .filter(Articolo.data_pubblicazione <= date.today()).first_or_404())
     return render_template('blog_articolo.html', a=articolo)
+
+
+# =====================================================================
+# CONTENT FACTORY: pubblicazione articoli dal CRM
+# =====================================================================
+ARTICLE_HTML_TAGS = [
+    'a', 'article', 'aside', 'blockquote', 'br', 'code', 'div', 'em', 'figcaption',
+    'figure', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'li', 'ol', 'p',
+    'pre', 'section', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'tbody',
+    'td', 'th', 'thead', 'tr', 'u', 'ul'
+]
+ARTICLE_HTML_ATTRIBUTES = {
+    '*': ['class', 'id', 'style', 'title'],
+    'a': ['href', 'rel', 'target'],
+    'img': ['alt', 'height', 'loading', 'src', 'width'],
+    'td': ['colspan', 'rowspan'],
+    'th': ['colspan', 'rowspan', 'scope'],
+}
+ARTICLE_CSS_SANITIZER = CSSSanitizer(allowed_css_properties=[
+    'background-color', 'border', 'border-bottom', 'border-collapse', 'border-radius',
+    'color', 'display', 'font-size', 'font-style', 'font-weight', 'height', 'line-height',
+    'margin', 'margin-bottom', 'margin-left', 'margin-right', 'margin-top', 'max-width',
+    'padding', 'padding-bottom', 'padding-left', 'padding-right', 'padding-top', 'text-align',
+    'text-decoration', 'width'
+])
+ARTICLE_HTML_CLEANER = bleach.Cleaner(
+    tags=ARTICLE_HTML_TAGS,
+    attributes=ARTICLE_HTML_ATTRIBUTES,
+    protocols=['http', 'https', 'mailto'],
+    strip=True,
+    css_sanitizer=ARTICLE_CSS_SANITIZER,
+)
+
+
+def _article_api_error(message, status=400):
+    return jsonify({'ok': False, 'error': message}), status
+
+
+def _canonical_article_hash(data):
+    """Hash the normalized persisted payload, not incidental JSON formatting."""
+    canonical = json.dumps(data, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
+
+
+def _validated_article_payload(data, external_id):
+    if not isinstance(data, dict):
+        return None, 'Il payload JSON deve essere un oggetto.'
+    try:
+        if str(uuid.UUID(external_id)) != external_id:
+            raise ValueError
+    except (ValueError, AttributeError):
+        return None, 'external_id non valido.'
+
+    required = ('version', 'slug', 'title', 'meta_description', 'excerpt', 'body_html',
+                'status', 'publish_date')
+    if any(name not in data for name in required):
+        return None, 'Payload incompleto.'
+    if isinstance(data['version'], bool) or not isinstance(data['version'], int) or data['version'] < 1:
+        return None, 'version deve essere un intero maggiore o uguale a 1.'
+    slug = data['slug']
+    if not isinstance(slug, str) or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', slug) or len(slug) > 200:
+        return None, 'slug deve essere canonico, minuscolo e separato da trattini.'
+    string_limits = {
+        'title': 300, 'meta_description': 1000, 'excerpt': 5000, 'body_html': 500000,
+    }
+    for field, limit in string_limits.items():
+        if not isinstance(data[field], str) or not data[field].strip() or len(data[field]) > limit:
+            return None, f'{field} non valido.'
+    if data['status'] not in ('draft', 'published'):
+        return None, 'status deve essere draft o published.'
+    if not isinstance(data['publish_date'], str):
+        return None, 'publish_date non valido.'
+    try:
+        publish_date = date.fromisoformat(data['publish_date'])
+    except ValueError:
+        return None, 'publish_date deve essere ISO YYYY-MM-DD.'
+    if publish_date.isoformat() != data['publish_date']:
+        return None, 'publish_date deve essere ISO YYYY-MM-DD.'
+
+    cover = data.get('cover', '')
+    if cover is None:
+        cover = ''
+    if not isinstance(cover, str) or len(cover) > 400:
+        return None, 'cover non valida.'
+    cover = cover.strip()
+    if cover:
+        parsed = urlparse(cover)
+        is_https_url = parsed.scheme == 'https' and bool(parsed.hostname)
+        # Both /static/x.jpg and static/x.jpg are paths; rendering normalizes
+        # either form to an absolute SITE_URL-based URL.
+        is_safe_path = (not parsed.scheme and not parsed.netloc and not cover.startswith('//') and
+                        '\\' not in cover and '..' not in cover.split('/'))
+        if not (is_https_url or is_safe_path):
+            return None, 'cover deve essere un path o un URL HTTPS.'
+
+    normalized = {
+        'version': data['version'], 'slug': slug, 'title': data['title'].strip(),
+        'meta_description': data['meta_description'].strip(), 'excerpt': data['excerpt'].strip(),
+        'body_html': ARTICLE_HTML_CLEANER.clean(data['body_html']), 'status': data['status'],
+        'publish_date': publish_date.isoformat(), 'cover': cover.strip(),
+    }
+    if not normalized['body_html'].strip():
+        return None, 'body_html non contiene HTML consentito.'
+    return normalized, None
+
+
+@app.route('/api/internal/articles/<external_id>', methods=['PUT'])
+def api_publish_article(external_id):
+    api_key = app.config.get('WEBSITE_ARTICLE_PUBLISH_API_KEY', '')
+    supplied_key = request.headers.get('X-API-Key', '')
+    if not api_key or not hmac.compare_digest(supplied_key, api_key):
+        return _article_api_error('Chiave API non valida.', 401)
+    data = request.get_json(silent=True)
+    if data is None:
+        return _article_api_error('JSON non valido.')
+    payload, error = _validated_article_payload(data, external_id)
+    if error:
+        return _article_api_error(error)
+
+    payload_hash = _canonical_article_hash(payload)
+    article = Articolo.query.filter_by(external_id=external_id).first()
+    incoming_version = payload['version']
+    if article:
+        if incoming_version < article.version:
+            return _article_api_error('Versione precedente a quella pubblicata.', 409)
+        if incoming_version == article.version:
+            if hmac.compare_digest(article.payload_hash or '', payload_hash):
+                return jsonify({'ok': True, 'id': article.id, 'version': article.version,
+                                'url': f'{SITE_URL.rstrip("/")}/blog/{article.slug}',
+                                'status': 'published' if article.pubblicato else 'draft'}), 200
+            return _article_api_error('Stessa versione con payload differente.', 409)
+
+    slug_owner = Articolo.query.filter_by(slug=payload['slug']).first()
+    if slug_owner and slug_owner.external_id != external_id:
+        return _article_api_error('Slug già utilizzato da un altro articolo.', 409)
+    created = article is None
+    if created:
+        article = Articolo(external_id=external_id)
+        db.session.add(article)
+    article.version = incoming_version
+    article.slug = payload['slug']
+    article.titolo = payload['title']
+    article.meta_description = payload['meta_description']
+    article.excerpt = payload['excerpt']
+    article.body = payload['body_html']
+    article.cover = payload['cover']
+    article.data_pubblicazione = date.fromisoformat(payload['publish_date'])
+    article.pubblicato = payload['status'] == 'published'
+    article.payload_hash = payload_hash
+    db.session.commit()
+    return jsonify({'ok': True, 'id': article.id, 'version': article.version,
+                    'url': f'{SITE_URL.rstrip("/")}/blog/{article.slug}',
+                    'status': payload['status']}), 201 if created else 200
 
 
 # =====================================================================
@@ -403,7 +582,8 @@ def sitemap():
     urls = [f'{SITE_URL}/'] + [f'{SITE_URL}/{p}' for p in PAGINE]
     urls += [f'{SITE_URL}/servizi/{s}' for s in SERVIZI_DETTAGLIO]
     urls += [f'{SITE_URL}/blog', f'{SITE_URL}/contatti', f'{SITE_URL}/negozio']
-    for a in Articolo.query.filter_by(pubblicato=True).all():
+    for a in (Articolo.query.filter_by(pubblicato=True)
+              .filter(Articolo.data_pubblicazione <= date.today()).all()):
         urls.append(f'{SITE_URL}/blog/{a.slug}')
     for landing in LandingPage.query.filter_by(status='published').all():
         urls.append(f'{SITE_URL}/landing/{landing.slug}')
@@ -758,6 +938,34 @@ def seed_prodotti():
 # =====================================================================
 # INIT DB + SEED AUTOMATICO AL PRIMO AVVIO
 # =====================================================================
+def ensure_editorial_article_columns():
+    """Add integration columns to a legacy ``articoli`` table without data loss.
+
+    ``create_all`` only creates missing tables; it never alters a production table.
+    This deliberately small, additive migration works on SQLite and PostgreSQL and
+    is safe to run on every process startup.
+    """
+    inspector = inspect(db.engine)
+    if 'articoli' not in inspector.get_table_names():
+        return
+    existing = {column['name'] for column in inspector.get_columns('articoli')}
+    additions = {
+        'external_id': 'VARCHAR(36)',
+        'version': 'INTEGER DEFAULT 1',
+        'payload_hash': 'VARCHAR(64)',
+        'updated_at': 'TIMESTAMP',
+    }
+    with db.engine.begin() as connection:
+        for column, definition in additions.items():
+            if column not in existing:
+                connection.execute(text(f'ALTER TABLE articoli ADD COLUMN {column} {definition}'))
+        # Multiple NULL external_id values are valid for pre-existing articles.
+        connection.execute(text(
+            'CREATE UNIQUE INDEX IF NOT EXISTS ix_articoli_external_id '
+            'ON articoli (external_id)'
+        ))
+
+
 def seed_articoli():
     """Importa soltanto gli articoli del seed che non sono già presenti."""
     seed_file = os.path.join(os.path.dirname(__file__), 'seed_articoli.json')
@@ -785,6 +993,7 @@ def seed_articoli():
 
 with app.app_context():
     db.create_all()
+    ensure_editorial_article_columns()
     seed_articoli()
     seed_prodotti()
 
