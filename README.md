@@ -33,8 +33,38 @@ static/                # css, img (ottimizzate: 79MB -> 8MB), video, docs (PDF c
 | `CRM_WEBHOOK_URL` | endpoint del CRM che riceve i lead (vedi sotto) |
 | `CRM_API_KEY` | opzionale, inviata come header `X-API-Key` |
 | `SITE_URL` | `https://www.mauriziogustinicchiconsulting.it` |
+| `WEBSITE_ARTICLE_PUBLISH_API_KEY` | segreto condiviso con il CRM per la pubblicazione articoli |
 
 5. Al primo avvio il DB si crea da solo e i 6 articoli vengono importati (seed automatico).
+
+## API editoriale (CRM → sito)
+
+Il CRM pubblica un articolo con una richiesta autenticata:
+
+```text
+PUT /api/internal/articles/<external_id UUID>
+X-API-Key: $WEBSITE_ARTICLE_PUBLISH_API_KEY
+Content-Type: application/json
+```
+
+Il corpo richiede `version` (intero >= 1), `slug` minuscolo con trattini,
+`title`, `meta_description`, `excerpt`, `body_html`, `status` (`draft` o
+`published`) e `publish_date` (`YYYY-MM-DD`); `cover` è facoltativa e può
+essere un path (ad esempio `/static/...`) o un URL HTTPS. La risposta contiene
+`ok`, `id`, `version`, `url` e `status`.
+
+La pubblicazione è idempotente per `external_id`, versione e hash del payload
+normalizzato: la stessa richiesta è un successo senza creare duplicati; una
+versione inferiore o la stessa versione con contenuto diverso restituisce 409.
+L'HTML in ingresso viene sottoposto a una whitelist conservativa. La chiave è
+obbligatoria: se non è configurata l'endpoint restituisce 401.
+
+All'avvio il sito aggiunge in modo additivo alla tabella legacy `articoli` i
+campi `external_id`, `version`, `payload_hash` e `updated_at`; la migrazione è
+compatibile sia con SQLite locale sia con PostgreSQL e non modifica gli
+articoli esistenti. Articoli con data futura non sono visibili in `/blog`, nel
+dettaglio né nella sitemap. Le copertine locali vengono rese come URL assoluti
+nelle card e nei meta Open Graph.
 
 ## Dominio (resta su Aruba come registrar)
 

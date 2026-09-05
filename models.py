@@ -17,6 +17,12 @@ class Articolo(db.Model):
     styles = db.Column(db.Text, default='')           # eventuale <style> specifico
     data_pubblicazione = db.Column(db.Date, default=date.today)
     pubblicato = db.Column(db.Boolean, default=True)
+    # Metadati di integrazione editoriale. Sono nullable per non interrompere
+    # gli articoli storici creati dal pannello admin.
+    external_id = db.Column(db.String(36), unique=True, nullable=True, index=True)
+    version = db.Column(db.Integer, nullable=False, default=1)
+    payload_hash = db.Column(db.String(64), nullable=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     creato_il = db.Column(db.DateTime, default=datetime.utcnow)
 
     @property
