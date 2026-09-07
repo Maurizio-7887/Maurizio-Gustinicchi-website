@@ -35,5 +35,27 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE < backup.sql
 - **Admin panel:** tutto funziona uguale, legge da PostgreSQL Railway
 
 ---
+
+## Variabili ambiente Railway richieste
+
+Da impostare su Railway dashboard → web service → **Variables** (mai nel repository). Vedi anche `.env.example`.
+
+### Sicurezza
+- `SECRET_KEY` — stringa random di almeno 32 caratteri, usata da Flask per firmare sessioni/CSRF. Generarla con es. `python -c "import secrets; print(secrets.token_hex(32))"`.
+- `ADMIN_USER` — nome utente admin del pannello (default `maurizio`).
+- `ADMIN_PASSWORD` — password lunga e unica, diversa dal default di sviluppo (es. `MgcAdmin2026!Secure@123`).
+
+### Database
+- `DATABASE_URL` — connection string PostgreSQL Railway (già configurata, vedi sopra).
+
+### Integrazione Google AI (generazione articoli con Gemini/Imagen)
+- `GOOGLE_API_KEY` — chiave da Google AI Studio. Placeholder per ora, da sostituire con la chiave reale prima di usare l'assistente IA nel pannello admin.
+- `ARTICLE_TEXT_MODEL` — modello Gemini per la generazione testo (default `gemini-2.5-flash`).
+- `ARTICLE_IMAGE_MODEL` — modello Imagen per la generazione immagini (default `imagen-3.0-generate-002`).
+
+### Metadati articoli
+- `ARTICLE_AUTHOR` — nome autore predefinito per gli articoli (default `Maurizio Gustinicchi`, personalizzabile).
+
+---
 **Creato da Railway Agent il 3 agosto 2026**
 

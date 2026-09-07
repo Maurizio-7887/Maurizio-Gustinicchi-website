@@ -28,6 +28,8 @@ from flask import (Flask, render_template, request, redirect, url_for,
 from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine
 
 app = Flask(__name__)
+# SECRET_KEY: impostare su Railway dashboard (web service -> Variables) con una
+# stringa random di almeno 32 caratteri. Il default sotto è solo per lo sviluppo locale.
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mgc-dev-key-cambiami')
 app.config['MAX_CONTENT_LENGTH'] = 600 * 1024
 
@@ -68,6 +70,8 @@ if STRIPE_SECRET_KEY:
     stripe.api_key = STRIPE_SECRET_KEY
 
 # --- Admin ---
+# ADMIN_USER / ADMIN_PASSWORD: impostare su Railway dashboard (web service ->
+# Variables). Usare una password lunga e unica, diversa dal default di sviluppo.
 ADMIN_USER = os.environ.get('ADMIN_USER', 'maurizio')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Mgc@Admin2026!')
 IS_PRODUCTION = bool(os.environ.get('RAILWAY_ENVIRONMENT') or os.environ.get('RAILWAY_PROJECT_ID'))
@@ -77,9 +81,18 @@ ADMIN_SECURITY_CONFIGURED = bool(
 )
 
 SITE_URL = os.environ.get('SITE_URL', 'https://www.mauriziogustinicchiconsulting.it')
+# --- Assistente IA articoli (Google AI Studio: Gemini / Imagen) ---
+# GOOGLE_API_KEY: impostare su Railway dashboard (web service -> Variables) con
+# la chiave ottenuta da Google AI Studio. Senza questa variabile la generazione
+# automatica di articoli/immagini non è disponibile.
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+# ARTICLE_TEXT_MODEL / ARTICLE_IMAGE_MODEL: modelli Gemini/Imagen usati per
+# generare testo e immagini degli articoli. Configurabili su Railway dashboard,
+# i default sono già adatti alla maggior parte dei casi.
 ARTICLE_TEXT_MODEL = os.environ.get('ARTICLE_TEXT_MODEL', 'gemini-2.5-flash')
 ARTICLE_IMAGE_MODEL = os.environ.get('ARTICLE_IMAGE_MODEL', 'imagen-3.0-generate-002')
+# ARTICLE_AUTHOR: nome autore predefinito per gli articoli generati/importati.
+# Personalizzabile su Railway dashboard.
 ARTICLE_AUTHOR = os.environ.get('ARTICLE_AUTHOR', 'Maurizio Gustinicchi')
 MAX_GENERATED_IMAGE_BYTES = 10 * 1024 * 1024
 
