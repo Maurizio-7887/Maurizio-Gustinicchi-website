@@ -44,6 +44,7 @@
 
     <h2 id="form-prodotto" style="margin-top:50px; border-bottom:3px solid #ff9900; padding-bottom:8px;">✏️ Aggiungi / Modifica Prodotto</h2>
     <form method="POST" action="{{ url_for('admin_prodotti') }}" style="background:white; padding:25px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-top:15px;">
+        <input type="hidden" name="_csrf_token" value="{{ admin_csrf_token() }}">
         <input type="hidden" name="id" id="f_id">
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">

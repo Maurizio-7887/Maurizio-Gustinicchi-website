@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, date
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import deferred
 
 db = SQLAlchemy()
 
@@ -24,6 +25,19 @@ class Articolo(db.Model):
     payload_hash = db.Column(db.String(64), nullable=True)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     creato_il = db.Column(db.DateTime, default=datetime.utcnow)
+    # Workflow editoriale assistito da IA (i campi storici restano compatibili).
+    traccia_input = db.Column(db.Text, default='')
+    pubblico_target = db.Column(db.String(200), default='')
+    tono_voce = db.Column(db.String(100), default='Professionale e concreto')
+    autore = db.Column(db.String(160), default='Maurizio Gustinicchi')
+    stato = db.Column(db.String(20), default='bozza')  # bozza | pubblicato
+    published_at = db.Column(db.DateTime, nullable=True)
+    image_prompt = db.Column(db.Text, default='')
+    cover_filename = db.Column(db.String(240), default='')
+    cover_mimetype = db.Column(db.String(80), default='')
+    # Su Railway il filesystem locale è effimero: la copertina viene archiviata
+    # nel database PostgreSQL e servita da una rotta stabile.
+    cover_data = deferred(db.Column(db.LargeBinary, nullable=True))
 
     @property
     def data_it(self):

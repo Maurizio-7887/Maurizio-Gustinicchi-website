@@ -30,6 +30,7 @@
             <td style="padding:8px; text-align:center;">{{ o.metodo_pagamento }}</td>
             <td style="padding:8px; text-align:center;">
                 <form method="POST" action="{{ url_for('admin_ordine_stato', ordine_id=o.id) }}">
+                    <input type="hidden" name="_csrf_token" value="{{ admin_csrf_token() }}">
                     <select name="stato" onchange="this.form.submit()" style="padding:5px; border-radius:4px;">
                         {% for s in ['da_confermare','in_attesa_pagamento','pagato','spedito','annullato'] %}
                         <option value="{{ s }}" {{ 'selected' if o.stato==s else '' }}>{{ s.replace('_',' ') }}</option>

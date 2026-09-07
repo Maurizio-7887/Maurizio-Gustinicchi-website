@@ -1,39 +1,99 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Modifica' if a else 'Nuovo' }} Articolo - Admin MGC{% endblock %}
 {% block content %}
-<section style="max-width:1000px; margin:30px auto; padding:0 5%;">
-    <h1 style="color:#004d99;">{{ 'Modifica Articolo' if a else 'Nuovo Articolo' }}</h1>
-    <p><a href="/admin">&larr; Torna al pannello</a></p>
-    <form method="POST" style="display:flex; flex-direction:column; gap:14px; background:white; padding:25px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-        <label><strong>Titolo</strong></label>
-        <input type="text" name="titolo" value="{{ a.titolo if a else '' }}" required style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+<style>
+.article-ai-wrap{max-width:1240px;margin:28px auto;padding:0 4%}.article-ai-card{background:#fff;border-radius:14px;box-shadow:0 5px 24px rgba(0,52,102,.10);padding:24px;margin-bottom:20px}.article-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-weight:700;color:#163a5f}.field input,.field select,.field textarea{padding:11px;border:1px solid #b9c7d5;border-radius:7px;font:inherit}.field textarea{resize:vertical}.btn-ai,.btn-cover,.btn-draft,.btn-publish{border:0;border-radius:8px;padding:13px 18px;font-weight:800;cursor:pointer}.btn-ai{background:linear-gradient(135deg,#5b21b6,#2563eb);color:#fff}.btn-cover{background:#f59e0b;color:#172033}.btn-draft{background:#e2e8f0;color:#172033}.btn-publish{background:#15803d;color:#fff;font-size:1.05rem}.btn-ai:disabled,.btn-cover:disabled{opacity:.6;cursor:wait}.status-box{display:none;padding:12px;border-radius:8px;margin-top:12px;font-weight:700}.status-info{display:block;background:#e8f1ff;color:#064789}.status-ok{display:block;background:#e8f8ee;color:#116530}.status-error{display:block;background:#feecec;color:#a11919}.editor-tabs{display:flex;gap:8px;margin-bottom:8px}.editor-tabs button{border:1px solid #94a3b8;background:#f8fafc;border-radius:6px;padding:7px 12px;cursor:pointer}.preview-frame{width:100%;min-height:620px;border:1px solid #cbd5e1;border-radius:8px;background:white}.cover-preview{width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid #cbd5e1;border-radius:10px;background:#eef2f7}.quality{padding:10px;border-radius:8px;background:#fff7db;color:#765600;font-weight:700}.actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;position:sticky;bottom:0;background:rgba(255,255,255,.96);padding:14px;border-top:1px solid #ddd}.hint{color:#64748b;font-size:.9rem}.loader{display:inline-block;width:16px;height:16px;border:3px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:850px){.article-grid{grid-template-columns:1fr}.preview-frame{min-height:420px}}
+</style>
+<section class="article-ai-wrap">
+  <h1 style="color:#004d99;margin-bottom:5px;">✍️ {{ 'Revisione Articolo' if a else 'Nuovo Articolo Assistito da IA' }}</h1>
+  <p><a href="/admin">&larr; Torna al pannello</a></p>
 
-        <label><strong>Slug</strong> (URL: /blog/<em>slug</em>, senza spazi)</label>
-        <input type="text" name="slug" value="{{ a.slug if a else '' }}" required pattern="[A-Za-z0-9\-\.]+" style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+  <form id="articleForm" method="POST" action="{{ url_for('admin_articolo', art_id=a.id) if a else url_for('admin_articolo') }}">
+    <input type="hidden" name="_csrf_token" value="{{ admin_csrf_token() }}">
+    <input type="hidden" id="articleId" name="article_id" value="{{ a.id if a else '' }}">
 
-        <label><strong>Data pubblicazione</strong></label>
-        <input type="date" name="data_pubblicazione" value="{{ a.data_pubblicazione if a else '' }}" style="padding:10px; border:1px solid #ccc; border-radius:4px; max-width:250px;">
+    <div class="article-ai-card">
+      <h2 style="margin-top:0;color:#5b21b6;">1. Traccia editoriale</h2>
+      <div class="article-grid">
+        <div class="field"><label for="titolo">Titolo provvisorio</label><input id="titolo" name="titolo" maxlength="300" required value="{{ a.titolo if a else '' }}" placeholder="Es. Perché il controllo di gestione anticipa le crisi"></div>
+        <div class="field"><label for="pubblico_target">Pubblico di riferimento</label><input id="pubblico_target" name="pubblico_target" maxlength="200" value="{{ a.pubblico_target if a else 'Imprenditori e responsabili di PMI italiane' }}"></div>
+        <div class="field"><label for="tono_voce">Tono di voce</label><select id="tono_voce" name="tono_voce"><option>Professionale e concreto</option><option>Autorevole e divulgativo</option><option>Diretto e provocatorio, senza sensazionalismi</option><option>Tecnico ma comprensibile</option></select></div>
+        <div class="field"><label for="autore">Autore</label><input id="autore" name="autore" maxlength="160" value="{{ a.autore if a and a.autore else default_author|default('Maurizio Gustinicchi') }}"></div>
+      </div>
+      <div class="field" style="margin-top:16px;"><label for="traccia_input">Concetti e temi chiave (uno per riga)</label><textarea id="traccia_input" name="traccia_input" rows="8" maxlength="12000" placeholder="- problema concreto da affrontare&#10;- errore frequente nelle PMI&#10;- metodo operativo proposto&#10;- esempio o conseguenza pratica&#10;- conclusione e azione consigliata">{{ a.traccia_input if a else '' }}</textarea><span class="hint">Scrivi fatti e concetti verificabili. L’IA li svilupperà senza inventare dati o fonti.</span></div>
+      <button id="generateBtn" type="button" class="btn-ai" onclick="generaBozza()">✨ GENERA BOZZA CON IA</button>
+      <div id="generationStatus" class="status-box" role="status"></div>
+    </div>
 
-        <label><strong>Meta description</strong> (SEO, max ~160 caratteri)</label>
-        <textarea name="meta_description" rows="2" style="padding:10px; border:1px solid #ccc; border-radius:4px;">{{ a.meta_description if a else '' }}</textarea>
+    <div class="article-ai-card">
+      <h2 style="margin-top:0;color:#004d99;">2. Revisione umana</h2>
+      <div class="article-grid">
+        <div>
+          <div class="field"><label for="slug">Slug / permalink</label><input id="slug" name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" value="{{ a.slug if a else '' }}" placeholder="titolo-articolo"></div>
+          <div class="field" style="margin-top:12px;"><label for="meta_description">Meta description (max 160)</label><textarea id="meta_description" name="meta_description" rows="3" maxlength="160">{{ a.meta_description if a else '' }}</textarea></div>
+          <div class="field" style="margin-top:12px;"><label for="excerpt">Estratto per la pagina Blog</label><textarea id="excerpt" name="excerpt" rows="4">{{ a.excerpt if a else '' }}</textarea></div>
+          <div class="field" style="margin-top:12px;"><label for="data_pubblicazione">Data pubblicazione</label><input type="date" id="data_pubblicazione" name="data_pubblicazione" value="{{ a.data_pubblicazione.isoformat() if a and a.data_pubblicazione else datetime_today|default('') }}"></div>
+        </div>
+        <div>
+          <div class="field"><label for="image_prompt">Prompt copertina (modificabile)</label><textarea id="image_prompt" name="image_prompt" rows="5">{{ a.image_prompt if a else '' }}</textarea></div>
+          <button id="coverBtn" type="button" class="btn-cover" style="margin:10px 0;" onclick="generaCopertina(false)">🖼️ GENERA / RIGENERA COPERTINA</button>
+          <img id="coverPreview" class="cover-preview" src="{{ a.cover if a and a.cover else '' }}" alt="Anteprima copertina" {% if not a or not a.cover %}style="display:none"{% endif %}>
+          <input type="hidden" id="cover" name="cover" value="{{ a.cover if a else '' }}">
+        </div>
+      </div>
 
-        <label><strong>Excerpt</strong> (riassunto mostrato nella card del blog)</label>
-        <textarea name="excerpt" rows="3" style="padding:10px; border:1px solid #ccc; border-radius:4px;">{{ a.excerpt if a else '' }}</textarea>
+      <div class="field" style="margin-top:18px;"><label for="body">Testo completo in HTML</label><div class="editor-tabs"><button type="button" onclick="mostraEditor()">Modifica HTML</button><button type="button" onclick="mostraPreview()">Anteprima live</button></div><textarea id="body" name="body" rows="30" required style="font-family:ui-monospace,monospace;font-size:.88rem;">{{ a.body if a else '' }}</textarea><iframe id="bodyPreview" class="preview-frame" sandbox="" title="Anteprima articolo" style="display:none"></iframe></div>
+      <div id="qualityStatus" class="quality" style="margin-top:12px;">Controllo qualità in attesa del testo.</div>
+      <details style="margin-top:16px;"><summary><strong>CSS specifico opzionale</strong></summary><div class="field"><textarea name="styles" rows="6" style="font-family:monospace">{{ a.styles if a else '' }}</textarea></div></details>
+    </div>
 
-        <label><strong>Immagine copertina</strong> (path, es. /static/img/copertina.jpg)</label>
-        <input type="text" name="cover" value="{{ a.cover if a else '' }}" style="padding:10px; border:1px solid #ccc; border-radius:4px;">
-
-        <label><strong>Contenuto HTML</strong> (il corpo dell'articolo, dentro il &lt;main&gt;)</label>
-        <textarea name="body" rows="22" required style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:monospace; font-size:0.85em;">{{ a.body if a else '' }}</textarea>
-
-        <label><strong>Style CSS specifici</strong> (opzionale, blocco &lt;style&gt;...&lt;/style&gt;)</label>
-        <textarea name="styles" rows="6" style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:monospace; font-size:0.85em;">{{ a.styles if a else '' }}</textarea>
-
-        <label style="display:flex; align-items:center; gap:8px;">
-            <input type="checkbox" name="pubblicato" {{ 'checked' if not a or a.pubblicato else '' }}> <strong>Pubblicato</strong>
-        </label>
-
-        <button type="submit" style="padding:14px; background:#004d99; color:white; border:none; border-radius:4px; font-weight:bold; font-size:1.05em; cursor:pointer;">💾 Salva Articolo</button>
-    </form>
+    <div class="actions">
+      <button type="submit" name="azione" value="bozza" class="btn-draft">💾 SALVA COME BOZZA</button>
+      <button type="submit" name="azione" value="pubblica" class="btn-publish" onclick="return confirm('Hai riletto tutto il testo e verificato la copertina? Pubblicare ora online?')">✅ CONFERMA E PUBBLICA ONLINE</button>
+    </div>
+  </form>
 </section>
+<script>
+const csrfToken = {{ admin_csrf_token()|tojson }};
+const statusBox = document.getElementById('generationStatus');
+const articleForm = document.getElementById('articleForm');
+const toneSelect = document.getElementById('tono_voce');
+{% if a and a.tono_voce %}toneSelect.value = {{ a.tono_voce|tojson }};{% endif %}
+if (!document.getElementById('data_pubblicazione').value) document.getElementById('data_pubblicazione').value = new Date().toISOString().slice(0,10);
+
+function setStatus(message, kind='info') { statusBox.className='status-box status-'+kind; statusBox.textContent=message; }
+function setLoading(button, loading, label) { button.disabled=loading; button.innerHTML=loading?'<span class="loader"></span>'+label:button.dataset.original; }
+document.querySelectorAll('#generateBtn,#coverBtn').forEach(b=>b.dataset.original=b.innerHTML);
+
+async function generaBozza(){
+  const button=document.getElementById('generateBtn');
+  const payload={article_id:document.getElementById('articleId').value||null,titolo:document.getElementById('titolo').value,pubblico_target:document.getElementById('pubblico_target').value,tono_voce:toneSelect.value,traccia_input:document.getElementById('traccia_input').value};
+  if(!payload.titolo.trim()||!payload.pubblico_target.trim()||!payload.traccia_input.trim()){setStatus('Compila titolo, pubblico e concetti chiave.','error');return;}
+  setLoading(button,true,'GENERAZIONE TESTO…'); setStatus('L’IA sta sviluppando la bozza. Non chiudere la pagina.','info');
+  try{
+    const response=await fetch('/admin/api/articoli/genera-bozza',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},body:JSON.stringify(payload)});
+    const data=await response.json(); if(!response.ok||!data.ok) throw new Error(data.error||'Generazione non riuscita');
+    document.getElementById('articleId').value=data.article_id; articleForm.action='/admin/articolo/'+data.article_id;
+    document.getElementById('titolo').value=data.title; document.getElementById('slug').value=data.slug; document.getElementById('meta_description').value=data.meta_description; document.getElementById('excerpt').value=data.excerpt; document.getElementById('body').value=data.body_html; document.getElementById('image_prompt').value=data.image_prompt;
+    controllaQualita(); mostraPreview(); setStatus(data.message+' Genero ora la copertina…','ok');
+    await generaCopertina(true);
+  }catch(error){setStatus(error.message,'error');}finally{setLoading(button,false);}
+}
+
+async function generaCopertina(automatico){
+  const id=document.getElementById('articleId').value; const button=document.getElementById('coverBtn');
+  if(!id){setStatus('Genera o salva prima la bozza testuale.','error');return;}
+  setLoading(button,true,'GENERAZIONE IMMAGINE…'); if(!automatico)setStatus('Sto generando la nuova copertina 16:9…','info');
+  try{
+    const response=await fetch('/admin/api/articoli/'+id+'/genera-copertina',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},body:JSON.stringify({image_prompt:document.getElementById('image_prompt').value})});
+    const data=await response.json(); if(!response.ok||!data.ok)throw new Error(data.error||'Copertina non generata');
+    const img=document.getElementById('coverPreview'); img.src=data.cover_url; img.style.display='block'; document.getElementById('cover').value=data.cover_url.split('?')[0]; setStatus('✅ Bozza e copertina sono archiviate. Rileggi e modifica prima di pubblicare.','ok');
+  }catch(error){setStatus('Testo salvato, ma copertina non disponibile: '+error.message,'error');}finally{setLoading(button,false);}
+}
+
+function mostraPreview(){const textarea=document.getElementById('body'),frame=document.getElementById('bodyPreview');frame.srcdoc='<!doctype html><meta charset="utf-8"><style>body{font:17px/1.65 Arial,sans-serif;padding:24px;color:#172033}img{max-width:100%}h2,h3{color:#004d99}</style>'+textarea.value;textarea.style.display='none';frame.style.display='block';}
+function mostraEditor(){document.getElementById('body').style.display='block';document.getElementById('bodyPreview').style.display='none';}
+function controllaQualita(){const text=[document.getElementById('titolo').value,document.getElementById('meta_description').value,document.getElementById('excerpt').value,document.getElementById('body').value].join('\n');const suspicious=/\[(?:inserire|nome|data|azienda|testo|placeholder|da completare)[^\]]*\]|\b(?:lorem ipsum|todo|tbd|da completare|testo segnaposto)\b|\{\{[^}]+\}\}|\$\{[^}]+\}/i;const box=document.getElementById('qualityStatus');if(!text.trim()){box.textContent='Controllo qualità in attesa del testo.';return;}box.textContent=suspicious.test(text)?'⚠️ Possibile placeholder rilevato: correggilo prima di pubblicare.':'✅ Nessun placeholder evidente rilevato. È comunque necessaria la rilettura umana.';box.style.background=suspicious.test(text)?'#feecec':'#e8f8ee';box.style.color=suspicious.test(text)?'#a11919':'#116530';}
+document.getElementById('body').addEventListener('input',controllaQualita);document.getElementById('titolo').addEventListener('input',()=>{if(!document.getElementById('slug').value)document.getElementById('slug').value=document.getElementById('titolo').value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');controllaQualita();});controllaQualita();
+</script>
 {% endblock %}
