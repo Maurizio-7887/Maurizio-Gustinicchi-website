@@ -1138,3 +1138,10 @@ h1, h2, h3, h4, .main-nav a {
     text-decoration: none;
     font-weight: bold;
 }
+/* Copertina articolo varianze: altezza proporzionale, nessun ritaglio */
+.art-var img.cover {
+    height: auto !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    display: block;
+}
