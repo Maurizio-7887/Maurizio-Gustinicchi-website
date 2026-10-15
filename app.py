@@ -629,6 +629,45 @@ def r_blog(slug):
 
 
 # =====================================================================
+# FEED ARTICOLI PUBBLICI (letto dal CRM per social + email ai lead)
+# =====================================================================
+@app.route('/api/articoli.json')
+def api_articoli_pubblici():
+    """Feed JSON degli articoli GIA' visibili sul blog (stessi filtri di /blog).
+
+    Contiene solo dati pubblici (niente corpo HTML, bozze o articoli
+    programmati nel futuro): il CRM lo interroga periodicamente e, quando
+    trova uno slug nuovo, lo pubblica su Facebook/Instagram e lo spedisce
+    via Mailchimp ai lead.
+    """
+    try:
+        limite = max(1, min(int(request.args.get('limit', 50)), 200))
+    except ValueError:
+        limite = 50
+    articoli = (Articolo.query
+                .filter_by(pubblicato=True)
+                .filter(Articolo.data_pubblicazione <= date.today())
+                .order_by(Articolo.data_pubblicazione.desc(), Articolo.id.desc())
+                .limit(limite)
+                .all())
+    risultato = []
+    for a in articoli:
+        risultato.append({
+            'slug': a.slug,
+            'titolo': a.titolo,
+            'excerpt': a.excerpt or '',
+            'meta_description': a.meta_description or '',
+            'url': f"{SITE_URL.rstrip('/')}/blog/{a.slug}",
+            'cover_url': absolute_cover_url(a.cover) if a.cover else '',
+            'data_pubblicazione': a.data_pubblicazione.isoformat() if a.data_pubblicazione else '',
+            'autore': a.autore or '',
+        })
+    response = jsonify({'ok': True, 'articoli': risultato})
+    response.headers['Cache-Control'] = 'public, max-age=60'
+    return response
+
+
+# =====================================================================
 # SITEMAP + ROBOTS
 # =====================================================================
 @app.route('/sitemap.xml')
