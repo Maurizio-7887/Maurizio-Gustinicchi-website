@@ -129,12 +129,62 @@ def protect_admin_posts_from_csrf():
             abort(400, 'Richiesta non valida (CSRF).')
 
 
+# --- Box "Seguimi su Facebook / Instagram" sotto ogni articolo ---
+# I link arrivano dal CRM (che li ricava dalla Pagina Meta collegata), cosi'
+# non vanno configurati due volte. SOCIAL_FACEBOOK_URL / SOCIAL_INSTAGRAM_URL
+# li forzano. Il refresh avviene in background: la pagina non aspetta mai il CRM.
+_SOCIAL_CACHE = {'dati': {'facebook': '', 'instagram': ''}, 'scade': 0.0, 'in_corso': False}
+_SOCIAL_LOCK = threading.Lock()
+
+
+def _crm_social_links_url():
+    base = os.environ.get('CRM_PUBLIC_URL', '').strip().rstrip('/')
+    if not base and CRM_WEBHOOK_URL:
+        parti = urlparse(CRM_WEBHOOK_URL)
+        if parti.scheme == 'https' and parti.netloc:
+            base = f'https://{parti.netloc}'
+    return f'{base}/api/public/social-links' if base else ''
+
+
+def _aggiorna_social_links():
+    url = _crm_social_links_url()
+    durata = 600
+    try:
+        if url:
+            data = requests.get(url, timeout=5).json()
+            nuovi = {k: str(data.get(k) or '') for k in ('facebook', 'instagram')}
+            nuovi = {k: v if v.startswith('https://') else '' for k, v in nuovi.items()}
+            if any(nuovi.values()):
+                _SOCIAL_CACHE['dati'] = nuovi
+                durata = 6 * 3600
+    except Exception:
+        pass
+    finally:
+        _SOCIAL_CACHE['scade'] = datetime.now().timestamp() + durata
+        _SOCIAL_CACHE['in_corso'] = False
+
+
+def social_links():
+    forzati = {'facebook': os.environ.get('SOCIAL_FACEBOOK_URL', '').strip(),
+               'instagram': os.environ.get('SOCIAL_INSTAGRAM_URL', '').strip()}
+    if all(forzati.values()):
+        return forzati
+    if datetime.now().timestamp() >= _SOCIAL_CACHE['scade'] and not app.config.get('TESTING'):
+        with _SOCIAL_LOCK:
+            if not _SOCIAL_CACHE['in_corso']:
+                _SOCIAL_CACHE['in_corso'] = True
+                threading.Thread(target=_aggiorna_social_links, daemon=True).start()
+    dati = _SOCIAL_CACHE['dati']
+    return {k: forzati[k] or dati.get(k, '') for k in ('facebook', 'instagram')}
+
+
 @app.context_processor
 def inject_globals():
     return {
         'current_year': datetime.now().year,
         'article_cover_url': absolute_cover_url,
         'admin_csrf_token': admin_csrf_token,
+        'social_links': social_links,
     }
 
 
