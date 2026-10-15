@@ -525,6 +525,60 @@ def contatti():
 
 
 # =====================================================================
+# GUIDA PDF DI RICHIAMO (lead magnet per Meta Ads) -> lead nel CRM
+# =====================================================================
+GUIDA_MARGINI_PDF = '/static/docs/guida-5-segnali-margine.pdf'
+GUIDA_MARGINI_TITOLO = '5 segnali che il margine della tua PMI sta scendendo'
+_UTM_CHIAVI = ('utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term')
+
+
+@app.route('/guida-margini', methods=['GET', 'POST'])
+def guida_margini():
+    if request.method == 'GET':
+        utm = {k: request.args.get(k, '')[:100] for k in _UTM_CHIAVI}
+        return render_template('guida_margini.html', utm=utm, scaricata=False, errore='', dati={})
+
+    dati = {k: (request.form.get(k) or '').strip() for k in ('nome', 'email', 'azienda', 'telefono')}
+    utm = {k: (request.form.get(k) or '')[:100] for k in _UTM_CHIAVI}
+    # Campo trappola invisibile: i bot lo compilano, le persone no.
+    if request.form.get('sito_web'):
+        return render_template('guida_margini.html', utm=utm, scaricata=True, errore='', dati={},
+                               pdf=GUIDA_MARGINI_PDF)
+    errore = ''
+    if not dati['nome'] or not dati['email'] or not dati['azienda']:
+        errore = 'Compila nome, email e azienda.'
+    elif not re.match(r'^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$', dati['email']):
+        errore = "L'indirizzo email non sembra valido."
+    elif not request.form.get('privacy'):
+        errore = "Per scaricare la guida devi prendere visione dell'informativa privacy."
+    if errore:
+        return render_template('guida_margini.html', utm=utm, scaricata=False, errore=errore, dati=dati)
+
+    consenso_newsletter = bool(request.form.get('newsletter'))
+    messaggio = (f'Ha scaricato la guida "{GUIDA_MARGINI_TITOLO}". '
+                 f'Consenso a ricevere articoli e novita\' via email: {"SI" if consenso_newsletter else "NO"}.')
+    lead = Lead(nome=dati['nome'], email=dati['email'], azienda=dati['azienda'], telefono=dati['telefono'],
+                messaggio=messaggio, fonte='guida_margini', pagina_origine='/guida-margini')
+    db.session.add(lead)
+    db.session.commit()
+    payload = {
+        '_lead_id': lead.id,
+        'event_id': f'guida-margini-{lead.id}',
+        'nome': dati['nome'], 'email': dati['email'], 'azienda': dati['azienda'], 'telefono': dati['telefono'],
+        'messaggio': messaggio,
+        'fonte': 'Guida PDF - 5 segnali margine',
+        'tipo_anagrafica': 'Lead',
+        'consenso_newsletter': consenso_newsletter,
+        'utm': {k: v for k, v in utm.items() if v},
+        'data': datetime.now().isoformat(),
+    }
+    threading.Thread(target=invia_lead_al_crm, args=(payload,), daemon=True).start()
+    threading.Thread(target=invia_email_notifica_lead, args=(payload,), daemon=True).start()
+    return render_template('guida_margini.html', utm=utm, scaricata=True, errore='', dati={},
+                           pdf=GUIDA_MARGINI_PDF)
+
+
+# =====================================================================
 # LANDING PAGE: pubblicazione dalla Content Factory + raccolta lead
 # =====================================================================
 def _validate_landing_payload(data):
@@ -724,7 +778,7 @@ def api_articoli_pubblici():
 def sitemap():
     urls = [f'{SITE_URL}/'] + [f'{SITE_URL}/{p}' for p in PAGINE]
     urls += [f'{SITE_URL}/servizi/{s}' for s in SERVIZI_DETTAGLIO]
-    urls += [f'{SITE_URL}/blog', f'{SITE_URL}/contatti', f'{SITE_URL}/negozio']
+    urls += [f'{SITE_URL}/blog', f'{SITE_URL}/contatti', f'{SITE_URL}/negozio', f'{SITE_URL}/guida-margini']
     for a in (Articolo.query.filter_by(pubblicato=True)
               .filter(Articolo.data_pubblicazione <= date.today()).all()):
         urls.append(f'{SITE_URL}/blog/{a.slug}')
