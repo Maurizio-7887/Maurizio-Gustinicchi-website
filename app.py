@@ -178,6 +178,54 @@ def social_links():
     return {k: forzati[k] or dati.get(k, '') for k in ('facebook', 'instagram')}
 
 
+# --- Anti-spam dei moduli pubblici -------------------------------------
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
+
+_PAROLE_SPAM = (
+    'seo', 'backlink', 'ranking', 'first page of google', 'google first page', 'guest post', 'crypto',
+    'bitcoin', 'forex', 'casino', 'viagra', 'loan', 'web design', 'website design', 'redesign your website',
+    'increase your traffic', 'more traffic', 'leads for your business', 'lead generation', 'outsourc',
+    'virtual assistant', 'dear sir', 'dear business owner', 'unsubscribe', 'opt out', 'whatsapp me',
+    'click here', 'limited offer', 'video explainer', 'explainer video', 'domain authority', 'cheap')
+_EN = {'the', 'and', 'you', 'your', 'we', 'our', 'with', 'for', 'business', 'website', 'are', 'can', 'this',
+       'that', 'have', 'would', 'like', 'help', 'hello', 'hi', 'please', 'services', 'company'}
+_IT = {'il', 'lo', 'la', 'di', 'che', 'per', 'non', 'una', 'sono', 'con', 'della', 'del', 'buongiorno',
+       'salve', 'grazie', 'vorrei', 'azienda', 'nostra', 'nostro', 'mi', 'ci', 'gentile', 'cordiali', 'saluti'}
+
+
+def _serializer_moduli():
+    return URLSafeTimedSerializer(app.config['SECRET_KEY'], salt='modulo-pubblico')
+
+
+def form_token():
+    """Token firmato con l'ora in cui la pagina e' stata aperta."""
+    return _serializer_moduli().dumps(int(datetime.now().timestamp()))
+
+
+def motivo_spam_modulo(form, testo_campi=('nome', 'azienda', 'messaggio')):
+    """'' se l'invio sembra di una persona, altrimenti il motivo (non mostrato)."""
+    if (form.get('sito_web') or '').strip():
+        return 'campo trappola compilato'
+    try:
+        aperto = _serializer_moduli().loads(form.get('form_token', ''), max_age=2 * 86400)
+        if datetime.now().timestamp() - int(aperto) < 3:
+            return 'compilato in meno di 3 secondi'
+    except (BadSignature, SignatureExpired, TypeError, ValueError):
+        return 'token del modulo mancante o scaduto'
+    testo = ' '.join((form.get(k) or '') for k in testo_campi).lower()
+    if re.search(r'[\u0400-\u04FF\u4E00-\u9FFF\u0600-\u06FF]', testo):
+        return 'alfabeto non latino'
+    if len(re.findall(r'https?://|www\.', testo)) >= 2:
+        return 'troppi link'
+    for parola in _PAROLE_SPAM:
+        if re.search(r'(?<![a-z])' + re.escape(parola), testo):
+            return 'parola tipica dello spam'
+    parole = re.findall(r"[a-zàèéìòù']+", (form.get('messaggio') or '').lower())
+    if sum(p in _EN for p in parole) >= 4 and not any(p in _IT for p in parole):
+        return 'messaggio in inglese'
+    return ''
+
+
 @app.context_processor
 def inject_globals():
     return {
@@ -185,6 +233,7 @@ def inject_globals():
         'article_cover_url': absolute_cover_url,
         'admin_csrf_token': admin_csrf_token,
         'social_links': social_links,
+        'form_token': form_token,
     }
 
 
@@ -497,6 +546,11 @@ def contatti():
         if not nome or not email or not messaggio:
             flash('Compila tutti i campi obbligatori (nome, email, messaggio).', 'error')
             return redirect(url_for('contatti'))
+        if motivo_spam_modulo(request.form):
+            # Spam: risposta identica a un invio vero (il bot non impara nulla),
+            # ma niente salvataggio, niente CRM, niente email di notifica.
+            flash('Messaggio inviato con successo! Ti risponderò al più presto.', 'success')
+            return redirect(url_for('contatti'))
 
         lead = Lead(nome=nome, email=email, azienda=azienda,
                     telefono=telefono, messaggio=messaggio,
@@ -540,8 +594,8 @@ def guida_margini():
 
     dati = {k: (request.form.get(k) or '').strip() for k in ('nome', 'email', 'azienda', 'telefono')}
     utm = {k: (request.form.get(k) or '')[:100] for k in _UTM_CHIAVI}
-    # Campo trappola invisibile: i bot lo compilano, le persone no.
-    if request.form.get('sito_web'):
+    # Campo trappola invisibile e tempo minimo: i bot non passano.
+    if motivo_spam_modulo(request.form, testo_campi=('nome', 'azienda')):
         return render_template('guida_margini.html', utm=utm, scaricata=True, errore='', dati={},
                                pdf=GUIDA_MARGINI_PDF)
     errore = ''
@@ -651,8 +705,9 @@ def landing_pubblica(slug):
     payload = page.payload
     if request.method == 'POST':
         # Honeypot: i browser umani non compilano questo campo nascosto.
-        if request.form.get('website', '').strip():
-            return redirect(url_for('landing_pubblica', slug=slug))
+        if request.form.get('website', '').strip() or motivo_spam_modulo(
+                dict(request.form, sito_web=request.form.get('website', ''))):
+            return redirect(url_for('landing_pubblica', slug=slug, inviato='1') + '#contatto')
         nome = request.form.get('nome', '').strip()[:200]
         email = request.form.get('email', '').strip()[:200]
         azienda = request.form.get('azienda', '').strip()[:200]

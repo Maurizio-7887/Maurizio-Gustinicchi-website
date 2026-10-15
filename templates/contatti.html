@@ -36,6 +36,8 @@
             <div class="contact-form-container">
                 <h2>Inviaci un Messaggio</h2>
                 <form action="/contatti" method="POST" class="contact-form">
+                    <input type="hidden" name="form_token" value="{{ form_token() }}">
+                    <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true"><label>Sito web <input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
                     
                     <label for="nome">Nome Completo:</label>
                     <input type="text" id="nome" name="nome" required>

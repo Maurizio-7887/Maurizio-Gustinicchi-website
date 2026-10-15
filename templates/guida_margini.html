@@ -62,6 +62,7 @@
     <h2>Scarica la guida</h2>
     <p class="gm-note">Gratuita, in PDF, 6 pagine.</p>
     {% if errore %}<div class="gm-err">{{ errore }}</div>{% endif %}
+    <input type="hidden" name="form_token" value="{{ form_token() }}">
     {% for k, v in utm.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
     <div class="gm-hp" aria-hidden="true"><label>Sito web <input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
     <label for="gm-nome">Nome e cognome *</label>
