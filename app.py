@@ -246,7 +246,8 @@ PAGINE = ['chi-siamo', 'certificati', 'servizi', 'shop', 'formazione',
 
 SERVIZI_DETTAGLIO = ['controllo', 'digitalizzazione', 'innovation-manager',
                      'business-reporting', 'organizzazione', 'dashboard-bi',
-                     'manutenzione', 'content-factory']
+                     'manutenzione', 'content-factory', 'cfo-esterno',
+                     'software-gestionali-su-misura']
 
 
 @app.route('/')

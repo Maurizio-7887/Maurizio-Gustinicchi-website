@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/service-pages.css') }}">
+{% endblock %}
+{% block content %}
+<article class="service-page">
+    <nav class="service-breadcrumb" aria-label="Percorso"><a href="/">Home</a> / <a href="/servizi">Servizi</a> / <span aria-current="page">{% block breadcrumb %}{% endblock %}</span></nav>
+    {% block service_body %}{% endblock %}
+    <aside class="service-related" aria-label="Servizi collegati">
+        <h2>Approfondisci il metodo e prova gli strumenti</h2>
+        <ul>
+            <li><a href="/servizi/controllo">Consulenza di controllo di gestione per PMI</a></li>
+            <li><a href="/servizi/cfo-esterno">CFO esterno e direzione finanziaria in outsourcing</a></li>
+            <li><a href="/servizi/software-gestionali-su-misura">Sviluppo software gestionali su misura</a></li>
+            <li><a href="/servizi/digitalizzazione">Digitalizzazione dei processi e organizzazione Lean</a></li>
+            <li><a href="/#laboratorio-impresa">Simulatore, percorso aziendale e test: prova il laboratorio interattivo</a></li>
+        </ul>
+    </aside>
+</article>
+{% endblock %}
