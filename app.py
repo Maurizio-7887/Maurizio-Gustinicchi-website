@@ -25,7 +25,8 @@ from functools import wraps
 import requests
 from flask import (Flask, render_template, request, redirect, url_for,
                    flash, session, abort, Response, jsonify)
-from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine
+from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine, VisitaCanale, VisitaCrawler
+import provenienza
 
 app = Flask(__name__)
 # SECRET_KEY: impostare su Railway dashboard (web service -> Variables) con una
@@ -566,6 +567,7 @@ def contatti():
             'telefono': telefono,
             'messaggio': messaggio,
             'fonte': 'Sito Web - mauriziogustinicchiconsulting.it',
+            'provenienza': provenienza_dal_modulo(request.form),
             'data': datetime.now().isoformat(),
         }
         threading.Thread(target=invia_lead_al_crm, args=(payload,), daemon=True).start()
@@ -624,6 +626,7 @@ def guida_margini():
         'tipo_anagrafica': 'Lead',
         'consenso_newsletter': consenso_newsletter,
         'utm': {k: v for k, v in utm.items() if v},
+        'provenienza': provenienza_dal_modulo(request.form),
         'data': datetime.now().isoformat(),
     }
     threading.Thread(target=invia_lead_al_crm, args=(payload,), daemon=True).start()
@@ -735,6 +738,7 @@ def landing_pubblica(slug):
             'landing_id': page.external_id, 'landing_slug': slug,
             'landing_version': page.version, 'pagina_origine': f'/landing/{slug}',
             'utm': utm, 'consenso_privacy': True, 'data': datetime.now().isoformat(),
+            'provenienza': provenienza_dal_modulo(request.form),
         }
         threading.Thread(target=invia_lead_al_crm, args=(lead_payload,), daemon=True).start()
         threading.Thread(target=invia_email_notifica_lead, args=(lead_payload,), daemon=True).start()
@@ -790,6 +794,86 @@ def r_blog(slug):
 # =====================================================================
 # FEED ARTICOLI PUBBLICI (letto dal CRM per social + email ai lead)
 # =====================================================================
+# =====================================================================
+# MISURA DELLA CRESCITA (SEO / AEO): ingressi per canale e crawler
+# Solo contatori aggregati per giorno: niente IP, niente cookie.
+# =====================================================================
+_ESCLUSI_CONTEGGIO = ('/static', '/admin', '/api', '/media', '/robots.txt', '/sitemap.xml', '/favicon')
+
+
+def _incrementa(sql, parametri):
+    try:
+        db.session.execute(text(sql), parametri)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+
+
+@app.after_request
+def conta_ingresso(response):
+    try:
+        if (request.method != 'GET' or response.status_code != 200
+                or not (response.mimetype or '').startswith('text/html')
+                or request.path.startswith(_ESCLUSI_CONTEGGIO)
+                or request.headers.get('Purpose') == 'prefetch'
+                or request.headers.get('Sec-Purpose', '').startswith('prefetch')):
+            return response
+        oggi = date.today()
+        bot = provenienza.bot_da_user_agent(request.headers.get('User-Agent', ''))
+        if bot:
+            _incrementa('INSERT INTO visite_crawler (giorno, bot, visite) VALUES (:g, :b, 1) '
+                        'ON CONFLICT (giorno, bot) DO UPDATE SET visite = visite_crawler.visite + 1',
+                        {'g': oggi, 'b': bot[:40]})
+            return response
+        referrer = request.referrer or ''
+        if provenienza.e_interno(referrer):
+            return response  # navigazione interna: non e' un ingresso
+        can = provenienza.canale(referrer, request.args.get('utm_source', ''), request.args.get('utm_medium', ''),
+                                 request.args.get('gclid', ''))
+        pagina = request.path[:200] or '/'
+        _incrementa('INSERT INTO visite_canale (giorno, canale, pagina, visite) VALUES (:g, :c, :p, 1) '
+                    'ON CONFLICT (giorno, canale, pagina) DO UPDATE SET visite = visite_canale.visite + 1',
+                    {'g': oggi, 'c': can, 'p': pagina})
+    except Exception:
+        pass
+    return response
+
+
+@app.route('/api/statistiche-visite')
+def api_statistiche_visite():
+    """Contatori aggregati per il cruscotto del CRM (chiave condivisa CRM_API_KEY)."""
+    if not CRM_API_KEY or not hmac.compare_digest(request.headers.get('X-API-Key', ''), CRM_API_KEY):
+        return jsonify({'ok': False, 'message': 'Non autorizzato'}), 403
+    try:
+        giorni = max(1, min(int(request.args.get('giorni', 400)), 800))
+    except ValueError:
+        giorni = 400
+    dal = date.today() - timedelta(days=giorni)
+    visite = VisitaCanale.query.filter(VisitaCanale.giorno >= dal).all()
+    crawler = VisitaCrawler.query.filter(VisitaCrawler.giorno >= dal).all()
+    return jsonify({
+        'ok': True, 'dal': dal.isoformat(), 'canali': provenienza.CANALI,
+        'bot_ai': sorted(provenienza.BOT_AI),
+        'visite': [{'giorno': v.giorno.isoformat(), 'canale': v.canale, 'pagina': v.pagina, 'visite': v.visite}
+                   for v in visite],
+        'crawler': [{'giorno': c.giorno.isoformat(), 'bot': c.bot, 'visite': c.visite} for c in crawler],
+    })
+
+
+def provenienza_dal_modulo(form):
+    """Canale di ingresso della sessione in cui il visitatore ha compilato il
+    modulo (lo registra /static/js/provenienza.js, solo in sessionStorage)."""
+    ref = (form.get('ingresso_referrer') or '')[:300]
+    pagina = (form.get('ingresso_pagina') or '')[:200]
+    sorgente = (form.get('ingresso_utm_source') or form.get('utm_source') or '')[:100]
+    mezzo = (form.get('ingresso_utm_medium') or form.get('utm_medium') or '')[:100]
+    can = provenienza.canale(ref, sorgente, mezzo, form.get('ingresso_gclid') or '')
+    if can == 'diretto' and not pagina:
+        can = 'sconosciuto'
+    return {'canale': can, 'pagina_ingresso': pagina,
+            'referrer_dominio': (urlparse(ref).hostname or '') if ref else ''}
+
+
 @app.route('/api/articoli.json')
 def api_articoli_pubblici():
     """Feed JSON degli articoli GIA' visibili sul blog (stessi filtri di /blog).

@@ -133,3 +133,21 @@ class Ordine(db.Model):
     @property
     def totale_eur(self):
         return f'{self.totale_cent / 100:.2f}'.replace('.', ',')
+
+
+class VisitaCanale(db.Model):
+    """Ingressi al sito per giorno, canale di provenienza e pagina di arrivo.
+    Solo numeri aggregati: niente IP, niente cookie, niente dati personali."""
+    __tablename__ = 'visite_canale'
+    giorno = db.Column(db.Date, primary_key=True)
+    canale = db.Column(db.String(30), primary_key=True)
+    pagina = db.Column(db.String(200), primary_key=True)
+    visite = db.Column(db.Integer, nullable=False, default=0)
+
+
+class VisitaCrawler(db.Model):
+    """Passaggi dei crawler (Google, Bing e motori/assistenti AI) per giorno."""
+    __tablename__ = 'visite_crawler'
+    giorno = db.Column(db.Date, primary_key=True)
+    bot = db.Column(db.String(40), primary_key=True)
+    visite = db.Column(db.Integer, nullable=False, default=0)
