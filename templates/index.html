@@ -4,6 +4,7 @@
 {% block meta_description %}Consulenza di controllo di gestione, AI e software gestionali su misura per PMI, progettati insieme al cliente. Margini, liquidità e processi sotto controllo con Maurizio Gustinicchi.{% endblock %}
 
 {% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/interactive-lab.css') }}">
 <style>
         /* CSS INLINE - Mantenuto per semplicità di copia/incolla, anche se in produzione andrebbe in un file esterno */
         .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
@@ -382,6 +383,8 @@
 
         <hr>
 
+        {% include '_interactive_lab.html' %}
+
         <section class="ai-agent-section">
             <h2>🤖 Agente AI Strategico: Risposte Istantanee Basate sulla Nostra Expertise</h2>
             <p style="font-size: 1.1em; color: #333; margin-bottom: 25px;">
@@ -526,6 +529,7 @@
 
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='js/interactive-lab.js') }}" defer></script>
 <script>
 (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
