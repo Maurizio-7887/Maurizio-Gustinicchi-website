@@ -1,55 +1,49 @@
-{% extends "base.html" %}
-
-{% block title %}Navigazione Proattiva AI - Controllo di Gestione 5.0 | Maurizio Gustinicchi{% endblock %}
-{% block meta_description %}{% endblock %}
-
-{% block head_extra %}
-
-{% endblock %}
-
-{% block main_attrs %}{% endblock %}
-
-{% block content %}
-
-        
-        <section class="intro-chisono">
-            <h1 class="page-title">Controllo di Gestione 5.0: Navigazione Proattiva AI</h1>
-            <p class="sottotitolo">Non limitarti a contare i danni del passato. Attiva un sistema di allerta precoce che rileva i rischi finanziari e operativi prima che diventino criticità.</p>
-        </section>
-
-        <section class="bio-content">
-            
-            <div class="bio-foto">
-                <img src="/static/img/img_analisi_montecarlo.jpg" 
-                     alt="Icona Analisi Montecarlo con Algoritmi AI" 
-                     class="profile-pic">
-                
-                <p class="sottotitolo-foto">Prevenzione Digitale: Simuliamo fino a 10 Milioni di scenari per proteggere il tuo margine.</p>
-            </div>
-            
-            <div class="bio-testo">
-                <h2>Oltre lo Specchietto Retrovisore: Guarda la Strada</h2>
-                <p>Il Controllo di Gestione tradizionale registra ciò che è già accaduto. Il nostro approccio <strong>5.0</strong> utilizza il <strong>Machine Learning</strong> e <strong>Agenti AI</strong> per scansionare l'orizzonte aziendale. Identifichiamo i "passi falsi" potenziali con largo anticipo, permettendoti di correggere la rotta quando il costo dell'errore è ancora pari a zero.</p>
-                
-                <h3>Simulazioni Monte Carlo: La Certezza del Dato</h3>
-                <p>Validiamo le tue strategie sottoponendole a <strong>simulazioni di stress test fino a 10 milioni di varianti</strong>. Questo non è semplice calcolo: è uno scudo tecnologico che garantisce che il tuo Piano Industriale sia a prova di imprevisto.</p>
-
-                <h3>Funzioni Chiave del Radar Aziendale AI</h3>
-                
-                <ul class="feature-list">
-                    <li><strong>Prevenzione Rischi e Passi Falsi:</strong> Algoritmi di rilevamento precoce delle anomalie nei flussi di cassa e nei margini di contribuzione.</li>
-                    <li><strong>Analisi Predittiva dei Bilanci:</strong> Valutiamo la sostenibilità futura di ROI e ROA, non basandoci su foto statiche ma su proiezioni dinamiche AI.</li>
-                    <li><strong>Budgeting Adattivo:</strong> Modelli che reagiscono in tempo reale ai mutamenti del mercato, ricalcolando gli obiettivi per evitare sprechi.</li>
-                    <li><strong>Dynamic Pricing 5.0:</strong> Ottimizzazione dei prezzi guidata dall'AI per massimizzare il margine in base alla domanda e ai costi marginali correnti.</li>
-                    <li><strong>Data Quality & Outlier Detection:</strong> I nostri AI Agents puliscono i tuoi dati storici eliminando gli errori di lettura che portano a decisioni sbagliate.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="cta-finale">
-            <h3>Attiva ora la tua Navigazione Proattiva</h3>
-            <p>Metti in sicurezza il futuro della tua azienda con un sistema di controllo che non dorme mai.</p>
-            <a href="/contatti" class="cta-button-large">Richiedi un'Analisi Strategica</a>
-        </section>
-    
+{% extends "servizi/_service_layout.html" %}
+{% block title %}Controllo di gestione PMI | Maurizio Gustinicchi{% endblock %}
+{% block meta_description %}Consulenza di controllo di gestione per PMI: analisi dei margini, budget, scostamenti e flussi di cassa. Report e strumenti costruiti sui tuoi processi.{% endblock %}
+{% block breadcrumb %}Controllo di gestione{% endblock %}
+{% block service_body %}
+<header class="service-hero">
+    <span class="service-kicker">Margini · budget · decisioni</span>
+    <h1>Consulenza di controllo di gestione per PMI</h1>
+    <p>Fatturare non basta per capire se l'impresa sta creando valore. Ti affianco nel collegare ricavi, costi e dati operativi, per leggere la marginalità e confrontare i risultati con gli obiettivi.</p>
+    <a href="/contatti" class="cta-button-large">Parliamo dei numeri della tua impresa</a>
+</header>
+<section>
+    <h2>Quando serve un consulente di controllo di gestione</h2>
+    <p>Quando il fatturato cresce ma il risultato non segue; quando non sai quali prodotti, clienti o commesse contribuiscano al margine; oppure quando i report arrivano troppo tardi per intervenire. Il punto di partenza è una domanda concreta, non una dashboard piena di indicatori.</p>
+    <div class="service-grid">
+        <div class="service-box"><h3>Analisi della marginalità</h3><p>Distinzione tra costi variabili, costi fissi e criteri di attribuzione. Lettura per prodotto, servizio o commessa, nei limiti del dettaglio disponibile.</p></div>
+        <div class="service-box"><h3>Budget e analisi degli scostamenti</h3><p>Obiettivi economici espliciti e confronto con i consuntivi, distinguendo variazioni di volumi, prezzi, mix e costi quando i dati lo permettono.</p></div>
+        <div class="service-box"><h3>Flussi di cassa</h3><p>Un prospetto degli incassi e dei pagamenti attesi per distinguere redditività e liquidità, esplicitando scadenze e ipotesi.</p></div>
+        <div class="service-box"><h3>Report direzionali e KPI</h3><p>Indicatori selezionati insieme alla direzione, con fonte, formula, responsabile e frequenza di aggiornamento definiti nel progetto.</p></div>
+    </div>
+</section>
+<section>
+    <h2>Come si svolge il lavoro e quali dati servono</h2>
+    <ol>
+        <li><strong>Definiamo il problema:</strong> decisioni da supportare, perimetro e persone coinvolte.</li>
+        <li><strong>Verifichiamo i dati:</strong> contabilità, vendite, acquisti, scadenziari e, se presenti, ore, consumi e avanzamenti delle commesse. Individuiamo lacune e riconciliazioni necessarie.</li>
+        <li><strong>Costruiamo il modello:</strong> riclassificazioni, criteri di costo, budget e indicatori, evitando precisioni che le fonti non consentono.</li>
+        <li><strong>Condividiamo i risultati:</strong> report, lettura degli scostamenti e azioni da valutare, con un calendario di aggiornamento concordato.</li>
+    </ol>
+    <p>Le informazioni aziendali vengono richieste nel percorso di consulenza con modalità concordate: non è necessario inviare documenti riservati per il primo contatto.</p>
+</section>
+<section>
+    <h2>Cosa viene consegnato</h2>
+    <p>Il contenuto dell'incarico viene definito prima dell'avvio. Può includere un modello di conto economico gestionale, un budget, un prospetto dei flussi di cassa e un report periodico con commento agli scostamenti. Software, automazioni e frequenza delle riunioni dipendono dal progetto.</p>
+    <div class="service-note"><strong>Esempio illustrativo, non un risultato cliente:</strong> una commessa con ricavi di 20.000 euro e costi variabili attribuiti di 14.000 euro genera un margine di contribuzione di 6.000 euro, pari al 30% dei ricavi. Non è l'utile netto: restano da considerare costi fissi, altri oneri e imposte.</div>
+    <p><a href="/#laboratorio-impresa">Prova il simulatore di margine e liquidità</a>: usa numeri inventati per esplorare la differenza tra risultato economico e tempi d'incasso.</p>
+</section>
+<section>
+    <h2>AI e simulazioni: strumenti di supporto, non certezze</h2>
+    <p>L'intelligenza artificiale può aiutare a preparare analisi, individuare anomalie e sintetizzare report, previa verifica delle fonti e delle condizioni di trattamento dei dati. Le conclusioni richiedono controllo professionale. Le simulazioni di scenario, anche Monte Carlo quando appropriate, dipendono da ipotesi e distribuzioni: non eliminano il rischio né prevedono con certezza il futuro.</p>
+</section>
+<section>
+    <h2>Domande sul controllo di gestione</h2>
+    <details><summary>È diverso dalla contabilità del commercialista?</summary><p>Sì. Il controllo di gestione supporta le decisioni interne con una lettura economica e operativa. Non sostituisce contabilità, dichiarazioni fiscali e adempimenti del commercialista, con cui occorre coordinare i dati.</p></details>
+    <details><summary>Serve già un gestionale?</summary><p>Non necessariamente. Si può partire dai dati disponibili, anche da fogli di calcolo, verificandone qualità e coerenza. Un software dedicato viene valutato quando volumi, ripetitività e necessità di controllo lo giustificano.</p></details>
+    <details><summary>Qual è la differenza rispetto a un CFO esterno?</summary><p>Un progetto di controllo può essere circoscritto a costi, budget e report. Il CFO esterno affianca la direzione con continuità sulle decisioni economico-finanziarie, entro un incarico concordato. <a href="/servizi/cfo-esterno">Scopri il servizio CFO esterno per PMI</a>.</p></details>
+</section>
+<section class="service-cta"><h2>Partiamo dalla decisione che oggi fai fatica a prendere</h2><p>Raccontami quali numeri non riesci a leggere o a collegare: definiremo il perimetro di analisi e una proposta di lavoro.</p><a href="/contatti" class="cta-button-large">Richiedi un confronto sul controllo di gestione</a></section>
 {% endblock %}

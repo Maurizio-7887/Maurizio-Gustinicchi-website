@@ -1,0 +1,21 @@
+.service-page {max-width:1100px;margin:0 auto;padding:30px 5% 60px;color:#24364b;line-height:1.75;overflow-wrap:anywhere}
+.service-page .service-breadcrumb {font-size:.87rem;margin-bottom:24px;color:#526477}
+.service-page a:not(.cta-button-large) {color:#0056b3;text-decoration:underline;text-underline-offset:3px}
+.service-page .service-hero {background:#eef5fc;border-left:5px solid #0056b3;border-radius:0 16px 16px 0;padding:30px;margin-bottom:32px}
+.service-page h1 {font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.22;color:#10315a;margin:8px 0 20px}
+.service-page h2 {font-size:1.55rem;line-height:1.35;color:#10315a;margin:0 0 16px}
+.service-page h3 {font-size:1.1rem;line-height:1.45;color:#10315a}
+.service-page section {margin:32px 0}
+.service-page .service-hero p {margin-bottom:24px;font-size:1.08rem}
+.service-page .service-kicker {text-transform:uppercase;font-size:.8rem;letter-spacing:.1em;font-weight:700;color:#0056b3}
+.service-page .service-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.service-page .service-box {padding:22px;border:1px solid #d8e3ee;border-radius:12px;background:#fff}
+.service-page .service-box h3 {margin-top:0}
+.service-page .service-note {padding:18px 22px;background:#fff7e8;border-left:4px solid #c28516}
+.service-page details {border-bottom:1px solid #d8e3ee;padding:16px 0}
+.service-page summary {font-weight:700;cursor:pointer;color:#10315a}
+.service-page .service-cta,.service-page .service-related {padding:26px;background:#eef5fc;border-radius:12px;margin-top:32px}
+.service-page .cta-button-large {display:inline-block;white-space:normal;text-align:center;max-width:100%;box-sizing:border-box;font-size:1rem}
+.service-page a:focus-visible,.service-page summary:focus-visible {outline:3px solid #c28516;outline-offset:4px}
+@media(max-width:650px){.service-page .service-grid{grid-template-columns:1fr}.service-page .service-hero{padding:22px}.service-page{padding:20px 5% 40px}}
+@media print{.service-page details>*{display:block}.service-page .service-hero,.service-page .service-cta{background:white}.service-page .service-grid{display:block}.service-page .service-box{break-inside:avoid}}
