@@ -1,0 +1,82 @@
+<section id="laboratorio-impresa" class="mgc-lab" aria-labelledby="mgc-lab-title">
+  <div class="mgc-lab-inner">
+    <p class="mgc-eyebrow">NON SOLO PAROLE. PROVA IL METODO.</p>
+    <h2 id="mgc-lab-title">La tua azienda, vista da un'altra prospettiva.</h2>
+    <p class="mgc-intro">Esplora i numeri, segui un ordine, metti alla prova il tuo controllo di gestione. Tre strumenti gratuiti, senza registrazione.</p>
+    <p class="mgc-privacy">I valori e le risposte restano in questa pagina: questi strumenti non li inviano al server né li salvano. Usa dati inventati o arrotondati. Ricaricando la pagina, le compilazioni si azzerano.</p>
+    <noscript><p class="mgc-notice">Per utilizzare i calcoli e i risultati interattivi attiva JavaScript. Puoi comunque leggere metodo, formule e percorso dimostrativo qui sotto.</p></noscript>
+    <div class="mgc-cards">
+      <details class="mgc-card" id="simulatore-margini">
+        <summary><span class="mgc-number">01 / NUMERI</span><h3>Dove perdi margine?</h3><p>Uno sconto pesa solo sui ricavi? E incassare prima cambia l'utile? Prova e distingui margine e liquidità.</p><span class="mgc-open">Apri il simulatore <span aria-hidden="true">↗</span></span></summary>
+        <div class="mgc-panel">
+          <p>Modello annuale semplificato, al netto dell'IVA. Volumi, costi variabili unitari e costi fissi invariati nello scenario. Non è un bilancio né una previsione AI.</p>
+          <form id="mgc-margin-form">
+            <div class="mgc-fields">
+              <label>Ricavi annui iniziali (€)<input name="revenue" type="number" min="1" max="1000000000000" step="any" value="500000" required></label>
+              <label>Costi variabili annui (€)<input name="variable" type="number" min="0" max="1000000000000" step="any" value="250000" required></label>
+              <label>Costi fissi operativi annui (€)<input name="fixed" type="number" min="0" max="1000000000000" step="any" value="150000" required></label>
+              <label>Sconto aggiuntivo sui prezzi (%)<input name="discount" type="number" min="0" max="100" step="any" value="5" required></label>
+              <label>Giorni medi d'incasso attuali<input name="days" type="number" min="0" max="730" step="1" value="60" required></label>
+              <label>Giorni medi d'incasso nello scenario<input name="targetDays" type="number" min="0" max="730" step="1" value="45" required></label>
+            </div>
+            <button class="mgc-btn" type="submit">Confronta gli scenari</button>
+          </form>
+          <p>Il capitale nei crediti è stimato come ricavi annui ÷ 365 × giorni d'incasso, ipotizzando tutte le vendite a credito e distribuite uniformemente. La sola riduzione dei giorni è valutata a ricavi iniziali costanti: <strong>non è un aumento dell'utile</strong>.</p>
+          <div id="mgc-margin-result" class="mgc-result" role="status" aria-live="polite" hidden></div>
+          <button type="button" class="mgc-btn mgc-secondary" data-print="margin" hidden>Stampa / salva PDF del confronto</button>
+          <details class="mgc-method"><summary>Leggi le formule e i limiti</summary><p>Ricavi scenario = ricavi iniziali × (1 − sconto / 100). Margine di contribuzione = ricavi − costi variabili. Risultato operativo semplificato = ricavi − costi variabili − costi fissi operativi. Incidenza = risultato ÷ ricavi × 100; se i ricavi sono zero non è definita. Non sono modellati imposte, oneri finanziari, investimenti, stagionalità e variazioni dei volumi. Includi nei costi operativi le voci pertinenti senza duplicarle. La variazione dei crediti è una stima a regime, non cassa già disponibile.</p></details>
+          <a class="mgc-contact" href="/contatti">Analizziamo i tuoi margini →</a>
+        </div>
+      </details>
+      <details class="mgc-card" id="azienda-prima-dopo">
+        <summary><span class="mgc-number">02 / PROCESSI</span><h3>La tua azienda prima e dopo</h3><p>Un ordine, cinque passaggi. Scopri dove si ricopiano i dati e come potrebbe funzionare un flusso collegato.</p><span class="mgc-open">Esplora il percorso <span aria-hidden="true">↗</span></span></summary>
+        <div class="mgc-panel">
+          <p class="mgc-notice">SIMULAZIONE — Azienda e ordine inventati. Esempio illustrativo, non dimostrazione di integrazioni già attive o di risparmi misurati.</p>
+          <p><strong>Ordine DEMO-104 · 100 staffe metalliche</strong><br>Dal cliente al cruscotto, senza movimentare scorte o documenti reali.</p>
+          <div class="mgc-toggle" role="group" aria-label="Modalità del processo">
+            <button type="button" data-mode="before" aria-pressed="true">Prima: dati separati</button>
+            <button type="button" data-mode="after" aria-pressed="false">Dopo: flusso collegato</button>
+          </div>
+          <ol class="mgc-steps" id="mgc-process-steps">
+            <li>Vendite</li><li>Magazzino</li><li>Produzione</li><li>Consegna</li><li>Controllo di gestione</li>
+          </ol>
+          <div id="mgc-process-result" class="mgc-result" role="status" aria-live="polite"><h4>Vendite · dati separati</h4><p>L'ordine viene trascritto dall'email in un foglio. Quantità e data richiesta possono divergere tra le copie.</p></div>
+          <div class="mgc-actions"><button type="button" class="mgc-btn mgc-secondary" id="mgc-process-prev" disabled>← Indietro</button><button type="button" class="mgc-btn" id="mgc-process-next">Passaggio successivo →</button><button type="button" class="mgc-btn mgc-secondary" id="mgc-process-reset">Ricomincia</button></div>
+          <p>Il software non elimina ogni errore: servono dati attendibili, responsabilità, autorizzazioni e controlli. Qui mostriamo il metodo, non una promessa di risultato.</p>
+          <a class="mgc-contact" href="/contatti">Disegniamo il tuo processo →</a>
+        </div>
+      </details>
+      <details class="mgc-card" id="test-controllo-gestione">
+        <summary><span class="mgc-number">03 / CONSAPEVOLEZZA</span><h3>Quanto controlli la tua impresa?</h3><p>Otto domande su margini, cassa e organizzazione. Individua i punti da approfondire, senza giudizi automatici sull'azienda.</p><span class="mgc-open">Inizia l'autovalutazione <span aria-hidden="true">↗</span></span></summary>
+        <div class="mgc-panel">
+          <p>Autovalutazione orientativa basata sulle tue risposte, non audit o certificazione. Per ogni domanda scegli: <strong>No / Non so</strong>, <strong>In parte</strong> oppure <strong>Sì, in modo sistematico</strong>.</p>
+          <form id="mgc-check-form">
+            {% for question in [
+              'Conosci il margine dei singoli prodotti o servizi?',
+              'Aggiorni una previsione degli incassi e dei pagamenti delle prossime settimane?',
+              'Confronti periodicamente risultati effettivi e budget?',
+              'I reparti usano dati coerenti, con controlli sulle doppie registrazioni?',
+              'Monitora qualcuno crediti scaduti e tempi d’incasso?',
+              'Per le attività chiave sono chiari responsabile, scadenza e risultato atteso?',
+              'Prima di decidere, verificate completezza e aggiornamento dei dati?',
+              'Misurate gli effetti delle azioni correttive dopo averle attuate?'
+            ] %}
+            <fieldset><legend>{{ loop.index }}. {{ question }}</legend><div class="mgc-options">
+              <label><input type="radio" name="q{{ loop.index0 }}" value="0" required> No / Non so</label>
+              <label><input type="radio" name="q{{ loop.index0 }}" value="1"> In parte</label>
+              <label><input type="radio" name="q{{ loop.index0 }}" value="2"> Sì, sistematicamente</label>
+            </div></fieldset>
+            {% endfor %}
+            <button type="submit" class="mgc-btn">Mostra le aree da approfondire</button>
+            <button type="reset" class="mgc-btn mgc-secondary">Azzera le risposte</button>
+          </form>
+          <div id="mgc-check-result" class="mgc-result" role="status" aria-live="polite" hidden></div>
+          <button type="button" class="mgc-btn mgc-secondary" data-print="check" hidden>Stampa / salva PDF del riepilogo</button>
+          <a class="mgc-contact" href="/contatti">Confrontiamoci sui tuoi risultati →</a>
+        </div>
+      </details>
+    </div>
+    <p class="mgc-footnote">Strumenti esplorativi, non consulenza personalizzata. Nessun risultato garantito. Puoi stampare i risultati o scegliere “Salva come PDF” nella finestra di stampa.</p>
+  </div>
+</section>
+<div id="mgc-print-report" hidden></div>
