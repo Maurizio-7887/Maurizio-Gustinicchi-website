@@ -54,7 +54,10 @@ h1, h2, h3, h4, .main-nav a {
 }
 
 /* 🎯 FIX LOGO CRUCIALE: Colore BLU, su una riga e dimensione maggiore per il desktop */
-.logo h1 {
+/* Il nome nel marchio non e' piu' un H1: l'H1 di ogni pagina e' il suo titolo. */
+.logo h1, .logo .logo-nome {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
     display: block; 
     font-size: 1.8em; 
     color: #0056b3; /* BLU */
@@ -1002,7 +1005,7 @@ h1, h2, h3, h4, .main-nav a {
 @media (max-width: 768px) {
     
     /* FIX CRUCIALE PER IL TITOLO: Riduce la dimensione e permette l'a capo */
-    .logo h1 {
+    .logo h1, .logo .logo-nome {
         /* Riduci il font (puoi provare 1.2em o 1.4em a seconda del risultato) */
         font-size: 1.4em !important; 
         /* Permetti al testo di andare a capo per adattarsi allo schermo */
