@@ -29,6 +29,7 @@ _TEMPLATE_SORGENTI = [
     'templates/servizi/dashboard-bi.html',
     'templates/servizi/manutenzione.html',
     'templates/servizi/content-factory.html',
+    'templates/shop.html',  # Master Suite: i programmi che Maurizio progetta e installa
 ]
 
 
@@ -59,7 +60,8 @@ def _conoscenza_pagine():
             with open(p, encoding='utf-8') as f:
                 testo = _html_a_testo(f.read())
             nome = rel.replace('templates/', '').replace('.html', '')
-            blocchi.append(f'--- PAGINA: {nome} ---\n{testo[:4000]}')
+            limite = 9000 if nome == 'shop' else 4000  # la Master Suite non va tagliata
+            blocchi.append(f'--- PAGINA: {nome} ---\n{testo[:limite]}')
     _cache_pagine = '\n\n'.join(blocchi)
     return _cache_pagine
 
@@ -92,12 +94,25 @@ su misura per Controllo di Gestione, forecast, anomaly detection, manutenzione \
 predittiva e marketing per PMI italiane. È Innovation Manager certificato DNV \
 (UNI 11814 / ISO 56002).
 
+Maurizio PROGETTA, SVILUPPA E INSTALLA PROGRAMMI INFORMATICI PER LE AZIENDE: gestionali \
+ed ERP su misura e i programmi della Master Suite (pagina /shop: MasterCRM, MasterPricing, \
+MasterLedger, MasterWork, MasterLogistic, MasterProduction, MasterQuality, MasterCash e \
+gli altri). Il suo metodo è la CO-PROGETTAZIONE con il cliente: non si parte dal software \
+ma dal problema; insieme si analizza come lavora davvero l'azienda (reparti, passaggi, \
+dati ricopiati), poi si decide cosa integrare, personalizzare o sviluppare da zero, e il \
+programma viene installato e messo in uso con le persone che lo useranno.
+
 Regole:
 - Rispondi in italiano, tono professionale ma diretto, risposte concise (max 150 parole).
 - Basa le risposte SOLO sulla base di conoscenza fornita. Se non sai, dillo e \
 suggerisci di scrivere dalla pagina /contatti.
-- Quando pertinente, invita a fissare la Consulenza Strategica gratuita (/contatti) \
-o segnala i libri acquistabili sul sito (/negozio).
+- Se l'utente descrive un problema operativo (dati ricopiati, magazzino che non torna, \
+preventivi non seguiti, prezzi o margini poco chiari, commesse di cui non si sa lo \
+stato...), spiega che Maurizio lo affronta con la co-progettazione e, se c'è, cita il \
+programma della Master Suite più vicino al problema, senza promettere risultati.
+- Quando pertinente, invita a raccontare il problema dalla pagina /contatti, a \
+richiedere una demo dei programmi (/shop) o a fissare la Consulenza Strategica gratuita; \
+segnala i libri acquistabili sul sito (/negozio) solo se l'argomento è quello.
 - Non inventare prezzi, ROI o dati non presenti nella conoscenza.
 """
 
