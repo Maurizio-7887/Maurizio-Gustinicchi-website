@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from '_libri_shared.html' import condizioni_acquisto with context %}
 
 {% block title %}Acquista {{ p.nome }} - Maurizio Gustinicchi Consulting{% endblock %}
 {% block meta_description %}{% endblock %}
@@ -8,16 +9,16 @@
 <section style="max-width:900px; margin:40px auto; padding:0 5%;">
 
     <div style="display:flex; gap:30px; flex-wrap:wrap; margin-bottom:30px;">
-        {% if p.immagine %}
-        <img src="{{ p.immagine }}" alt="Copertina: {{ p.nome }}" style="width:160px; height:auto; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-radius:4px;">
+        {% if copertina_prodotto(p) %}
+        <img src="{{ copertina_prodotto(p) }}" alt="Copertina: {{ p.nome }}" style="width:160px; height:auto; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-radius:4px;">
         {% endif %}
         <div>
             <h1 style="color:#004d99; font-size:1.6em; margin-bottom:8px;">{{ p.nome }}</h1>
             <p style="color:#555;">{{ p.descrizione }}</p>
             {% if p.tipo == 'software' %}
-            <p style="font-weight:bold; font-size:1.2em; margin-top:10px; color:#004d99;">A partire da € trattativa personale</p>
+            <p style="font-weight:bold; font-size:1.2em; margin-top:10px; color:#004d99;">A PREVENTIVO</p>
             {% else %}
-            <p style="font-weight:bold; font-size:1.2em; margin-top:10px;">€ {{ p.prezzo_eur }} <span style="font-weight:normal; font-size:0.75em; color:#666;">+ € {{ p.spedizione_eur }} spedizione</span></p>
+            {{ condizioni_acquisto(p) }}
             {% endif %}
         </div>
     </div>
@@ -106,8 +107,8 @@
             </div>
         </div>
 
-        <button type="submit" class="cta-negozio" style="margin-top:25px; border:none; cursor:pointer; font-size:1em;">Procedi al pagamento</button>
-        <p style="font-size:0.85em; color:#888; margin-top:10px;">Pagamento sicuro con carta di credito, oppure con bonifico bancario (istruzioni dopo l'invio dell'ordine).</p>
+        <button type="submit" class="cta-negozio" style="margin-top:25px; border:none; cursor:pointer; font-size:1em;">{% if pagamento_carta %}Procedi al pagamento con carta{% else %}Invia ordine con bonifico{% endif %}</button>
+        <p style="font-size:0.85em; color:#555; margin-top:10px;">{% if pagamento_carta %}Pagamento con carta tramite Stripe. Potrai verificare il totale prima di pagare.{% else %}Pagamento tramite bonifico bancario: le istruzioni vengono mostrate dopo l'invio dell'ordine.{% endif %}</p>
         {% endif %}
     </form>
 

@@ -1,145 +1,28 @@
 {% extends "base.html" %}
-
+{% from '_libri_shared.html' import scheda_libro with context %}
 {% block title %}Le Nostre Pubblicazioni - Maurizio Gustinicchi Consulting{% endblock %}
-{% block meta_description %}{% endblock %}
-
-{% block head_extra %}
-<style>
-        /* FIX GLOBALI HEADER e NAV (Lasciati invariati) */
-        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
-        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
-        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
-        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
-        .main-nav ul li { margin: 0 8px; line-height: 1; }
-        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
-        .intro-libri .page-title { color: #0056b3; } 
-        .main-nav ul li.current-page a { color: #cc0000; } /* Stile pagina corrente */
-    
-        /* ========================================================= */
-        /* REGOLE ESSENZIALI PER L'ALLINEAMENTO ORIZZONTALE */
-        /* ========================================================= */
-    
-        .libri-gallery {
-            display: flex;
-            flex-wrap: nowrap; 
-            justify-content: center;
-            min-width: 980px; 
-            max-width: 1200px; 
-            margin: 20px auto; 
-            gap: 20px; 
-            padding: 0 10px;
-            overflow-x: auto;
-        }
-        
-        .libro-card {
-            flex: 0 0 300px; 
-            width: 300px; 
-            min-height: 750px; 
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .libro-copertina {
-            max-width: 100%;
-            height: auto;
-            max-height: 300px;
-            object-fit: contain;
-        }
-    
-        .libro-info {
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-            align-items: center;
-            width: 100%;
-        }
-    
-        .descrizione-breve {
-            flex-grow: 1; 
-            text-align: center;
-            margin-top: 15px;
-            margin-bottom: 25px;
-            font-size: 0.9em;
-        }
-    
-        .cta-amazon {
-            background-color: #ff9900; 
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            display: block; 
-            width: 80%; 
-            margin-top: auto;
-        }
-
-    </style>
-{% endblock %}
-
-{% block main_attrs %}{% endblock %}
-
+{% block meta_description %}I manuali professionali di Maurizio Gustinicchi: argomenti, copertine, prezzi e acquisto diretto. Marketing e marginalità, Executive Assistant e Intelligenza Artificiale.{% endblock %}
+{% block head_extra %}{% include '_negozio_styles.html' %}{% endblock %}
 {% block content %}
-
-    <section class="intro-libri">
-        <h1 class="page-title">Le Nostre Pubblicazioni per la Tua Crescita</h1>
-        <p class="sottotitolo">Manuali operativi essenziali per Imprenditori, Manager e Professionisti che desiderano padroneggiare il Controllo di Gestione e l'Innovazione.</p>
+<div class="store-shell">
+    <section class="store-intro">
+        <h1>Le Nostre Pubblicazioni per la Tua Crescita</h1>
+        <p>Manuali operativi per Imprenditori, Manager e Professionisti che desiderano approfondire il Controllo di Gestione e l'Innovazione.</p>
+        <p>Qui trovi gli stessi libri, prezzi e condizioni del <a href="{{ url_for('negozio', _anchor='libri') }}">negozio</a>. I pulsanti portano alla medesima pagina di acquisto diretto.</p>
     </section>
-
-    <section class="libri-gallery">
-
-        <article class="libro-card">
-            <img src="/static/img/libro-ragioneria-margine-marketing.jpg" alt="Copertina del Libro: La Ragioneria del Margine per Addetti al Marketing" class="libro-copertina">
-            
-            <div class="libro-info">
-                <h2>LA RAGIONERIA DEL MARGINE PER ADDETTI AL MARKETING <span style="font-weight:normal; font-size:0.75em; color:#666;">— Nuova Edizione</span></h2>
-                <p class="autore">Di: Maurizio Gustinicchi</p>
-                <p class="descrizione-breve">Il nuovo Marketer-Controller AI-Driven: una metodologia che sfrutta l'Intelligenza Artificiale per formalizzare la costificazione, sostituire l'allocazione approssimativa con la Ragioneria Strategica e implementare l'Analisi Predittiva sul budget. Il futuro del marketing non è creativo, è quantitativo.</p>
-                <a href="{{ url_for('acquista', slug='marketing-di-successo') }}" class="cta-negozio">Acquista ora</a>
-            </div>
-        </article>
-
-        <article class="libro-card">
-            <img src="/static/img/libro-executive-assistant.jpg" alt="Copertina del Libro: Executive Assistant" class="libro-copertina">
-            
-            <div class="libro-info">
-                <h2>IL PROFESSIONISTA QUALIFICATO DI SEGRETERIA E L'ASSISTENTE DEL CEO: Competenze, Strategie e Successo</h2>
-                <p class="autore">Di: Maurizio Gustinicchi</p>
-                <p class="descrizione-breve">Una guida pratica sulle competenze avanzate, dal Time Management all'Accounting, necessarie per il successo professionale di un Executive Assistant moderno.</p>
-                <a href="{{ url_for('acquista', slug='professionista-segreteria-ceo') }}" class="cta-negozio">Acquista ora</a>
-            </div>
-        </article>
-
-        <article class="libro-card">
-            <img src="/static/img/libro-la-distruzione-creatrice.jpg" 
-                alt="Copertina del Libro: La Distruzione Creatrice 4.0" 
-                class="libro-copertina">
-            
-            <div class="libro-info">
-                <h2>LA DISTRUZIONE CREATRICE 4.0: COMANDARE L'AI PER MARGINALIZZARE</h2>
-                
-                <p class="autore">Di: Maurizio Gustinicchi</p>
-                
-                <p class="descrizione-breve">L'unica guida operativa che integra la teoria economica della Distruzione Creatrice con il mondo 5.0. Impara Python per acquisire il controllo degli algoritmi e trasformare le sfide dell'Intelligenza Artificiale in un vantaggio competitivo per CFO, Controller e Operations Manager.</p>
-                
-                <a href="{{ url_for('acquista', slug='distruzione-creatrice-4-0') }}" class="cta-negozio">Acquista ora</a>
-            </div>
-        </article>
-
+    <section aria-label="Manuali disponibili">
+        <div class="store-book-grid">
+        {% for p in libri %}
+            {{ scheda_libro(p) }}
+        {% else %}
+            <p>I manuali non sono attualmente disponibili per l'acquisto diretto. <a href="/contatti">Richiedi informazioni</a>.</p>
+        {% endfor %}
+        </div>
     </section>
-
-    <section class="cta-finale">
-        <h3>Sei interessato a una collaborazione o a un'intervista?</h3>
+    <section>
+        <h2>Sei interessato a una collaborazione o a un'intervista?</h2>
         <p>Contattami direttamente per eventi, workshop o partnership editoriali.</p>
         <a href="/contatti" class="cta-button-large">Contatta l'Autore</a>
     </section>
-    
-
+</div>
 {% endblock %}
