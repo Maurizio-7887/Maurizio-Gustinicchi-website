@@ -1,0 +1,105 @@
+<style>
+        /* FIX: Griglia a 3 colonne affiancate sempre, per schermi grandi */
+        .store-software .elenco-servizi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px; 
+            padding: 20px 5%;
+            margin: 0 auto;
+            max-width: 1200px; 
+        }
+
+        /* Adattamento per schermi più piccoli, per evitare che le card si rompano male */
+        @media (max-width: 992px) {
+            .store-software .elenco-servizi-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .store-software .elenco-servizi-grid {
+                grid-template-columns: 1fr; 
+            }
+        }
+        
+        /* Stili della Card per allineamento e aspetto visivo */
+        .store-software .servizio-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex; 
+            flex-direction: column;
+            justify-content: flex-start; 
+            min-height: 450px; 
+        }
+        
+        .store-software .servizio-icona {
+            max-width: 80px;
+            margin: 0 auto 15px;
+        }
+
+        .store-software .servizio-foto {
+            width: calc(100% + 40px);
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            display: block;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .store-software .servizio-card h2 {
+            color: #0056b3;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .store-software .servizio-card p {
+            flex-grow: 1; 
+            margin-bottom: 15px;
+        }
+
+        .store-software .prezzo {
+            font-weight: bold;
+            color: #333;
+            margin-top: auto; 
+            margin-bottom: 10px;
+        }
+        
+        .store-software .cta-dettaglio {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .store-software .cta-dettaglio:hover {
+            background-color: #004494;
+        }
+    
+.store-shell {max-width:1200px;margin:0 auto;padding:24px 5%;}
+.store-intro {text-align:center;margin-bottom:28px;}
+.store-intro h1,.store-shell h2,.store-shell h3 {color:#0056b3;}
+.store-jump {display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:24px 0;}
+.store-jump a {padding:12px 20px;border:1px solid #0056b3;border-radius:8px;text-decoration:none;font-weight:bold;}
+.store-book-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:24px 0 48px;}
+.store-book-card {min-width:0;border:1px solid #dde4ec;border-radius:12px;background:#fff;padding:24px;display:flex;flex-direction:column;text-align:center;box-shadow:0 5px 20px #16304b0d;}
+.store-book-card img {width:100%;height:280px;object-fit:contain;margin-bottom:20px;}
+.store-book-card h3 {font-size:1.1rem;line-height:1.5;overflow-wrap:anywhere;}
+.store-book-card p {line-height:1.65;}
+.store-book-card .store-price {margin-top:auto;font-size:1.6rem;font-weight:bold;color:#0056b3;}
+.store-book-card .store-shipping {font-size:.9rem;color:#555;}
+.store-book-card .store-buy {background:#0056b3;color:#fff;text-decoration:none;padding:13px 18px;border-radius:7px;font-weight:bold;}
+.store-shell section[id] {scroll-margin-top:24px;}
+.store-software .elenco-servizi-grid {padding:20px 0;}
+.store-software .servizio-card {min-width:0;overflow-wrap:anywhere;}
+.store-software .intro-servizi {padding-left:0;padding-right:0;}
+@media(max-width:900px){.store-book-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:600px){.store-book-grid{grid-template-columns:1fr;}.store-book-card{padding:20px;}.store-shell{padding:20px 5%;}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+</style>
