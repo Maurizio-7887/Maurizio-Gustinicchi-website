@@ -39,45 +39,46 @@
 .home-video-player video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;}
 @media(max-width:760px){.conversion-section.home-video-feature{grid-template-columns:minmax(0,1fr);padding:22px;gap:20px;}}
 
-/* Marchio unito a sinistra e navigazione editoriale su due livelli. */
-.site-header.main-header{grid-template-columns:300px minmax(0,1fr);column-gap:38px;row-gap:8px;padding:20px 3.5%;align-items:center}
-.site-header .logo{width:100%;max-width:300px;min-width:0}
+/* Marchio e qualifica centrati; navigazione leggibile su fascia tenue. */
+.site-header.main-header{grid-template-columns:300px minmax(0,1fr);column-gap:28px;row-gap:0;padding:20px 3%;align-items:center}
+.site-header .logo{grid-column:1;grid-row:1;width:100%;max-width:300px;min-width:0;text-align:center}
 .site-header .logo>a:first-child{display:block}
-.site-header .brand-logo{display:block;width:100%;max-width:300px;height:auto}
-.site-header .logo .brand-credential{display:block;margin-top:6px;color:#183e65;font:500 14px/1.5 system-ui,sans-serif;text-decoration:none}
+.site-header .brand-logo{display:block;width:100%;max-width:300px;height:auto;margin-inline:auto}
+.site-header .logo .brand-credential{display:block;width:100%;box-sizing:border-box;margin:8px auto 0;color:#183e65;font:500 14px/1.5 system-ui,sans-serif;text-align:center;text-decoration:none}
 .site-header .logo .brand-credential:hover{text-decoration:underline}
-.site-nav{justify-content:space-between;gap:8px 12px;align-content:center;flex-wrap:nowrap}
-.site-nav>a,.site-nav summary{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 6px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:#18324e;font:600 15px/1.35 system-ui,sans-serif;text-decoration:none;white-space:nowrap}
-.site-nav>a:hover,.site-nav summary:hover{background:#f0f5fa;color:#0056a7;text-decoration:none}
+.nav-panel{grid-column:2;grid-row:1;min-width:0;background:#f1f5f9;border:1px solid #e1e8f0;border-radius:12px;padding:10px 16px}
+.site-nav{justify-content:flex-start;gap:4px 18px;align-items:center;flex-wrap:nowrap}
+.site-nav>a,.site-nav summary{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 5px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#122f50;font:700 17px/1.35 system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+.site-nav>a:hover,.site-nav summary:hover{background:#e3ecf6;color:#004b91;text-decoration:none}
 .site-nav>a[aria-current="page"]{background:transparent;border-bottom-color:#0056a7;color:#004b91;font-weight:750;box-shadow:none}
-.site-nav .nav-contact{margin-left:16px;background:#ff9900;color:#081831;border:0;border-radius:6px;padding:12px 18px}
+.site-nav .nav-contact{margin-left:auto;background:#ff9900;color:#081831;border:0;border-radius:6px;padding:12px 16px;font-size:15px}
 .site-nav .nav-contact:hover,.site-nav .nav-contact[aria-current="page"]{background:#ffb347;color:#081831}
-.site-nav-secondary{padding-top:8px;border-top:1px solid #e3eaf1;gap:8px 12px}
-.site-nav-secondary>a,.site-nav-secondary summary{font-size:14px}
-.site-nav-secondary .client-access{margin-left:16px;padding-left:18px;border-left:1px solid #d7e2ee;font:600 14px/1.35 system-ui,sans-serif;color:#18324e}
-.site-nav summary{list-style:none;gap:7px}
+.site-nav-secondary{padding-top:7px;margin-top:7px;border-top:1px solid #d5dfeb;gap:4px 18px}
+.site-nav-secondary>a,.site-nav-secondary summary{font-size:16px}
+.site-nav-secondary .client-access{margin-left:auto;padding-left:14px;border-left:1px solid #c6d4e4;font:700 15px/1.35 system-ui,sans-serif;color:#122f50;max-width:none}
+.site-nav summary{list-style:none;gap:7px;cursor:pointer}
 .site-nav summary::-webkit-details-marker{display:none}
 .site-nav summary:after{content:'▾';font-size:11px}
-.site-nav details[open] summary{background:#f0f5fa;color:#0056a7}
+.site-nav details[open] summary{background:#e3ecf6;color:#0056a7}
 .site-nav .resource-links{margin-top:6px}
 .conversion-home .hero-claim .innovation-credential{display:inline-flex;flex-direction:column;gap:4px;margin-top:12px;padding:12px 16px;border:1px solid #6db3ff;border-left:4px solid #ffb347;border-radius:7px;background:#123253;color:#fff;text-decoration:none;font:700 17px/1.4 system-ui,sans-serif}
 .innovation-credential small{font-size:12px;font-weight:500;color:#c6ddf5}
 .innovation-credential:hover{background:#1b426b}
-@media(max-width:1250px){
- .site-header.main-header{grid-template-columns:minmax(0,1fr);gap:12px}
- .site-header .logo{grid-column:1;grid-row:1}
- .site-nav-primary{grid-column:1;grid-row:2}
- .site-nav-secondary{grid-column:1;grid-row:3}
+@media(max-width:1350px){
+ .site-header.main-header{grid-template-columns:minmax(0,1fr);gap:16px}
+ .site-header .logo{grid-column:1;grid-row:1;justify-self:center}
+ .nav-panel{grid-column:1;grid-row:2}
+ .site-nav{flex-wrap:wrap}
 }
 @media(max-width:900px){
  .site-header.main-header{padding:16px 20px}
  .site-header .logo{max-width:280px}
- .site-header .logo .brand-credential{font-size:13px}
- .site-nav{justify-content:flex-start;flex-wrap:wrap;gap:4px 14px}
- .site-nav>a,.site-nav summary{font-size:14px;padding:10px 4px}
- .site-nav-secondary>a,.site-nav-secondary summary,.site-nav-secondary .client-access{font-size:13px}
+ .nav-panel{padding:10px 12px}
+ .site-nav{gap:4px 16px}
+ .site-nav>a,.site-nav summary{font-size:16px;padding:10px 5px}
+ .site-nav-secondary>a,.site-nav-secondary summary,.site-nav-secondary .client-access{font-size:15px}
  .site-nav .nav-contact{flex-basis:100%;margin:6px 0 0}
- .site-nav-secondary .client-access{margin-left:0;padding-left:4px;border-left:0}
- .site-nav-secondary .resource-links{left:0;right:auto;min-width:170px}
+ .site-nav-secondary .client-access{margin-left:0;padding-left:5px;border-left:0}
+ .site-nav-secondary .resource-links{position:static;left:auto;right:auto;min-width:0;max-width:100%;box-sizing:border-box}
  .conversion-home .hero-claim .innovation-credential{font-size:16px;max-width:100%;box-sizing:border-box}
 }
