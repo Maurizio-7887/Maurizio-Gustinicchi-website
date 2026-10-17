@@ -242,7 +242,7 @@ def inject_globals():
 # =====================================================================
 # PAGINE STATICHE (template convertiti dal sito Aruba)
 # =====================================================================
-PAGINE = ['chi-siamo', 'certificati', 'servizi', 'formazione',
+PAGINE = ['come-lavoro', 'chi-siamo', 'certificati', 'servizi', 'formazione',
           'video', 'libri', 'partner', 'testimonianze', 'privacy-policy']
 
 SERVIZI_DETTAGLIO = ['controllo', 'digitalizzazione', 'innovation-manager',
