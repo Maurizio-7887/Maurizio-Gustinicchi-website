@@ -22,6 +22,13 @@
         .corso-card--social { align-self: start; }
         .corso-card--social .corso-content p { flex-grow: 0; }
 
+        /* Solo Segreteria: spazi regolari, senza dilatare il contenuto. */
+        .corso-card--segreteria .corso-content { flex-grow: 0; }
+        .corso-card--segreteria .corso-content p { flex: 0 0 auto; margin-bottom: 12px; }
+        .corso-card--segreteria .programma-operativo { margin-bottom: 12px; }
+        .corso-card--segreteria .programma-operativo li { margin-bottom: .35rem; }
+        .corso-card--segreteria .corso-content > :last-child { margin-bottom: 0; }
+
         /* FIX GLOBALI HEADER */
         .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
         
@@ -60,20 +67,18 @@
                 <div class="corso-content">
                     <h3>Controllo di gestione avanzato</h3>
                     <p class="modalita">Modalità: Presenza / Online</p>
-                    <p class="descrizione">Percorso pratico sul controllo di gestione secondo le logiche dei principali ERP e dei sistemi di <strong>Corporate Performance Management (CPM)</strong>: pianificare i risultati, chiudere i conti gestionali, spiegare gli scostamenti e decidere su costi, margini e liquidità.</p>
+                    <p class="descrizione">Percorso pratico sulle logiche ERP e di <strong>Corporate Performance Management (CPM)</strong>: dal budget alle chiusure mensili, dall’analisi delle varianze alle decisioni su margini e liquidità.</p>
                     <ul class="programma-controllo">
-                        <li><strong>Ottobre: budget iniziale V0 e piano integrato:</strong> obiettivi e responsabilità per l’anno successivo; collegamento tra conto economico, stato patrimoniale e rendiconto finanziario prospettici, budget di cassa e capitale circolante.</li>
-                        <li><strong>Fast closing mensile:</strong> chiusura gestionale rapida, riconciliazione tra contabilità generale e gestionale, confronto tra budget e consuntivo e individuazione delle azioni correttive.</li>
-                        <li><strong>Costo standard e analisi delle varianze:</strong> costo di prodotto o servizio, scostamenti di prezzo, quantità, efficienza, volume e mix; lettura delle cause e delle responsabilità.</li>
-                        <li><strong>Aprile: primo forecast 3+9:</strong> tre mesi di consuntivo e nove di previsione, con aggiornamenti 6+6 e 9+3 durante l’anno, secondo il calendario gestionale adottato.</li>
-                        <li><strong>Rolling forecast e pianificazione per driver:</strong> orizzonte mobile di 12–18 mesi e previsioni costruite su volumi, prezzi, ore e organico, distinguendo l’aggiornamento continuo dal budget annuale.</li>
-                        <li><strong>Centri di costo e ribaltamenti:</strong> conti, centri ausiliari e produttivi, centri di profitto; allocazione dei costi indiretti con criteri di distribuzione e ripartizione coerenti con le logiche ERP.</li>
-                        <li><strong>Redditività multidimensionale:</strong> margini di contribuzione a più livelli per prodotto, servizio, cliente, canale e area; confronto tra budget, consuntivo e forecast.</li>
-                        <li><strong>Pianificazione pluriennale e investimenti:</strong> Long-Term Planning, piano degli investimenti (capex), VAN, TIR e payback; impatto delle decisioni su risultati e flussi di cassa.</li>
-                        <li><strong>Scenari e simulazioni what-if:</strong> ipotesi base, ottimistica e pessimistica, analisi di sensitività, punto di pareggio e leva operativa per valutare alternative e rischi.</li>
-                        <li><strong>Reporting e governo del piano:</strong> dashboard direzionali, KPI finanziari e operativi, commento degli scostamenti, versioni, responsabilità, approvazioni e tracciabilità delle modifiche.</li>
+                        <li><strong>Budget V0 a ottobre:</strong> obiettivi per l’anno successivo; budget economico, patrimoniale e finanziario integrato, cassa e capitale circolante.</li>
+                        <li><strong>Fast closing mensile:</strong> chiusura gestionale, riconciliazione contabile e confronto budget–consuntivo con analisi degli scostamenti.</li>
+                        <li><strong>Costi standard e varianze:</strong> costo di prodotto o servizio; scostamenti di prezzo, quantità, efficienza, volume e mix, cause e azioni correttive.</li>
+                        <li><strong>Forecast e driver:</strong> ad aprile 3+9, poi 6+6 e 9+3; rolling forecast a 12–18 mesi basato su volumi, prezzi, ore e organico.</li>
+                        <li><strong>Centri di costo e redditività:</strong> ribaltamento dei costi indiretti, centri di profitto e margini per prodotto, cliente, canale e area.</li>
+                        <li><strong>Piano pluriennale e investimenti:</strong> Long-Term Planning, capex, VAN, TIR e payback; effetti sui risultati e sui flussi di cassa.</li>
+                        <li><strong>Scenari what-if:</strong> ipotesi base, ottimistica e pessimistica, sensitività, punto di pareggio e leva operativa.</li>
+                        <li><strong>Reporting e governo del piano:</strong> dashboard, KPI, commento degli scostamenti, versioni, responsabilità, approvazioni e tracciabilità.</li>
                     </ul>
-                    <p class="descrizione">Analisi di bilancio ed esercitazioni con dati fittizi collegano numeri, cause e decisioni aziendali. Le logiche sono trasversali: non si tratta di un corso ufficiale o certificato da uno specifico produttore ERP.</p>
+                    <p class="descrizione">Analisi di bilancio ed esercitazioni con dati fittizi collegano numeri e decisioni. Le logiche sono trasversali: il corso non è ufficiale né certificato da un produttore ERP.</p>
                 </div>
             </article>
 
@@ -99,7 +104,7 @@
                 </div>
             </article>
 
-            <article class="corso-card corso-card--operativo">
+            <article class="corso-card corso-card--operativo corso-card--segreteria">
                 <img class="corso-copertina-img" 
                     src="/static/img/copertine/manuale_operativo_segretaria_azienda.jpg" 
                     alt="Copertina Manuale Segretaria di Azienda">
