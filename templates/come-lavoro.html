@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Come lavoro: in azienda, al tuo fianco | Maurizio Gustinicchi{% endblock %}
+{% block meta_description %}Lavoro in azienda fianco a fianco con responsabili e operatori: ascolto, analisi e soluzioni semplici da usare. Il confronto continua anche su WhatsApp.{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/come-lavoro.css', v='20261017') }}">
+{% endblock %}
+{% block content %}
+<div class="work-page">
+  <section class="work-hero" aria-labelledby="work-title">
+    <div class="work-wrap work-hero-grid">
+      <div>
+        <p class="work-kicker">IL MIO METODO · LE PERSONE, PRIMA DEL SOFTWARE</p>
+        <h1 id="work-title">Prima entro nella tua azienda.<br><span>Poi progetto la soluzione.</span></h1>
+        <p class="work-lead">Fianco a fianco con chi decide e con chi lavora ogni giorno.</p>
+        <p>Vengo in azienda e lavoro accanto ai responsabili e agli operatori. Per capire cosa serve davvero, parto dalle persone, dalle attività e dai problemi concreti. Non da un programma da venderti.</p>
+        <a class="work-button" href="/contatti#richiesta">Parliamo della tua azienda <span aria-hidden="true">↗</span></a>
+        <p class="work-hero-note">Presenza sul campo. Confronto diretto. Strumenti comprensibili.</p>
+      </div>
+      <figure class="work-photo-placeholder" aria-labelledby="work-photo-caption">
+        <!-- SEGNAPOSTO: sostituire con una foto autentica in azienda, autorizzata e senza dati riservati visibili. -->
+        <span class="work-photo-label">QUI, IL LAVORO SUL CAMPO</span>
+        <svg viewBox="0 0 100 80" width="100" height="80" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <rect x="12" y="23" width="76" height="47" rx="8"/>
+          <path d="M33 23l6-12h22l6 12"/>
+          <circle cx="50" cy="46" r="14"/>
+          <path d="M73 33h5"/>
+        </svg>
+        <figcaption id="work-photo-caption"><strong>La tua azienda.<br>Le tue persone. Il nostro confronto.</strong><span>Spazio riservato a una foto autentica di Maurizio in azienda.</span><small>Foto in arrivo · segnaposto temporaneo</small></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="work-wrap work-section" aria-labelledby="work-field-title">
+    <p class="work-kicker">01 / CAPIRE PRIMA DI CAMBIARE</p>
+    <div class="work-two-col">
+      <div><h2 id="work-field-title">I problemi si capiscono<br>là dove succedono.</h2><p>Una riunione non basta. Osservo come si lavora, ascolto chi segue le attività e ricostruisco i passaggi insieme a chi li conosce ogni giorno.</p></div>
+      <ul class="work-checklist">
+        <li>Dove si perde tempo o si ricopiano gli stessi dati?</li>
+        <li>Quali informazioni mancano per decidere?</li>
+        <li>Quali passaggi generano errori o incomprensioni?</li>
+        <li>Cosa funziona già e va preservato?</li>
+      </ul>
+    </div>
+    <p class="work-statement">Una soluzione deve <strong>risolvere i problemi.</strong><br>Non aggiungerne altri.</p>
+  </section>
+
+  <section class="work-soft-band" aria-labelledby="work-simple-title">
+    <div class="work-wrap work-section">
+      <p class="work-kicker">02 / PRECISO NON SIGNIFICA COMPLICATO</p>
+      <h2 id="work-simple-title">Costruito sulla tua realtà.<br>Semplice per chi lo usa.</h2>
+      <p class="work-intro">Procedure, analisi e software devono aiutare le persone a lavorare meglio. Per questo confronto le soluzioni con chi dovrà utilizzarle, non soltanto con chi le approva.</p>
+      <div class="work-card-grid">
+        <article class="work-card"><span aria-hidden="true">01</span><h3>Schermate comprensibili</h3><p>Parole familiari, informazioni leggibili e comandi che rendano chiaro cosa fare.</p></article>
+        <article class="work-card"><span aria-hidden="true">02</span><h3>Passaggi essenziali</h3><p>Parto dal flusso di lavoro reale, con l’obiettivo di evitare complicazioni e inserimenti inutili.</p></article>
+        <article class="work-card"><span aria-hidden="true">03</span><h3>Prove con gli utilizzatori</h3><p>Raccogliamo osservazioni, verifichiamo i passaggi e perfezioniamo ciò che serve.</p></article>
+      </div>
+      <p class="work-definition"><strong>User friendly, per me, significa questo:</strong> non devi ragionare come un programmatore per fare bene il tuo lavoro.</p>
+    </div>
+  </section>
+
+  <section class="work-wrap work-section work-two-col work-whatsapp" aria-labelledby="work-close-title">
+    <div>
+      <p class="work-kicker">03 / VICINI, ANCHE A DISTANZA</p>
+      <h2 id="work-close-title">Anche quando non sono lì,<br>il confronto continua.</h2>
+      <p>Uso anche WhatsApp per confrontarmi direttamente con i clienti: un dubbio, un documento, un passaggio da chiarire. Non tutto deve aspettare la prossima visita in azienda.</p>
+      <p>Il confronto rapido serve a far avanzare il lavoro: chiarire l’esigenza, valutare l’intervento e condividere l’aggiornamento.</p>
+      <p class="work-availability">Modalità di supporto, orari e tempi di risposta si concordano in base al lavoro previsto.</p>
+    </div>
+    <aside class="work-proximity" aria-label="Confronto operativo anche su WhatsApp">
+      <span class="work-channel">CONFRONTO DIRETTO · ANCHE SU WHATSAPP</span>
+      <p class="work-proximity-title">Lontani sulla mappa.<br><strong>Vicini nel lavoro.</strong></p>
+      <ol><li>Mi racconti l’esigenza.</li><li>Chiariamo insieme cosa serve.</li><li>Definiamo il prossimo passo.</li></ol>
+      <p>Messaggi, documenti e chiarimenti: il contatto diretto affianca il lavoro in azienda.</p>
+    </aside>
+  </section>
+
+  <section class="work-wrap work-section work-final" aria-labelledby="work-final-title">
+    <p class="work-kicker">PARTIAMO DA UN PROBLEMA REALE</p>
+    <h2 id="work-final-title">Raccontami cosa oggi<br>ti complica il lavoro.</h2>
+    <p>Partiamo da lì per capire come posso affiancare te e le persone della tua azienda.</p>
+    <a class="work-button" href="/contatti#richiesta">Parliamo della tua azienda <span aria-hidden="true">↗</span></a>
+    <a class="work-secondary" href="/servizi">Esplora le soluzioni</a>
+  </section>
+</div>
+{% endblock %}
