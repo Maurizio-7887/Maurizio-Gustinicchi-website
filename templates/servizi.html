@@ -19,6 +19,29 @@
         
         /* FIX Titolo Pagina per coerenza */
         .intro-servizi .page-title { color: #0056b3; } 
+
+        /* Griglia dedicata: quattro schede e tre centrate, senza cambiare le altre pagine. */
+        .elenco-servizi-grid.servizi-layout {
+            max-width: 1440px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            grid-template-columns: repeat(8, minmax(0, 1fr));
+            gap: 28px;
+        }
+        .servizi-layout > .servizio-card { grid-column: span 2; min-width: 0; }
+        .servizi-layout > .servizio-card:nth-child(5) { grid-column: 2 / span 2; }
+        .servizi-layout .servizio-icona { object-fit: contain; }
+        @media (max-width: 1100px) {
+            .elenco-servizi-grid.servizi-layout { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .servizi-layout > .servizio-card:nth-child(5) { grid-column: span 2; }
+            .servizi-layout > .servizio-card:nth-child(7) { grid-column: 2 / span 2; }
+        }
+        @media (max-width: 600px) {
+            .elenco-servizi-grid.servizi-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+            .servizi-layout > .servizio-card,
+            .servizi-layout > .servizio-card:nth-child(5),
+            .servizi-layout > .servizio-card:nth-child(7) { grid-column: 1; }
+        }
     </style>
 {% endblock %}
 
@@ -31,7 +54,7 @@
             <p class="sottotitolo">Offriamo consulenza specialistica e strumenti pratici per la digitalizzazione aziendale e l'ottimizzazione dei processi, coprendo ogni aspetto critico del tuo business.</p>
         </section>
 
-        <section class="elenco-servizi-grid">
+        <section class="elenco-servizi-grid servizi-layout">
             
             <article class="servizio-card">
                 <img src="/static/img/Icona_Controller.png" alt="Icona Controller e KPI" class="servizio-icona">
@@ -41,12 +64,14 @@
             </article>
 
             <article class="servizio-card">
+                <img src="/static/img/icona_cfo_esterno.svg" alt="Pianificazione finanziaria e liquidità — CFO esterno" class="servizio-icona" width="80" height="80">
                 <h2>CFO esterno per PMI</h2>
                 <p>Direzione finanziaria in outsourcing: affiancamento su liquidità, pianificazione e decisioni economico-finanziarie, con attività e frequenza concordate.</p>
                 <a href="/servizi/cfo-esterno" class="cta-dettaglio">Scopri il servizio CFO esterno</a>
             </article>
 
             <article class="servizio-card">
+                <img src="/static/img/icona_sviluppo_erp.svg" alt="Moduli e processi integrati — sviluppo ERP su misura" class="servizio-icona" width="80" height="80">
                 <h2>Sviluppo software gestionali su misura</h2>
                 <p>Analisi dei processi, prototipo, sviluppo, collaudo e formazione. Software personalizzati per PMI, con integrazioni e condizioni di manutenzione da definire.</p>
                 <a href="/servizi/software-gestionali-su-misura" class="cta-dettaglio">Scopri lo sviluppo di gestionali personalizzati</a>
