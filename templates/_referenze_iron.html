@@ -1,0 +1,33 @@
+{# Testi forniti e confermati dal committente per Angelo Mierla. #}
+{% set referenze_iron = [
+  ('MasterWork', 'Produzione & Fabbrica', 'MasterWork ha trasformato la gestione della nostra officina. La tracciatura in tempo reale degli avanzamenti e delle anomalie ci ha permesso di azzerare i colli di bottiglia e ottimizzare i turni con un impatto immediato sulla produttività.'),
+  ('MasterLogistic / MasterWMS', 'Magazzino & Logistica', 'Con MasterLogistic abbiamo finalmente il controllo totale del magazzino e dei flussi logistici. DDT, ordini e KPI in tempo reale hanno reso la nostra catena di distribuzione impeccabile.'),
+  ('MasterAnalytics', 'Analisi & Marginalità', 'MasterAnalytics ci offre una visibilità straordinaria sui numeri aziendali. Analizzare costi, ricavi e marginalità per singola commessa in modo integrato ha cambiato il nostro modo di prendere decisioni strategiche.'),
+  ('MasterCRM', 'Clienti, Preventivi & Richiami', "MasterCRM è uno strumento eccezionale per il commerciale. Gestire contatti, pipeline e preventivi automatizzati in un'unica scheda ci ha fatto recuperare tempo prezioso e chiudere più trattative."),
+  ('MasterPricing', 'Prezzi di vendita & Marginalità', "MasterPricing ha dato un ordine rigoroso alla nostra politica dei prezzi. L'analisi delle varianze e gli alert automatici sui costi reali ci proteggono ogni giorno da brutte sorprese sulla marginalità."),
+  ('MasterQuality', 'Qualità ISO 9001 / IATF', 'Grazie a MasterQuality la gestione delle non conformità e degli audit per la certificazione è diventata fluida e strutturata, riducendo drasticamente il carico burocratico del reparto.'),
+  ('MasterProcurement', 'Acquisti', "MasterProcurement ha digitalizzato e reso trasparenti i nostri flussi d'acquisto. Richieste, ordini e vendor rating ci consentono di selezionare i migliori fornitori senza perdite di tempo."),
+  ('MasterProduction', 'Pianificazione', 'MasterProduction ci ha dato finalmente il controllo completo sulla pianificazione. Monitorare capacità, priorità e carichi di lavoro in anticipo ha azzerato i ritardi nelle consegne ai clienti.')
+] %}
+<section class="iron-referenze" aria-labelledby="iron-referenze-titolo">
+  <header class="iron-referenze-intro">
+    <p class="iron-referenze-label">LA VOCE DI CHI LI USA OGNI GIORNO</p>
+    <h2 id="iron-referenze-titolo">I software Master nell’esperienza di Iron Segnaletica</h2>
+    <p>Otto testimonianze sui diversi strumenti, un’unica esperienza aziendale: quella di <strong>Angelo Mierla, CEO di Iron Segnaletica.</strong></p>
+  </header>
+  <div class="recensioni-grid iron-referenze-grid">
+    {% for prodotto, area, testo in referenze_iron %}
+    <article class="recensione-card iron-referenza">
+      <header>
+        <p class="iron-referenza-area">{{ area }}</p>
+        <h3>{{ prodotto }}</h3>
+      </header>
+      <blockquote><p>“{{ testo }}”</p></blockquote>
+      <div class="iron-referenza-autore">
+        <div class="autore">Angelo Mierla</div>
+        <div class="servizio">CEO di Iron Segnaletica</div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
