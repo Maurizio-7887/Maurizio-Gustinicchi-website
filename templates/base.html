@@ -24,27 +24,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     {% block head_extra %}{% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-menu-visible') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-marchio-innovation') }}">
 </head>
 <body>
 
     <a class="skip-content" href="#contenuto">Vai al contenuto</a>
     <header class="main-header site-header">
-        <div class="logo"><a href="/" aria-label="Maurizio Gustinicchi Consulting — Home"><span class="logo-nome">MAURIZIO GUSTINICCHI <span>CONSULTING</span></span><p>Controllo di gestione e software su misura</p></a></div>
+        <div class="logo"><a href="/" aria-label="Maurizio Gustinicchi Consulting — Home"><img class="brand-logo" src="{{ url_for('static', filename='img/marchio-maurizio-gustinicchi.png') }}" alt="Maurizio Gustinicchi — Controllo, Innovazione, Lean, Digitalizzazione" width="527" height="210"></a><a class="brand-credential" href="/certificati">Innovation Manager <strong>certificato DNV</strong></a></div>
         <nav class="site-nav site-nav-primary" aria-label="Navigazione principale">
-            <a href="/">Home</a>
-            <a href="/servizi">Soluzioni</a>
-            <a href="/come-lavoro">Come lavoro</a>
-            <a href="/testimonianze">Esperienze</a>
-            <a href="/chi-siamo">Chi sono</a>
-            <a class="nav-contact" href="/contatti">Parliamo della tua azienda</a>
+            <a href="/"{% if request.path == '/' %} aria-current="page"{% endif %}>Home</a>
+            <a href="/servizi"{% if request.path == '/servizi' or request.path.startswith('/servizi/') %} aria-current="page"{% endif %}>Soluzioni</a>
+            <a href="/come-lavoro"{% if request.path == '/come-lavoro' or request.path.startswith('/come-lavoro/') %} aria-current="page"{% endif %}>Come lavoro</a>
+            <a href="/testimonianze"{% if request.path == '/testimonianze' or request.path.startswith('/testimonianze/') %} aria-current="page"{% endif %}>Esperienze</a>
+            <a href="/chi-siamo"{% if request.path == '/chi-siamo' or request.path.startswith('/chi-siamo/') %} aria-current="page"{% endif %}>Chi sono</a>
+            <a class="nav-contact" href="/contatti"{% if request.path == '/contatti' or request.path.startswith('/contatti/') %} aria-current="page"{% endif %}>Parliamo della tua azienda</a>
         </nav>
         <nav class="site-nav site-nav-secondary" aria-label="Formazione e risorse">
-            <a href="/formazione">Formazione</a>
-            <a href="/video">Video</a>
-            <a href="/libri">Libri</a>
-            <a href="/negozio">Negozio</a>
-            <a href="/blog">Blog</a>
+            <a href="/formazione"{% if request.path == '/formazione' or request.path.startswith('/formazione/') %} aria-current="page"{% endif %}>Formazione</a>
+            <a href="/video"{% if request.path == '/video' or request.path.startswith('/video/') %} aria-current="page"{% endif %}>Video</a>
+            <a href="/libri"{% if request.path == '/libri' or request.path.startswith('/libri/') %} aria-current="page"{% endif %}>Libri</a>
+            <a href="/negozio"{% if request.path == '/negozio' or request.path.startswith('/negozio/') %} aria-current="page"{% endif %}>Negozio</a>
+            <a href="/blog"{% if request.path == '/blog' or request.path.startswith('/blog/') %} aria-current="page"{% endif %}>Blog</a>
             <details class="resource-menu"><summary>Altre risorse</summary><div class="resource-links">
                 <a href="/certificati">Certificazioni</a>
                 <a href="/partner">Partner</a>
