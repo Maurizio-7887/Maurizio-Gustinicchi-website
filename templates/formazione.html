@@ -8,6 +8,12 @@
         .programma-controllo, .programma-amministrazione { padding-left: 1.2rem; margin: 0 0 1rem; line-height: 1.55; }
         .programma-controllo li, .programma-amministrazione li { margin-bottom: .65rem; }
 
+        /* Solo Magazzino e Segretaria: niente paragrafi dilatati o schede stirate. */
+        .corso-card--operativo { align-self: start; }
+        .corso-card--operativo .corso-content p { flex-grow: 0; }
+        .programma-operativo { padding-left: 1.2rem; margin: 0 0 1rem; line-height: 1.55; }
+        .programma-operativo li { margin-bottom: .65rem; }
+
         /* FIX GLOBALI HEADER */
         .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
         
@@ -58,25 +64,48 @@
                 </div>
             </article>
 
-            <article class="corso-card">
+            <article class="corso-card corso-card--operativo">
                 <img class="corso-copertina-img" 
                     src="/static/img/copertine/manuale_operativo_magazzino_magazziniere_5_0.jpg" 
                     alt="Copertina Manuale Magazzino 5.0">
                 <div class="corso-content">
                     <h3>Magazzino e Magazziniere 5.0</h3>
                     <p class="modalita">Modalità: Presenza / Online</p>
-                    <p class="descrizione">Dalla logistica tradizionale alla gestione 4.0: utilizzo di WMS, tracciabilità RFID, principi Lean e ottimizzazione dei flussi di magazzino.</p>
+                    <p class="descrizione">Percorso pratico dalla ricezione della merce alla spedizione, con esercitazioni sul WMS di <strong>MASTERSUITE ACADEMY</strong>: si organizzano ubicazioni, si seguono i movimenti e si controllano giacenze e documenti in un ambiente didattico.</p>
+                    <ul class="programma-operativo">
+                        <li><strong>Layout e ubicazioni:</strong> aree di ricevimento, stoccaggio e spedizione, capacità e unità di carico.</li>
+                        <li><strong>Ricevimento e messa a dimora:</strong> entrata della merce, assegnazione dell’ubicazione e verifica delle quantità.</li>
+                        <li><strong>Trasferimenti interni:</strong> compiti di movimentazione, conferma di origine e destinazione e scansione simulata nell’interfaccia RF.</li>
+                        <li><strong>Rifornimento alla produzione:</strong> trasferimento dei materiali all’area di lavoro e collegamento con i consumi degli ordini di produzione.</li>
+                        <li><strong>Picking e preparazione ordini:</strong> prelievo FIFO, disponibilità dei materiali, prelievi parziali e controllo dell’avanzamento.</li>
+                        <li><strong>Imballo e spedizione:</strong> identificazione dei colli con SSCC, etichette, carico del trasporto e DDT simulato.</li>
+                        <li><strong>Inventari e differenze:</strong> conteggi, riconteggi, rotazione ABC e rettifiche delle giacenze simulate.</li>
+                        <li><strong>Tracciabilità e anomalie:</strong> lotti, seriali, merce bloccata e quarantena, ricostruzione del percorso da fornitore a cliente.</li>
+                    </ul>
+                    <p class="descrizione">Principi Lean e lettura dei flussi collegano le esercitazioni all’organizzazione del magazzino. Si utilizzano esclusivamente dati fittizi: nessun movimento di stock o documento commerciale reale e nessuna integrazione con dispositivi fisici è richiesta per le simulazioni.</p>
                 </div>
             </article>
 
-            <article class="corso-card">
+            <article class="corso-card corso-card--operativo">
                 <img class="corso-copertina-img" 
                     src="/static/img/copertine/manuale_operativo_segretaria_azienda.jpg" 
                     alt="Copertina Manuale Segretaria di Azienda">
                 <div class="corso-content">
                     <h3>Segretaria di Azienda</h3>
                     <p class="modalita">Modalità: Presenza / Online</p>
-                    <p class="descrizione">Formazione completa sulle procedure amministrative, l'organizzazione dell'ufficio, la gestione della corrispondenza e la comunicazione interaziendale.</p>
+                    <p class="descrizione">Percorso operativo basato sul <strong>Manuale Operativo Segretaria di Azienda</strong>: dall’organizzazione dell’ufficio alla corrispondenza, dalle relazioni professionali al supporto amministrativo, con esempi e strumenti di lavoro.</p>
+                    <ul class="programma-operativo">
+                        <li><strong>Ruolo e attività professionale:</strong> competenze dell’addetto alla segreteria, responsabilità e differenze tra lavoro autonomo e dipendente.</li>
+                        <li><strong>Relazioni e comunicazione:</strong> accoglienza, telefonate, rapporti con clienti e colleghi, comunicazione verbale, non verbale e paraverbale.</li>
+                        <li><strong>Testi e corrispondenza:</strong> redazione di email e lettere professionali, protocollo della posta in entrata e in uscita, archiviazione documentale.</li>
+                        <li><strong>Agenda e time management:</strong> appuntamenti, priorità, scadenze e organizzazione del tempo proprio e del responsabile.</li>
+                        <li><strong>Riunioni e supporto alla direzione:</strong> preparazione dei materiali, organizzazione degli incontri, redazione di verbali e coordinamento delle informazioni.</li>
+                        <li><strong>Amministrazione di base:</strong> lettura di documenti di trasporto e fatture, principi IVA, prima nota e ordinamento dei documenti per la contabilità.</li>
+                        <li><strong>Collaborazione in ufficio:</strong> integrazione con le altre funzioni aziendali, strumenti digitali e condivisione delle informazioni di lavoro.</li>
+                        <li><strong>Sicurezza e accessi:</strong> elementi di sicurezza nei luoghi di lavoro e utilizzo del registro degli accessi esterni.</li>
+                        <li><strong>Qualità del servizio:</strong> valutazione del lavoro di segreteria, raccolta dei riscontri e individuazione delle aree di miglioramento.</li>
+                    </ul>
+                    <p class="descrizione">Esercitazioni su modelli di protocollo, prima nota, registro accessi e verbali aziendali presenti nel manuale, usando dati inventati. Gli esempi amministrativi sono didattici e non sostituiscono la verifica delle disposizioni vigenti.</p>
                 </div>
             </article>
             
