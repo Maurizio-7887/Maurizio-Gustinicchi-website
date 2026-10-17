@@ -27,6 +27,7 @@ from flask import (Flask, render_template, request, redirect, url_for,
                    flash, session, abort, Response, jsonify)
 from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine, VisitaCanale, VisitaCrawler
 import provenienza
+from catalogo_libri import CATALOGO_LIBRI
 
 app = Flask(__name__)
 # SECRET_KEY: impostare su Railway dashboard (web service -> Variables) con una
@@ -241,7 +242,7 @@ def inject_globals():
 # =====================================================================
 # PAGINE STATICHE (template convertiti dal sito Aruba)
 # =====================================================================
-PAGINE = ['chi-siamo', 'certificati', 'servizi', 'shop', 'formazione',
+PAGINE = ['chi-siamo', 'certificati', 'servizi', 'formazione',
           'video', 'libri', 'partner', 'testimonianze', 'privacy-policy']
 
 SERVIZI_DETTAGLIO = ['controllo', 'digitalizzazione', 'innovation-manager',
@@ -257,6 +258,8 @@ def index():
 
 @app.route('/<pagina>')
 def pagina_statica(pagina):
+    if pagina == 'shop':
+        return redirect(url_for('negozio', _anchor='software'), code=301)
     if pagina == 'blog':
         return redirect(url_for('blog'))
     if pagina == 'contatti':
@@ -1572,23 +1575,8 @@ def admin_ordine_stato(ordine_id):
 def seed_prodotti():
     if Prodotto.query.count() > 0:
         return
-    libri = [
-        dict(slug='marketing-di-successo', tipo='libro',
-             nome='MARKETING DI SUCCESSO: Costi e Controllo nella Tua Strategia',
-             descrizione='Manuale operativo per Imprenditori e Controller: misura le campagne marketing e trasforma la spesa in investimento strategico. Copia cartacea autografata.',
-             prezzo_cent=2490, spedizione_cent=500,
-             immagine='/static/img/libro-marketing-successo.jpg'),
-        dict(slug='professionista-segreteria-ceo', tipo='libro',
-             nome="IL PROFESSIONISTA QUALIFICATO DI SEGRETERIA E L'ASSISTENTE DEL CEO",
-             descrizione='Competenze, strategie e successo per la figura chiave accanto alla direzione. Copia cartacea autografata.',
-             prezzo_cent=2490, spedizione_cent=500,
-             immagine='/static/img/libro-executive-assistant.jpg'),
-        dict(slug='distruzione-creatrice-4-0', tipo='libro',
-             nome="LA DISTRUZIONE CREATRICE 4.0: COMANDARE L'AI PER MARGINALIZZARE",
-             descrizione="Come guidare l'Intelligenza Artificiale per creare margine e vantaggio competitivo. Copia cartacea autografata.",
-             prezzo_cent=2490, spedizione_cent=500,
-             immagine='/static/img/libro-la-distruzione-creatrice.jpg'),
-    ]
+    libri = [dict(slug=slug, tipo='libro', spedizione_cent=500, **valori)
+             for slug, valori in CATALOGO_LIBRI.items()]
     for l in libri:
         db.session.add(Prodotto(**l))
     db.session.commit()
