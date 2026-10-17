@@ -2,7 +2,7 @@
 {% block title %}Come lavoro: in azienda, al tuo fianco | Maurizio Gustinicchi{% endblock %}
 {% block meta_description %}Lavoro in azienda fianco a fianco con responsabili e operatori: ascolto, analisi e soluzioni semplici da usare. Il confronto continua anche su WhatsApp.{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/come-lavoro.css', v='20261017') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/come-lavoro.css', v='20261017-images') }}">
 {% endblock %}
 {% block content %}
 <div class="work-page">
@@ -16,16 +16,9 @@
         <a class="work-button" href="/contatti#richiesta">Parliamo della tua azienda <span aria-hidden="true">↗</span></a>
         <p class="work-hero-note">Presenza sul campo. Confronto diretto. Strumenti comprensibili.</p>
       </div>
-      <figure class="work-photo-placeholder" aria-labelledby="work-photo-caption">
-        <!-- SEGNAPOSTO: sostituire con una foto autentica in azienda, autorizzata e senza dati riservati visibili. -->
-        <span class="work-photo-label">QUI, IL LAVORO SUL CAMPO</span>
-        <svg viewBox="0 0 100 80" width="100" height="80" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-          <rect x="12" y="23" width="76" height="47" rx="8"/>
-          <path d="M33 23l6-12h22l6 12"/>
-          <circle cx="50" cy="46" r="14"/>
-          <path d="M73 33h5"/>
-        </svg>
-        <figcaption id="work-photo-caption"><strong>La tua azienda.<br>Le tue persone. Il nostro confronto.</strong><span>Spazio riservato a una foto autentica di Maurizio in azienda.</span><small>Foto in arrivo · segnaposto temporaneo</small></figcaption>
+      <figure class="work-field-photo" aria-labelledby="work-photo-caption">
+        <img src="{{ url_for('static', filename='img/come-lavoro/officina.webp') }}" width="1254" height="1254" alt="Immagine illustrativa di un consulente con tablet a confronto con gli operatori in officina" fetchpriority="high" decoding="async">
+        <figcaption id="work-photo-caption"><strong>Il confronto parte da qui.<br>Accanto a chi lavora.</strong><small>Immagine illustrativa del metodo di lavoro in azienda.</small></figcaption>
       </figure>
     </div>
   </section>
@@ -72,6 +65,28 @@
       <ol><li>Mi racconti l’esigenza.</li><li>Chiariamo insieme cosa serve.</li><li>Definiamo il prossimo passo.</li></ol>
       <p>Messaggi, documenti e chiarimenti: il contatto diretto affianca il lavoro in azienda.</p>
     </aside>
+  </section>
+
+  <section class="work-proof-band" aria-labelledby="work-proof-title">
+    <div class="work-wrap work-section">
+      <p class="work-kicker">UN ESEMPIO CONCRETO / DALLA RICHIESTA ALL’INTERVENTO</p>
+      <div class="work-proof-grid">
+        <div>
+          <h2 id="work-proof-title">Un’esigenza alle 07:10.<br>Alle 09:12, l’intervento è già in corso.</h2>
+          <p class="work-proof-highlight">Circa due ore. Un confronto diretto. Una modifica concreta.</p>
+          <p>Il cliente chiede un avviso sui monitor di produzione per segnalare i codici con un piano di taglio da consultare. Alle 09:12 rispondo: <strong>«Sto aggiungendo»</strong>, e condivido il funzionamento dell’avviso «⚡ PIANO DI TAGLIO».</p>
+          <p>È questo il senso di essere vicini anche a distanza: partire da un problema operativo e lavorare subito a una soluzione comprensibile per chi usa il programma.</p>
+          <ol class="work-proof-timeline"><li><strong>07:10</strong><span>Il cliente descrive l’esigenza.</span></li><li><strong>09:12</strong><span>Confermo l’intervento in corso e ne descrivo il funzionamento.</span></li></ol>
+          <p class="work-availability">Un caso specifico, non una garanzia per ogni intervento. Lo scambio documenta la richiesta e l’aggiornamento sul lavoro in corso, non il collaudo o la consegna finale. Tempi e fattibilità dipendono dalla modifica e dagli accordi di assistenza.</p>
+        </div>
+        <figure class="work-chat-proof">
+          <a href="{{ url_for('static', filename='img/come-lavoro/whatsapp-intervento.webp') }}" target="_blank" rel="noopener" aria-label="Apri lo scambio WhatsApp ingrandito in una nuova scheda">
+            <img src="{{ url_for('static', filename='img/come-lavoro/whatsapp-intervento.webp') }}" width="985" height="475" alt="Scambio WhatsApp: richiesta alle 07:10 e risposta Sto aggiungendo alle 09:12. Schermate e codici di produzione oscurati." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Lo scambio operativo, con gli orari visibili. Schermate e codici di produzione oscurati. <span>Tocca l’immagine per ingrandire.</span></figcaption>
+        </figure>
+      </div>
+    </div>
   </section>
 
   <section class="work-wrap work-section work-final" aria-labelledby="work-final-title">
