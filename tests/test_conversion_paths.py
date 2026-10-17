@@ -61,6 +61,10 @@ class ConversionPathsTest(unittest.TestCase):
     def test_no_video_autoplay(self):
         tags=re.findall(r'<video\b[^>]*>',self.html());self.assertTrue(tags)
         for t in tags: self.assertNotIn('autoplay',t);self.assertIn('preload="none"',t)
+    def test_ai_entry_and_endpoint_preserved(self):
+        h=self.html();self.assertIn('href="#assistente-ai"',h);self.assertIn('id="assistente-ai"',h)
+        self.assertIn("fetch('/api/agente'",h);self.assertIn('id="chat-form"',h)
+        self.assertNotIn('video di presentazione e assistente AI',h)
     def test_contact_required_fields_only(self):
         h=self.html('/contatti'); fields=re.findall(r'<(?:input|textarea)\b[^>]*\brequired\b[^>]*>',h)
         self.assertEqual(sorted(re.search(r'name="([^"]+)"',f).group(1) for f in fields),['email','messaggio','nome'])
