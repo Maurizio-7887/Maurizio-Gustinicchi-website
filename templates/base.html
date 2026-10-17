@@ -24,24 +24,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     {% block head_extra %}{% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-menu-left') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-menu-visible') }}">
 </head>
 <body>
 
     <a class="skip-content" href="#contenuto">Vai al contenuto</a>
     <header class="main-header site-header">
         <div class="logo"><a href="/" aria-label="Maurizio Gustinicchi Consulting — Home"><span class="logo-nome">MAURIZIO GUSTINICCHI <span>CONSULTING</span></span><p>Controllo di gestione e software su misura</p></a></div>
-        <nav class="site-nav" aria-label="Navigazione principale">
+        <nav class="site-nav site-nav-primary" aria-label="Navigazione principale">
+            <a href="/">Home</a>
             <a href="/servizi">Soluzioni</a>
             <a href="/#come-lavoro">Come lavoro</a>
             <a href="/testimonianze">Esperienze</a>
             <a href="/chi-siamo">Chi sono</a>
-            <details class="resource-menu"><summary>Risorse</summary><div class="resource-links">
-                <a href="/formazione">Formazione</a><a href="/libri">Libri</a><a href="/negozio">Negozio</a><a href="/blog">Blog</a><a href="/video">Video</a><a href="/certificati">Certificazioni</a><a href="/partner">Partner</a>
-            </div></details>
             <a class="nav-contact" href="/contatti">Parliamo della tua azienda</a>
         </nav>
-        <a class="client-access" href="https://web-production-74f11.up.railway.app" target="_blank" rel="noopener">Area clienti / CRM ↗</a>
+        <nav class="site-nav site-nav-secondary" aria-label="Formazione e risorse">
+            <a href="/formazione">Formazione</a>
+            <a href="/video">Video</a>
+            <a href="/libri">Libri</a>
+            <a href="/negozio">Negozio</a>
+            <a href="/blog">Blog</a>
+            <details class="resource-menu"><summary>Altre risorse</summary><div class="resource-links">
+                <a href="/certificati">Certificazioni</a>
+                <a href="/partner">Partner</a>
+            </div></details>
+            <a class="client-access" href="https://web-production-74f11.up.railway.app" target="_blank" rel="noopener">Area clienti / CRM ↗</a>
+        </nav>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
