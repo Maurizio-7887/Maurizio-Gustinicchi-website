@@ -27,7 +27,7 @@ from flask import (Flask, render_template, request, redirect, url_for,
                    flash, session, abort, Response, jsonify)
 from models import db, Articolo, LandingPage, Lead, Prodotto, Ordine, VisitaCanale, VisitaCrawler
 import provenienza
-from catalogo_libri import CATALOGO_LIBRI
+from catalogo_libri import CATALOGO_LIBRI, copertina_prodotto
 
 app = Flask(__name__)
 # SECRET_KEY: impostare su Railway dashboard (web service -> Variables) con una
@@ -232,6 +232,7 @@ def motivo_spam_modulo(form, testo_campi=('nome', 'azienda', 'messaggio')):
 def inject_globals():
     return {
         'current_year': datetime.now().year,
+        'copertina_prodotto': copertina_prodotto,
         'article_cover_url': absolute_cover_url,
         'admin_csrf_token': admin_csrf_token,
         'social_links': social_links,
@@ -266,6 +267,10 @@ def pagina_statica(pagina):
         return redirect(url_for('contatti'))
     if pagina not in PAGINE:
         abort(404)
+    if pagina == 'libri':
+        libri = (Prodotto.query.filter_by(attivo=True, tipo='libro')
+                 .order_by(Prodotto.nome).all())
+        return render_template('libri.html', libri=libri)
     return render_template(f'{pagina}.html')
 
 
@@ -1486,7 +1491,7 @@ def acquista(slug):
             threading.Thread(target=invia_ordine_al_crm, args=(ordine.id,), daemon=True).start()
             return redirect(url_for('ordine_esito', ordine_id=ordine.id, esito='bonifico'))
 
-    return render_template('checkout.html', p=p)
+    return render_template('checkout.html', p=p, pagamento_carta=bool(STRIPE_SECRET_KEY))
 
 
 @app.route('/ordine/<int:ordine_id>/<esito>')

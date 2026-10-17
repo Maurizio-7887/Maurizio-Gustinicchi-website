@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from '_libri_shared.html' import scheda_libro with context %}
 {% block title %}Negozio: libri e software | Maurizio Gustinicchi{% endblock %}
 {% block meta_description %}Scopri i manuali professionali di Maurizio Gustinicchi e i software MASTER Suite per controllo di gestione, finanza e processi aziendali. Acquisto libri e demo software.{% endblock %}
 {% block head_extra %}{% include '_negozio_styles.html' %}{% endblock %}
@@ -17,15 +18,7 @@
         <p>Percorsi specialistici per chi vuole collegare competenze, numeri e decisioni. Scegli il manuale in base al tuo ruolo e alle attività che vuoi approfondire.</p>
         <div class="store-book-grid">
         {% for p in prodotti if p.tipo == 'libro' %}
-            <article class="store-book-card">
-                {% if p.immagine %}<img src="{{ p.immagine }}" alt="Copertina: {{ p.nome }}" loading="lazy">{% endif %}
-                <h3>{{ p.nome }}</h3>
-                <p>Di Maurizio Gustinicchi</p>
-                <p>{{ p.descrizione }}</p>
-                <p class="store-price">€ {{ p.prezzo_eur }}</p>
-                <p class="store-shipping">{% if p.spedizione_cent %}+ € {{ p.spedizione_eur }} di spedizione per ordine{% else %}Spedizione inclusa{% endif %}</p>
-                <a href="{{ url_for('acquista', slug=p.slug) }}" class="store-buy">Acquista il manuale</a>
-            </article>
+            {{ scheda_libro(p, 'h3') }}
         {% else %}
             <p>I manuali non sono attualmente disponibili per l'acquisto diretto. <a href="/contatti">Richiedi informazioni</a>.</p>
         {% endfor %}

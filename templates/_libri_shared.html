@@ -1,0 +1,18 @@
+{# Dati commerciali sempre dal prodotto DB: nessun listino duplicato nei template. #}
+{% macro condizioni_acquisto(p) -%}
+<div class="book-purchase-terms">
+    <p class="store-price">€ {{ p.prezzo_eur }} <span style="font-size:.65em;font-weight:normal;">a copia</span></p>
+    <p class="store-shipping">{% if p.spedizione_cent %}+ € {{ p.spedizione_eur }} di spedizione per ordine, anche per più copie dello stesso libro.{% else %}Spedizione inclusa, anche per più copie dello stesso libro.{% endif %}</p>
+</div>
+{%- endmacro %}
+
+{% macro scheda_libro(p, heading='h2') -%}
+<article class="store-book-card" data-book-slug="{{ p.slug }}">
+    {% if copertina_prodotto(p) %}<img src="{{ copertina_prodotto(p) }}" alt="Copertina: {{ p.nome }}" loading="lazy">{% endif %}
+    {% if heading == 'h3' %}<h3>{{ p.nome }}</h3>{% else %}<h2>{{ p.nome }}</h2>{% endif %}
+    <p>Di Maurizio Gustinicchi</p>
+    <p>{{ p.descrizione }}</p>
+    {{ condizioni_acquisto(p) }}
+    <a href="{{ url_for('acquista', slug=p.slug) }}" class="store-buy">Acquista il manuale</a>
+</article>
+{%- endmacro %}

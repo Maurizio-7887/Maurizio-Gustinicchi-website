@@ -46,3 +46,17 @@ def aggiorna_libri(session, modello, *, applica=False):
             session.rollback()
             raise
     return modifiche
+
+
+def copertina_prodotto(prodotto):
+    """Copertina condivisa; corregge il solo vecchio asset senza scrivere sul DB.
+
+    Prezzi, titoli, descrizioni e disponibilità restano quelli del database.
+    Le nuove copertine personalizzate nel pannello non vengono sovrascritte.
+    """
+    immagine = prodotto.immagine
+    if prodotto.tipo == 'libro' and prodotto.slug in CATALOGO_LIBRI:
+        if not immagine or (prodotto.slug == 'marketing-di-successo'
+                            and immagine == '/static/img/libro-marketing-successo.jpg'):
+            return CATALOGO_LIBRI[prodotto.slug]['immagine']
+    return immagine
