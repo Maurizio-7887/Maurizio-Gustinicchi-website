@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Recensioni e Testimonianze - Maurizio Gustinicchi Consulting{% endblock %}
-{% block meta_description %}{% endblock %}
+{% block meta_description %}Le testimonianze di clienti e allievi di Maurizio Gustinicchi Consulting: l’esperienza di Iron Segnaletica con i software Master per produzione, logistica e controllo aziendale.{% endblock %}
 
 {% block head_extra %}
 <style>
@@ -17,7 +17,7 @@
         /* GRIGLIA DELLE TESTIMONIANZE */
         .recensioni-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
             gap: 30px;
             padding: 40px 5%;
             max-width: 1200px;
@@ -60,6 +60,19 @@
             margin-top: 5px;
         }
 
+        .iron-referenze { padding: 48px 0; background: #f3f6fa; }
+        .iron-referenze-intro { max-width: 900px; margin: 0 auto; padding: 0 5%; text-align: center; }
+        .iron-referenze-label { font-size: .78rem; font-weight: 800; letter-spacing: .1em; color: #925000; }
+        .iron-referenze-intro h2 { color: #152d4a; font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.2; }
+        .iron-referenze-intro > p:last-child { color: #45556a; line-height: 1.7; }
+        .iron-referenze-grid { box-sizing: border-box; }
+        .iron-referenza { text-align: left; border-top: 4px solid #ff9900; border-radius: 14px; padding: 28px; min-width: 0; }
+        .iron-referenza-area { margin: 0 0 8px; color: #536176; font-size: .85rem; }
+        .iron-referenza h3 { margin: 0; color: #152d4a; font-size: 1.35rem; overflow-wrap: anywhere; }
+        .iron-referenza blockquote { margin: 24px 0; line-height: 1.75; }
+        .iron-referenza blockquote p { margin: 0; }
+        .iron-referenza-autore { margin-top: auto; }
+
         /* FIX Navigazione per due righe */
         .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
         .main-nav ul li { margin: 0 8px; line-height: 1; }
@@ -93,5 +106,5 @@
             
         </section>
 
-    
+        {% include "_referenze_iron.html" %}
 {% endblock %}
