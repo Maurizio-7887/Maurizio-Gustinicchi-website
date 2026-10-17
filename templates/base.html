@@ -24,13 +24,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     {% block head_extra %}{% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-menu-editoriale') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css', v='20261017-menu-leggibile') }}">
 </head>
 <body>
 
     <a class="skip-content" href="#contenuto">Vai al contenuto</a>
     <header class="main-header site-header">
         <div class="logo"><a href="/" aria-label="Maurizio Gustinicchi Consulting — Home"><img class="brand-logo" src="{{ url_for('static', filename='img/marchio-maurizio-gustinicchi.png') }}" alt="Maurizio Gustinicchi — Controllo, Innovazione, Lean, Digitalizzazione" width="527" height="210"></a><a class="brand-credential" href="/certificati">Innovation Manager <strong>certificato DNV</strong></a></div>
+        <div class="nav-panel">
         <nav class="site-nav site-nav-primary" aria-label="Navigazione principale">
             <a href="/"{% if request.path == '/' %} aria-current="page"{% endif %}>Home</a>
             <a href="/servizi"{% if request.path == '/servizi' or request.path.startswith('/servizi/') %} aria-current="page"{% endif %}>Soluzioni</a>
@@ -51,6 +52,7 @@
             </div></details>
             <a class="client-access" href="https://web-production-74f11.up.railway.app" target="_blank" rel="noopener">Area clienti / CRM ↗</a>
         </nav>
+        </div>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
