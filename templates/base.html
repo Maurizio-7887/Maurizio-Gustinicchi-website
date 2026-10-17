@@ -24,36 +24,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     {% block head_extra %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/conversion.css') }}">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="logo">
-            <a href="/" style="text-decoration:none; color:inherit;">
-                <span class="logo-nome">MAURIZIO GUSTINICCHI CONSULTING</span>
-                <p>Controllo di gestione, AI e software su misura</p>
-            </a>
-        </div>
-
-        <nav class="main-nav">
-            <ul>
-                <li><a href="/">HOME</a></li>
-                <li><a href="/chi-siamo">CHI SIAMO</a></li>
-                <li><a href="/certificati">CERTIFICAZIONI</a></li>
-                <li><a href="/servizi">SERVIZI</a></li>
-                <li><a href="/formazione">FORMAZIONE</a></li>
-            </ul>
-            <ul>
-                <li><a href="/video">VIDEO</a></li>
-                <li><a href="/libri">LIBRI</a></li>
-                <li><a href="/partner">PARTNER</a></li>
-                <li><a href="/blog">BLOG</a></li>
-                <li><a href="/testimonianze">RECENSIONI</a></li>
-                <li><a href="/contatti">CONTATTACI</a></li>
-                <li><a href="/negozio">NEGOZIO</a></li>
-                <li><a href="https://web-production-74f11.up.railway.app" target="_blank" rel="noopener" class="nav-crm-button">AREA CLIENTI / CRM</a></li>
-            </ul>
+    <a class="skip-content" href="#contenuto">Vai al contenuto</a>
+    <header class="main-header site-header">
+        <div class="logo"><a href="/" aria-label="Maurizio Gustinicchi Consulting — Home"><span class="logo-nome">MAURIZIO GUSTINICCHI <span>CONSULTING</span></span><p>Controllo di gestione e software su misura</p></a></div>
+        <nav class="site-nav" aria-label="Navigazione principale">
+            <a href="/servizi">Soluzioni</a>
+            <a href="/#come-lavoro">Come lavoro</a>
+            <a href="/testimonianze">Esperienze</a>
+            <a href="/chi-siamo">Chi sono</a>
+            <details class="resource-menu"><summary>Risorse</summary><div class="resource-links">
+                <a href="/formazione">Formazione</a><a href="/libri">Libri</a><a href="/negozio">Negozio</a><a href="/blog">Blog</a><a href="/video">Video</a><a href="/certificati">Certificazioni</a><a href="/partner">Partner</a>
+            </div></details>
+            <a class="nav-contact" href="/contatti">Parliamo della tua azienda</a>
         </nav>
+        <a class="client-access" href="https://web-production-74f11.up.railway.app" target="_blank" rel="noopener">Area clienti / CRM ↗</a>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -70,7 +58,7 @@
       {% endif %}
     {% endwith %}
 
-    <main{% block main_attrs %}{% endblock %}>
+    <main id="contenuto"{% block main_attrs %}{% endblock %}>
     {% block content %}{% endblock %}
     </main>
 
@@ -82,7 +70,6 @@
             <p>SEDE: Via Spluga 8 - 06012 Città di Castello (PG)</p>
             <p>TEL: <a href="tel:+393880457943" style="color:inherit;">388 0457943</a></p>
             <p>E-MAIL: <a href="mailto:info@mauriziogustinicchiconsulting.it" style="color:inherit;">info@mauriziogustinicchiconsulting.it</a></p>
-            <p>E-MAIL: <a href="mailto:gustinicchimaurizio@gmail.com" style="color:inherit;">gustinicchimaurizio@gmail.com</a></p>
         </div>
 
         <div class="footer-bottom">

@@ -1,110 +1,32 @@
 {% extends "base.html" %}
-
-{% block title %}Contattaci - Maurizio Gustinicchi Consulting{% endblock %}
-{% block meta_description %}{% endblock %}
-
-{% block head_extra %}
-<style>
-        /* FIX GLOBALI HEADER */
-        .main-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 5%; border-bottom: 1px solid #eee; background-color: white; }
-        
-        /* FIX LOGO */
-        .logo h1 { display: block; font-size: 1.8em; color: #0056b3; white-space: nowrap; margin-bottom: 0; line-height: 1.2; }
-        .logo p { margin-top: 5px; font-size: 0.9em; color: #555; }
-
-        /* FIX Navigazione */
-        .main-nav ul { display: flex; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; }
-        .main-nav ul li { margin: 0 8px; line-height: 1; }
-        .main-nav ul li a { font-size: 0.85em; font-weight: bold; white-space: nowrap; text-decoration: none; color: #333; }
-        
-        /* FIX Titolo Pagina per coerenza */
-        .intro-contatti .page-title { color: #0056b3; } 
-    </style>
-{% endblock %}
-
+{% block title %}Parliamo della tua azienda | Maurizio Gustinicchi{% endblock %}
+{% block meta_description %}Racconta il problema della tua PMI: margini, liquidità o processi da migliorare. Richiedi un primo confronto gratuito con Maurizio Gustinicchi.{% endblock %}
 {% block main_attrs %}{% endblock %}
-
 {% block content %}
-
-        <section class="intro-contatti">
-            <h1 class="page-title">Parla con me</h1>
-            <p class="sottotitolo">Compila il modulo qui sotto o usa i contatti diretti per richiedere una prima analisi gratuita della tua situazione aziendale.</p>
+{% set percorsi = {'controllo': ('Controllo di gestione', 'Quali margini o costi vuoi capire meglio?'), 'software': ('Software gestionale su misura', 'Quale processo vorresti migliorare e quali strumenti usi oggi?'), 'cfo': ('CFO esterno', 'Su quali decisioni finanziarie cerchi affiancamento?')} %}
+{% set percorso = percorsi.get(request.args.get('servizio', '')) %}
+<div class="conversion-contact conversion-section">
+    <header class="contact-heading"><p class="section-kicker">PARTIAMO DAL TUO PROBLEMA</p><h1>Parliamo della tua azienda.</h1><p>Margini poco chiari, dati ricopiati o liquidità difficile da prevedere? Raccontami cosa vuoi migliorare. Il primo confronto è gratuito.</p></header>
+    <div class="contact-grid">
+        <section class="contact-panel" id="richiesta" aria-labelledby="form-title">
+            <h2 id="form-title">Richiedi il primo confronto</h2>
+            {% if percorso %}<p class="contact-context">Percorso: <strong>{{ percorso[0] }}</strong>. {{ percorso[1] }}</p>{% endif %}
+            <p class="small-note" id="form-instructions">Sono necessari soltanto nome, email e una breve descrizione. Non inviare credenziali, documenti riservati o dati personali di terzi.</p>
+            <form action="/contatti" method="POST" class="contact-form compact-contact" aria-describedby="form-instructions">
+                <input type="hidden" name="form_token" value="{{ form_token() }}">
+                <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true"><label>Sito web <input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
+                <label for="nome">Nome e cognome <span>(obbligatorio)</span></label>
+                <input type="text" id="nome" name="nome" required autocomplete="name">
+                <label for="email">Email <span>(obbligatoria)</span></label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+                <div class="contact-optional"><div><label for="azienda">Azienda <span>(facoltativa)</span></label><input type="text" id="azienda" name="azienda" autocomplete="organization"></div><div><label for="telefono">Telefono <span>(facoltativo)</span></label><input type="tel" id="telefono" name="telefono" autocomplete="tel"></div></div>
+                <label for="messaggio">Quale problema vuoi risolvere? <span>(obbligatorio)</span></label>
+                <textarea id="messaggio" name="messaggio" rows="5" required placeholder="Descrivi il problema, come lavorate oggi e cosa vorresti cambiare."></textarea>
+                <p class="privacy-note">Prima di inviare, consulta l’<a href="/privacy-policy">informativa sul trattamento dei dati</a>. Questo modulo serve a richiedere un contatto e non contiene un’iscrizione a comunicazioni promozionali.</p>
+                <button type="submit" class="conversion-button">Richiedi il primo confronto</button>
+            </form>
         </section>
-
-        <section class="contatti-content">
-            
-            <div class="contact-form-container">
-                <h2>Inviaci un Messaggio</h2>
-                <form action="/contatti" method="POST" class="contact-form">
-                    <input type="hidden" name="form_token" value="{{ form_token() }}">
-                    <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true"><label>Sito web <input type="text" name="sito_web" tabindex="-1" autocomplete="off"></label></div>
-                    
-                    <label for="nome">Nome Completo:</label>
-                    <input type="text" id="nome" name="nome" required>
-
-                    <label for="email">Email Aziendale:</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <label for="azienda">Azienda:</label>
-                    <input type="text" id="azienda" name="azienda">
-
-                    <label for="telefono">Telefono:</label>
-                    <input type="tel" id="telefono" name="telefono">
-
-                    <label for="oggetto">Oggetto del Messaggio:</label>
-                    <select id="oggetto" name="oggetto">
-                        <option value="analisi">Richiesta Analisi Gratuita</option>
-                        <option value="preventivo">Richiesta Preventivo Servizi</option>
-                        <option value="altro">Altro...</option>
-                    </select>
-
-                    <label for="messaggio">Messaggio:</label>
-                    <textarea id="messaggio" name="messaggio" rows="6" required></textarea>
-
-                    <button type="submit" class="cta-button">Invia Richiesta</button>
-                    
-                    <p class="privacy-note">Cliccando su Invia, accetti la nostra <a href="/privacy-policy">Informativa sulla Privacy</a>.</p>
-                </form>
-            </div>
-
-            <div class="contact-info-container">
-                <h2>Contatti Diretti</h2>
-                
-                <div class="info-block">
-                    <h3>Ufficio e Sede Legale</h3>
-                    <p>Via Spluga 8, 06012 Città di Castello (PG)</p>
-                </div>
-                
-                <div class="info-block">
-                    <h3>Telefono e Email</h3>
-                    <p><strong>Telefono:</strong> <a href="tel:+393880457943">388 0457943</a></p>
-                    <p><strong>Email:</strong> <a href="mailto:info@mauriziogustinicchiconsulting.it">info@mauriziogustinicchiconsulting.it</a></p>
-                    <p><strong>Email:</strong> <a href="mailto:gustinicchimaurizio@gmail.com">gustinicchimaurizio@gmail.com</a></p>
-                </div>
-
-                <div class="info-block">
-                    <h3>Orari di Apertura</h3>
-                    <p>Lunedì - Venerdì: 9:00 - 19:00</p>
-                </div>
-
-                <div class="map-placeholder" style="padding:0; overflow:hidden; border-radius:10px; box-shadow:0 3px 15px rgba(0,0,0,0.12);">
-                    <iframe
-                        src="https://www.google.com/maps?q=Via+Spluga+8,+06012+Citt%C3%A0+di+Castello+PG&output=embed"
-                        width="100%" height="320" style="border:0; display:block;"
-                        allowfullscreen loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Mappa: Maurizio Gustinicchi Consulting - Via Spluga 8, Città di Castello">
-                    </iframe>
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=Via+Spluga+8,+06012+Citt%C3%A0+di+Castello+PG"
-                       target="_blank" rel="noopener"
-                       style="display:block; text-align:center; padding:10px; background:#004d99; color:white; text-decoration:none; font-weight:bold;">
-                        📍 Indicazioni Stradali
-                    </a>
-                </div>
-
-            </div>
-
-        </section>
-        
-    
-{% endblock %} 
+        <aside class="contact-next" aria-labelledby="next-title"><h2 id="next-title">Cosa succede dopo?</h2><ol><li><strong>Descrivi la situazione.</strong> Bastano poche righe, senza allegati riservati.</li><li><strong>Valutiamo cosa approfondire.</strong> Ci confrontiamo sul problema e sul possibile percorso.</li><li><strong>Decidiamo il passo successivo.</strong> Un eventuale incarico parte da una proposta con perimetro e condizioni concordate.</li></ol><p>Nessun servizio a pagamento viene attivato dal solo invio del modulo.</p><div class="contact-direct"><h3>Preferisci un contatto diretto?</h3><a href="mailto:info@mauriziogustinicchiconsulting.it">info@mauriziogustinicchiconsulting.it</a><a href="tel:+393880457943">388 0457943</a><p>Via Spluga 8<br>06012 Città di Castello (PG)</p><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Spluga+8,+06012+Citt%C3%A0+di+Castello+PG" target="_blank" rel="noopener">Apri le indicazioni stradali ↗</a></div></aside>
+    </div>
+</div>
+{% endblock %}
